@@ -8,6 +8,7 @@ import order_and_select
 import k_selections
 import heap_select
 import quick_select
+import k_heapsort
 
 
 one = [5, 2, 9, 7, 1, 90, 123, 8, 3]
@@ -40,6 +41,15 @@ def test_k_selections():
     assert k_selections.k_min(l, len(l) - 1) == 123
 
 
+def test_k_heapsort():
+    l = copy.copy(one)
+    assert k_heapsort.k_min(l, 3) == 5
+    l = copy.copy(one)
+    assert k_heapsort.k_min(l, 0) == 1
+    l = copy.copy(one)
+    assert k_heapsort.k_min(l, len(l) - 1) == 123
+
+
 def test_heap_select():
     l = copy.copy(one)
     assert heap_select.k_min(l, 3) == 5
@@ -48,6 +58,7 @@ def test_heap_select():
     l = copy.copy(one)
     assert heap_select.k_min(l, len(l) - 1) == 123
 
+
 def test_quick_select():
 	l = copy.copy(one)
 	assert quick_select.k_min(l, 3) == 5
@@ -55,6 +66,7 @@ def test_quick_select():
 	assert quick_select.k_min(l, 0) == 1
 	l = copy.copy(one)
 	assert quick_select.k_min(l, len(l) - 1) == 123
+
 
 def main(args):
 	# test_brute_force()
