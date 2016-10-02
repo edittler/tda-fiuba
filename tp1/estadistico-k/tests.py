@@ -1,80 +1,67 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import copy
+import unittest
 
 import brute_force
 import order_and_select
 import k_selections
+import k_heapsort
 import heap_select
 import quick_select
-import k_heapsort
-
 
 one = [5, 2, 9, 7, 1, 90, 123, 8, 3]
 
 
-def test_brute_force():
-    l = copy.copy(one)
-    assert brute_force.k_min(l, 3) == 5
-    l = copy.copy(one)
-    assert brute_force.k_min(l, 0) == 1
-    l = copy.copy(one)
-    assert brute_force.k_min(l, len(l) - 1) == 123
+class CommonKminTest(object):
+    module = None
+
+    def setUp(self):
+        super(CommonKminTest, self).setUp()
+        self.elements = [5, 2, 9, 7, 1, 90, 123, 8, 3]
+
+    def _call_algorithm(self, *args):
+        # Esta es una forma rápida que encontré de llamar un algoritmo
+        # dinámicamente.
+        return self.module.__dict__['k_min'](*args)
+
+    def test_k_is_zero(self):
+        self.assertEqual(self._call_algorithm(self.elements, 0), 1)
+
+    def test_k_is_3(self):
+        self.assertEqual(self._call_algorithm(self.elements, 3), 5)
+
+    def test_k_is_elements_length(self):
+        self.assertEqual(self._call_algorithm(self.elements, len(self.elements) - 1), 123)
 
 
-def test_order_and_select():
-    l = copy.copy(one)
-    assert order_and_select.k_min(l, 3) == 5
-    l = copy.copy(one)
-    assert order_and_select.k_min(l, 0) == 1
-    l = copy.copy(one)
-    assert order_and_select.k_min(l, len(l) - 1) == 123
+class BruteForceTest(CommonKminTest, unittest.TestCase):
+    module = brute_force
 
 
-def test_k_selections():
-    l = copy.copy(one)
-    assert k_selections.k_min(l, 3) == 5
-    l = copy.copy(one)
-    assert k_selections.k_min(l, 0) == 1
-    l = copy.copy(one)
-    assert k_selections.k_min(l, len(l) - 1) == 123
+class OrderAndSelectTest(CommonKminTest, unittest.TestCase):
+    module = order_and_select
 
 
-def test_k_heapsort():
-    l = copy.copy(one)
-    assert k_heapsort.k_min(l, 3) == 5
-    l = copy.copy(one)
-    assert k_heapsort.k_min(l, 0) == 1
-    l = copy.copy(one)
-    assert k_heapsort.k_min(l, len(l) - 1) == 123
+class KSelectionsTest(CommonKminTest, unittest.TestCase):
+    module = k_selections
 
 
-def test_heap_select():
-    l = copy.copy(one)
-    assert heap_select.k_min(l, 3) == 5
-    l = copy.copy(one)
-    assert heap_select.k_min(l, 0) == 1
-    l = copy.copy(one)
-    assert heap_select.k_min(l, len(l) - 1) == 123
+class KHeapsortTest(CommonKminTest, unittest.TestCase):
+    module = k_heapsort
 
 
-def test_quick_select():
-	l = copy.copy(one)
-	assert quick_select.k_min(l, 3) == 5
-	l = copy.copy(one)
-	assert quick_select.k_min(l, 0) == 1
-	l = copy.copy(one)
-	assert quick_select.k_min(l, len(l) - 1) == 123
+class HeapSelectTest(CommonKminTest, unittest.TestCase):
+    module = heap_select
+
+
+class QuickSelectTest(CommonKminTest, unittest.TestCase):
+    module = quick_select
 
 
 def main(args):
 	# test_brute_force()
-	test_order_and_select()
-	test_k_selections()
-	test_heap_select()
-	test_quick_select()
-	return 0
+	return unittest.main()
 
 
 if __name__ == '__main__':
