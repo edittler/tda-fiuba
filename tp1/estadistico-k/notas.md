@@ -32,38 +32,31 @@ Un heapsort es un ordenamiento de selección, solo que se usa un heap de mínimo
 Entonces, el heapsort consiste en dos etapas:
 
 1. Heapify. Se reordena el array para que sea un heap. Esto es O(n).
-2. Las n obtenciones del mínimo O(n logn).
+2. Las n extracciones del mínimo O(n logn).
 
 Por lo tanto, un heapsort normalmente es O(n) + O(n logn) = O(n logn).
 
-Aquí, al igual que con el k-selecciones, quitaremos los primeros k elementos. Por esto, aquí se hará el heapify, sucedido de k extracciones del mínimo. El orden sería O(n + k logn) con k < n. Si bien es O(n logn), esta es una cota un poco grosera, dado justamente el k<n.
+Aquí, al igual que con el k-selecciones, quitaremos los primeros k elementos. Por esto, aquí se hará el heapify, sucedido de k extracciones del mínimo. El orden sería O(n + k logn) con k < n.
 
 ## HeapSelect
-Se utiliza un heap de k elementos en lugar de n. Si el heap ya tiene k elementos, el elemento nuevo debería desplazar a uno para poder entrar.
-
-Esto entonces se separa en
-1. Construcción del heap: ?? Es posible que sea O(n), porque si bien todavía no lo implementamos, seguramente haya que recorrer todos los elementos.
-2. k extracciones, cada una O(logk).
-
-Entonces queda pendiente ver cómo se construye este heap, pero si esto no fuera problema, el orden sería O(k logk), que es menor al O(n logn) que teníamos hasta ahora.
-
-Si la construcción de este heap con k elementos es efectivamente O(n), entonces el orden sería O(n + k logk).
-
+Esta era una función de python que se encarga de algo parecido:
 ### Nota sobre heapq.nsmallest
 
 Este algoritmo de python que se encuentra en [https://hg.python.org/cpython/file/3.4/Lib/heapq.py#l195] consiste en lo siguiente:
 
 1. Toma los primeros k elementos de la lista y los convierte en un heap de máximo con heapify. Esto es O(k).
-2. Recorre cada elemento de la lista y lo agrega al heap y quita el máximo. De esta forma el heap siempre queda con los k mínimos hasta el momento. Para cada elemento cuesta O(logk) con lo cual este paso completo es O(n logk).
+2. Mantiene los k mínimos en el heap. Para esto recorre cada elemento de la lista y, si es menor al máximo lo agrega al heap y quita el nuevo máximo. Si es mayor al máximo, no lo agrega. Para cada elemento cuesta O(logk) con lo cual este paso completo es O(n logk).
 3. Ordena el heap de k elementos, lo cual es O(klogk) y devuelve esa lista.
 
-El tiempo entonces es O (k + n logk + k logk) = O(nlogk).
+El tiempo entonces es O (k + n logk + k logk) = O(n logk).
 
 Como explica la documentación, esta función es rápida par k pequeño. Si k se acerca a n, termina siendo más conveniente directamente ordenar la lista, ya que de todos modos tendremos que ordenar en el 3er paso la mayor parte de los elementos en el paso 3. Esta comparación de cuándo conviene cada una es justamente una comparación entre este algoritmo y el Order and Select.
 
-### Conclusión
+### Solución Diseñada
 
-No nos conviene usar el heapq.nsmallest, ya que el 3er paso ordena los k más pequeños, siendo que nosotros solo necesitamos obtener el máximo de ellos. Nos basaremos en esta documentación para implementarlo, porque solo varía el paso 3.
+No nos conviene usar el heapq.nsmallest, ya que el 3er paso ordena los k más pequeños, siendo que nosotros solo necesitamos obtener el máximo de estos últimos. Nos basaremos en esta documentación para implementarlo, pero variando el paso 3. En aquel paso solo observaremos el máximo, que justamente es la cabeza del heap. Esto es O(1) y es lo que se devuelve.
+
+El orden queda entonces: O(k + n logk + 1) = O(n logk). Es básicamente la función de python, pero sin el orden del final, lo cual reduce sustancialmente el tiempo.
 
 ## QuickSelect
 Se usa la lógica del Quicksort: se define un pivote y se ponen todos los elementos mayores "a la derecha" y todos los menores "a la izquierda". Según la posición p del pivote:
