@@ -15,18 +15,14 @@ def brute_force(l, k):
 
     # función interna que verifica si un elemento es el k más chico
     def _is_k_lowest(elem):
-        # Uso un set para guardar todos los elementos menores a elem.
-        # Set inserta solo elementos nuevos, ignorando los duplicados.
-        # La inserción en un set es O(1) amortizada
-        # (https://wiki.python.org/moin/TimeComplexity)
-        lower_than_elem = set()
+        lower_elements_count = 0
 
         for item in l:
             if item < elem:
-                lower_than_elem.add(item)
-        # Si la cantidad de elementos guardados es k - 1,
-        # elem es el k más pequeño
-        return len(lower_than_elem) == k - 1
+                lower_elements_count += 1
+
+        # Si la cantidad de elementos más pequeños es k, elem es el k más pequeño
+        return lower_elements_count == k
 
     for item in l:
         if _is_k_lowest(item):
@@ -38,4 +34,4 @@ def brute_force_1liner(l, k):
     La misma implementación del brute force pero hecho en una linea
     simplemente porque se puede.
     """
-    return next(i for i in l if len({x for x in l if x < i}) == k - 1)
+    return next(i for i in l if sum(1 for x in l if x < i) == k)
