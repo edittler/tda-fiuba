@@ -38,8 +38,6 @@ Por lo tanto, un heapsort normalmente es O(n) + O(n logn) = O(n logn).
 
 Aquí, al igual que con el k-selecciones, quitaremos los primeros k elementos. Por esto, aquí se hará el heapify, sucedido de k extracciones del mínimo. El orden sería O(n + k logn) con k < n. Si bien es O(n logn), esta es una cota un poco grosera, dado justamente el k<n.
 
-**OJO** Es probable que el "heapq.nsmallest(k+1, elements)" sea **este** algoritmo, ya que es un heap con todos los elementos. El heapSelect (que es el siguiente) es más barato.
-
 ## HeapSelect
 Se utiliza un heap de k elementos en lugar de n. Si el heap ya tiene k elementos, el elemento nuevo debería desplazar a uno para poder entrar.
 
@@ -51,6 +49,22 @@ Entonces queda pendiente ver cómo se construye este heap, pero si esto no fuera
 
 Si la construcción de este heap con k elementos es efectivamente O(n), entonces el orden sería O(n + k logk).
 
+### Nota sobre heapq.nsmallest
+
+Este algoritmo de python que se encuentra en [https://hg.python.org/cpython/file/3.4/Lib/heapq.py#l195] consiste en lo siguiente:
+
+1. Toma los primeros k elementos de la lista y los convierte en un heap de máximo con heapify. Esto es O(k).
+2. Recorre cada elemento de la lista y lo agrega al heap y quita el máximo. De esta forma el heap siempre queda con los k mínimos hasta el momento. Para cada elemento cuesta O(logk) con lo cual este paso completo es O(n logk).
+3. Ordena el heap de k elementos, lo cual es O(klogk) y devuelve esa lista.
+
+El tiempo entonces es O (k + n logk + k logk) = O(nlogk).
+
+Como explica la documentación, esta función es rápida par k pequeño. Si k se acerca a n, termina siendo más conveniente directamente ordenar la lista, ya que de todos modos tendremos que ordenar en el 3er paso la mayor parte de los elementos en el paso 3. Esta comparación de cuándo conviene cada una es justamente una comparación entre este algoritmo y el Order and Select.
+
+### Conclusión
+
+No nos conviene usar el heapq.nsmallest, ya que el 3er paso ordena los k más pequeños, siendo que nosotros solo necesitamos obtener el máximo de ellos. Nos basaremos en esta documentación para implementarlo, porque solo varía el paso 3.
+
 ## QuickSelect
 Se usa la lógica del Quicksort: se define un pivote y se ponen todos los elementos mayores "a la derecha" y todos los menores "a la izquierda". Según la posición p del pivote:
 - Si p == k: se devuelve l[p]
@@ -59,3 +73,10 @@ Se usa la lógica del Quicksort: se define un pivote y se ponen todos los elemen
 Esto entonces, en el caso óptimo de que el pivote siempre queda a la mitad tiene un tiempo de T(n) = T(n/2) + O(n) [n es lo que tarda en poner todo en su lado correspondiente del pivote].
 
 Utilizando el Teorema Maestro, esto es O(n).
+
+
+## Nota general sobre k
+
+k <= n. Sería absurdo pedir algo como el n+1 menor elemento.
+
+Si k == n, entonces el k mínimo es el máximo, y puede encontrarse en O(n) más rápido que con cualquiera de los otros. De hecho, todos los algoritmos antes descriptos pueden ser mejorados sustancialemnte con este razonamiento. Si k > n/2, entonces el k-mínimo es el n-k-máximo y será más barato buscar al k-máximo con el mismo algoritmo.
