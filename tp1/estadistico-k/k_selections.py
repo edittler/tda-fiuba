@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+
 def k_min(elements, k):
-    return k_selections(elements, k)
+    return k_selections(elements.copy(), k)
 
 
 def k_selections(l, k):

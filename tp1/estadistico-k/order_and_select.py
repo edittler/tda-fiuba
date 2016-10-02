@@ -3,7 +3,7 @@
 
 
 def k_min(elements, k):
-    return order_and_select(elements, k)
+    return order_and_select(elements.copy(), k)
 
 
 def order_and_select(l, k):

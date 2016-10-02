@@ -5,7 +5,7 @@ import heapq
 
 
 def k_min(elements, k):
-    return heap_select(elements, k)
+    return heap_select(elements.copy(), k)
 
 
 def heap_select(elements, k):

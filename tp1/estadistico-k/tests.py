@@ -34,6 +34,11 @@ class CommonKminTest(object):
     def test_k_is_elements_length(self):
         self.assertEqual(self._call_algorithm(self.elements, len(self.elements) - 1), 123)
 
+    def test_algorithm_does_not_change_the_list(self):
+        elems = self.elements.copy()
+        self._call_algorithm(self.elements, len(self.elements) - 1)
+        self.assertListEqual(elems, self.elements)
+
 
 class BruteForceTest(CommonKminTest, unittest.TestCase):
     module = brute_force
