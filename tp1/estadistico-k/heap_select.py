@@ -5,14 +5,19 @@ import heapq
 
 
 def k_min(elements, k):
-    return heap_select(elements, k)
+    return heap_select(elements.copy(), k)
 
 
 def heap_select(elements, k):
     """
-    Se almancenan los k elementos más chicos en un heal y
+    Se almancenan los k elementos más chicos en un heap de máximo y
     se devuelve el k-esimo valor
     """
-    heap = heapq.nsmallest(k+1, elements)
-    # Hay que averiguar cual es el orden de nsmallest
-    return heap[-1]
+    heap = elements[:k+1]
+    heapq._heapify_max(heap)
+    for elem in elements[k+1:]:
+        # Se inserta el elemento si y solo si es menor al máximo del heap.
+        # En el caso de insertarlo, se saca el máximo.
+        heapq._heappushpop_max(heap, elem)
+
+    return heap[0]
