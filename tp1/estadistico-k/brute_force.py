@@ -15,14 +15,17 @@ def brute_force(l, k):
 
     # función interna que verifica si un elemento es el k más chico
     def _is_k_lowest(elem):
-        lower_elements_count = 0
+        lower_elements_count, equal_elements_count = 0, 0
 
         for item in l:
             if item < elem:
                 lower_elements_count += 1
+            elif item == elem:
+                equal_elements_count += 1
 
-        # Si la cantidad de elementos más pequeños es k, elem es el k más pequeño
-        return lower_elements_count == k
+        # Si la cantidad de elementos más pequeños es q y k está entre
+        # q y q + la cantidad de elementos iguales, elem es el k más pequeño
+        return lower_elements_count <= k < (lower_elements_count + equal_elements_count)
 
     for item in l:
         if _is_k_lowest(item):

@@ -39,6 +39,13 @@ class CommonKminTest(object):
         self._call_algorithm(self.elements, len(self.elements) - 1)
         self.assertListEqual(elems, self.elements)
 
+    def test_algorithm_on_set_with_duplicated_elements(self):
+        elems = [5, 2, 9, 7, 1, 2, 90, 123, 2, 8, 3]
+        self.assertEqual(self._call_algorithm(elems, 1), 2)
+        self.assertEqual(self._call_algorithm(elems, 2), 2)
+        self.assertEqual(self._call_algorithm(elems, 3), 2)
+        self.assertEqual(self._call_algorithm(elems, 4), 3)
+
 
 class BruteForceTest(CommonKminTest, unittest.TestCase):
     module = brute_force
