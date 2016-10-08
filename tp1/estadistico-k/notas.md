@@ -8,6 +8,16 @@ A simple vista, calcular si un elemento es o no el 4to es O(n), ya que se fija c
 ### Sugerencia
 Para almacenar los elementos menores al que se está analizando, no convendría directamente usar una lista y utilizar append? Cada elemento nuevo es **siempre** O(1) (a diferencia del set, donde es en promedio O(1), y seguramente es una estructura más sencilla y más rápida para estos fines.
 
+### Mejor caso
+Cuando el k-ésimo elemento es el primero en la lista. Ejemplo:
+k = 4
+l = [4,15,2,1,0,14,6,11,8,9,3,13,12,7,5,10]
+
+### Peor caso
+Cuando el k-ésimo elemento es el último en la lista. Ejemplo:
+k = 4
+l = [10,15,2,1,0,14,6,11,8,9,3,13,12,7,5,4]
+
 ## Sort and Select
 
 #### Orden.
@@ -18,7 +28,7 @@ La lista indexa desde 0. Debería devolver el elemento de índice k-1.
 
 ## k-selecciones
 
-En la selección se analizan los n elementos de la lista y se pone en primer lugar al más pequeño. Luego, sobre los n-1 restantes se repite el proceso. Luego sobre n -2 y así k veces en total. Cada selección, sobre una lista de n elemtos, es O(n) (debe recorrerlos todos para ver el mínimo).
+En la selección se analizan los n elementos de la lista y se pone en primer lugar al más pequeño. Luego, sobre los n-1 restantes se repite el proceso. Luego sobre n -2 y así k veces en total. Cada selección, sobre una lista de n elementos, es O(n) (debe recorrerlos todos para ver el mínimo).
 
 Este algoritmo tiene k selecciones, con lo cual es entonces kO(n) (tanto k como n son parte de la entrada, ninguna es constante). Ya que k < n, esto seguramente sea menor a O(n^2). Salvo que k sea menor a log(n), este algoritmo es superado por el Sort and Select.
 
