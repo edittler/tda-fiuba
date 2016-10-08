@@ -44,8 +44,16 @@ En la selección se analizan los n elementos de la lista y se pone en primer lug
 
 Este algoritmo tiene k selecciones, con lo cual es entonces kO(n) (tanto k como n son parte de la entrada, ninguna es constante). Ya que k < n, esto seguramente sea menor a O(n^2). Salvo que k sea menor a log(n), este algoritmo es superado por el Sort and Select.
 
+Ver: En estos casos estamos tomando k como 0-based, por lo que aquí, la selección se haría "k+1" veces.
+
 ### Potencial Problema
 El mismo que en Sort and Select.
+
+### Mejor caso
+La complejidad del algoritmo depende de 'k', por lo que el mejor caso se da cuando k = 0 (realiza la selección parcial 1 sola vez), y esto se da con cualquier entrada de cualquier tamaño 'n'.
+
+### Peor caso
+Por el mismo argumento anterior, el peor caso se da cuando k = n
 
 ## k-heapsort
 
