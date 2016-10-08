@@ -12,11 +12,13 @@ Para almacenar los elementos menores al que se está analizando, no convendría 
 Cuando el k-ésimo elemento es el primero en la lista. Ejemplo:
 k = 4
 l = [4,15,2,1,0,14,6,11,8,9,3,13,12,7,5,10]
+O(n)
 
 ### Peor caso
 Cuando el k-ésimo elemento es el último en la lista. Ejemplo:
 k = 4
 l = [10,15,2,1,0,14,6,11,8,9,3,13,12,7,5,4]
+O(n²)
 
 ## Sort and Select
 
@@ -25,6 +27,16 @@ El timsort (algoritmo de ordenamiento usado por python) es O(n logn) en el peor 
 
 ### Potencial Problema
 La lista indexa desde 0. Debería devolver el elemento de índice k-1.
+
+### Mejor caso
+El mejor caso del Timsort se da cuando la entrada ya está ordenada. Ejemplo:
+k = cualquiera
+l = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+O(n)
+
+### Peor caso
+TODO
+O(n log n)
 
 ## k-selecciones
 
