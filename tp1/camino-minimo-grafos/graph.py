@@ -54,6 +54,31 @@ class Graph(object):
         """
         return iter(edge for edges in g._a for edge in edges)
 
+    def has_node(g, v):
+        return v < len(g._a)
+
+    @classmethod
+    def from_dict(cls, d):
+        """ Toma un diccionario, compuesto de la siguiente manera:
+            {
+                nodo: [nodo_adjacente, nodo_adjacente2],
+                nodo2: [...]
+            }
+            Por ejemplo:
+            {
+                1: [2, 3, 4, 5]
+                2: [3],
+                4: [5]
+            }
+        """
+        max_node = max(max(d.keys()), max(v for values in d.values() for v in values))
+        g = cls(max_node + 1)
+        for src, v in d.items():
+            for dst in v:
+                if g.has_node(dst):
+                    g.add_edge(src, dst)
+        return g
+
 
 class Edge(object):
     """ Arista de un grafo. """
