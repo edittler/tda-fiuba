@@ -11,6 +11,3 @@ class A_Star(CommonPath):
 
     def search(self):
         pass
-
-    def _heuristic(self, u, v):
-        pass

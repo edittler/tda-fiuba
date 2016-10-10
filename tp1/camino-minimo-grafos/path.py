@@ -12,11 +12,12 @@ class CommonPath(object):
     caminos y calcular las distancias.
     """
 
-    def __init__(self, g, u, v):
+    def __init__(self, g, u, v, heuristic=None):
         """
         g es el grafo a trabajar, u es el nodo origen, v es el nodo destino
         """
         self.g, self.u, self.v = g, u, v
+        self.heuristic = heuristic
         self.parents = {}
         self.search()
 
