@@ -79,6 +79,27 @@ class Graph(object):
                     g.add_edge(src, dst)
         return g
 
+    @classmethod
+    def from_dict_with_weigth(cls, d):
+        """ Toma un diccionario, compuesto de la siguiente manera:
+            {
+                nodo: [(nodo_adjacente, peso), (nodo_adjacente2, peso)],
+                nodo2: [...]
+            }
+            Por ejemplo:
+            {
+                1: [(2,5), (3,2), (4,1), (5,19)]
+                2: [(3,20)],
+                4: [(5,100)]
+            }
+        """
+        max_node = max(max(d.keys()), max(v[0] for values in d.values() for v in values))
+        g = cls(max_node + 1)
+        for src, v in d.items():
+            for dst in v:
+                if g.has_node(dst[0]):
+                    g.add_edge(src, dst[0], dst[1])
+        return g
 
 class Edge(object):
     """ Arista de un grafo. """
