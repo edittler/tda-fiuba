@@ -1,4 +1,10 @@
+# PyCharm
+.idea/workspace.xml
+
+# IPythonNotebook
+.ipynb_checkpoints/
+
+# Python
+__pycache__/
 *.py[cod]
-.ipynb_checkpoints
-__pycache__
 .cache

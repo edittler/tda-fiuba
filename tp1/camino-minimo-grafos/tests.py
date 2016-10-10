@@ -6,6 +6,9 @@ import unittest
 from graph import Graph
 from bfs import BFS
 from dijkstra import Dijkstra
+from heuristic import Heuristic
+from a_star import A_Star
+
 
 class GraphTest(unittest.TestCase):
 
@@ -58,9 +61,11 @@ class PathTest(object):
         self.assertIsNone(self.path.path_to(4))
         self.assertIsNone(self.path.path_to(5))
 
+
 class BFSTest(PathTest, unittest.TestCase):
     def create_path(self, g, u, v):
         self.path = BFS(g, u, v)
+
 
 class DijkstraTest(PathTest, unittest.TestCase):
     def create_path(self, g, u, v):
@@ -82,8 +87,16 @@ class DijkstraTest(PathTest, unittest.TestCase):
         self.assertListEqual(self.path.path_to(2), [0, 2])
         self.assertListEqual(self.path.path_to(3), [0, 1, 4, 5, 3])
 
+class HeuristicTest(PathTest, unittest.TestCase):
+    def create_path(self, g, u, v):
+        self.path = Heuristic(g, u, v)
+
+
+class AStarTest(PathTest, unittest.TestCase):
+    def create_path(self, g, u, v):
+        self.path = A_Star(g, u, v)
+
 def main():
-    # test_brute_force()
     return unittest.main()
 
 
