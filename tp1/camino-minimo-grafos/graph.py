@@ -19,7 +19,7 @@ class Graph(object):
 
     def V(g):
         """ Número de vértices en el grafo. """
-        return len(g._m)
+        return len(g._a)
 
     def E(g):
         """ Número de aristas en el grafo. """
