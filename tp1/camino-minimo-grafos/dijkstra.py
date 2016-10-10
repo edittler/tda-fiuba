@@ -25,14 +25,20 @@ class Dijkstra(CommonPath):
         priority_queue = []
         priority_queue_node_finder = {}
 
+        # Inicializo todos los vertices con distancia infinita
         for v in self.g:
             distance[v] = math.inf
 
+        # Inicializo nodo origen y lo agrego a la PQ
         distance[self.u] = 0
         heapq.heappush(priority_queue, _PriorityQueueNode(distance[self.u], self.u))
 
+        # Voy procesando tomando los vertices con menor distancia desde origen
         while priority_queue:
             u = heapq.heappop(priority_queue)
+
+            # Corroboro que el nodo no fue eliminado anteriormente
+            # (es mas facil chequear un tag que eliminar de la PQ)
             if not u.removed:
 
                 # Condicion de corte -> Mi nodo actual es el destino
@@ -47,12 +53,15 @@ class Dijkstra(CommonPath):
                         self.parents[edge.dst] = u.node
 
                         try:
+                            # Si consigo una menor distancia, "elimino" el nodo
+                            # que representa este vertice de la PQ
                             to_remove_node = priority_queue_node_finder[edge.dst]
                             to_remove_node.removed = True
                         except KeyError:
                             # Es la primera vez que se inserta el nodo en la PQ
                             pass
 
+                        # Actualizo la distancia minima hacia este vertice en la PQ
                         to_insert_node = _PriorityQueueNode(current_distance, edge.dst)
                         heapq.heappush(priority_queue, to_insert_node)
                         priority_queue_node_finder[edge.dst] = to_insert_node
