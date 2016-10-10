@@ -5,7 +5,7 @@ import unittest
 
 from graph import Graph
 from bfs import BFS
-
+from dijkstra import Dijkstra
 
 class GraphTest(unittest.TestCase):
 
@@ -36,26 +36,35 @@ class GraphTest(unittest.TestCase):
         self.assertListEqual(list(g.adj(2)), [1])
 
 
-class PathTest(unittest.TestCase):
+class PathTest(object):
+
+    path = None
 
     def test_path_to(self):
         g = Graph.from_dict({0: [1, 2], 1: [4], 2: [3], 3: [5], 4: [5, 6]})
-        path = BFS(g, 0, 6)
-        self.assertListEqual(path.path_to(1), [0, 1])
-        self.assertListEqual(path.path_to(2), [0, 2])
-        self.assertListEqual(path.path_to(3), [0, 2, 3])
-        self.assertListEqual(path.path_to(4), [0, 1, 4])
-        self.assertListEqual(path.path_to(5), [0, 2, 3, 5])
+        self.create_path(g, 0, 6)
+        self.assertListEqual(self.path.path_to(1), [0, 1])
+        self.assertListEqual(self.path.path_to(2), [0, 2])
+        self.assertListEqual(self.path.path_to(3), [0, 2, 3])
+        self.assertListEqual(self.path.path_to(4), [0, 1, 4])
+        self.assertListEqual(self.path.path_to(5), [0, 2, 3, 5])
 
     def test_partial_path(self):
         g = Graph.from_dict({0: [1, 2], 1: [4], 2: [3], 3: [5], 4: [5, 6]})
-        path = BFS(g, 0, 3)
-        self.assertListEqual(path.path_to(1), [0, 1])
-        self.assertListEqual(path.path_to(2), [0, 2])
-        self.assertListEqual(path.path_to(3), [0, 2, 3])
-        self.assertIsNone(path.path_to(4))
-        self.assertIsNone(path.path_to(5))
+        self.create_path(g, 0, 3)
+        self.assertListEqual(self.path.path_to(1), [0, 1])
+        self.assertListEqual(self.path.path_to(2), [0, 2])
+        self.assertListEqual(self.path.path_to(3), [0, 2, 3])
+        self.assertIsNone(self.path.path_to(4))
+        self.assertIsNone(self.path.path_to(5))
 
+class BFSTest(PathTest, unittest.TestCase):
+    def create_path(self, g, u, v):
+        self.path = BFS(g, u, v)
+
+class DijkstraTest(PathTest, unittest.TestCase):
+    def create_path(self, g, u, v):
+        self.path = Dijkstra(g, u, v)
 
 def main():
     # test_brute_force()
