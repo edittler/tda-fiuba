@@ -66,6 +66,22 @@ class DijkstraTest(PathTest, unittest.TestCase):
     def create_path(self, g, u, v):
         self.path = Dijkstra(g, u, v)
 
+    def test_path_to_with_weigth(self):
+        g = Graph.from_dict_with_weigth({0: [(1,5), (2,10)], 1: [(4,5)], 2: [(3,1)], 3: [(5,6)], 4: [(5,5), (6,10)], 5: [(6,2)]})
+        self.create_path(g, 0, 6)
+        self.assertListEqual(self.path.path_to(1), [0, 1])
+        self.assertListEqual(self.path.path_to(2), [0, 2])
+        self.assertListEqual(self.path.path_to(3), [0, 2, 3])
+        self.assertListEqual(self.path.path_to(4), [0, 1, 4])
+        self.assertListEqual(self.path.path_to(5), [0, 1, 4, 5])
+
+    def test_partial_path_with_weigth(self):
+        g = Graph.from_dict_with_weigth({0: [(1,5), (2,1)], 1: [(4,5)], 2: [(3,21)], 3: [(5,6)], 4: [(5,5), (6,10)], 5: [(3,1)]})
+        self.create_path(g, 0, 3)
+        self.assertListEqual(self.path.path_to(1), [0, 1])
+        self.assertListEqual(self.path.path_to(2), [0, 2])
+        self.assertListEqual(self.path.path_to(3), [0, 1, 4, 5, 3])
+
 def main():
     # test_brute_force()
     return unittest.main()
