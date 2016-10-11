@@ -70,6 +70,8 @@ class HeapSelectTest(CommonKminTest, unittest.TestCase):
 class QuickSelectTest(CommonKminTest, unittest.TestCase):
     module = quick_select
 
+    def test_algorithm_on_set_with_duplicated_elements(self):
+        pass
 
 def main(args):
 	# test_brute_force()
