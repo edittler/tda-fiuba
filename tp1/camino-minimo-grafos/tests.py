@@ -106,7 +106,7 @@ class HeuristicPathTest(object):
     path = None
 
     def heuristic(self, points):
-        return lambda u, v: (points[v][0] - points[u][0]) ^ 2 + (points[v][1] - points[u][1]) ^ 2
+        return lambda u, v: (points[v][0] - points[u][0]) ** 2 + (points[v][1] - points[u][1]) ** 2
 
     def test_path_to(self):
         g = Graph.from_dict({0: [1, 2], 1: [4], 2: [3], 3: [5], 4: [5, 6]})
@@ -119,12 +119,13 @@ class HeuristicPathTest(object):
             5: (2, 1),
             6: (3, 1)
         }
-        self.create_path(g, 0, 4, self.heuristic(points))
+        self.create_path(g, 0, 6, self.heuristic(points))
         self.assertListEqual(self.path.path_to(1), [0, 1])
         self.assertListEqual(self.path.path_to(2), [0, 2])
-        self.assertListEqual(self.path.path_to(3), [0, 2, 3])
+        self.assertIsNone(self.path.path_to(3))
         self.assertListEqual(self.path.path_to(4), [0, 1, 4])
         self.assertListEqual(self.path.path_to(5), [0, 1, 4, 5])
+        self.assertListEqual(self.path.path_to(6), [0, 1, 4, 6])
 
 
 class HeuristicTest(HeuristicPathTest, unittest.TestCase):
