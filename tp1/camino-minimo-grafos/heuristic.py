@@ -13,8 +13,8 @@ class Heuristic(CommonPath):
 
         while q:
             u = q.pop()
-            nodes = [(self.heuristic(u, v), v) for v in self.g.adj(u)]
-            sorted_nodes = sorted(nodes, key=lambda t: t[0])
+            nodes = [(self.heuristic(v, self.v), v) for v in self.g.adj(u)]
+            sorted_nodes = sorted(nodes, key=lambda t: t[0], reverse=True)
             for t in sorted_nodes:
                 v = t[1]
                 if v not in self.parents:
