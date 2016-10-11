@@ -72,7 +72,14 @@ class DijkstraTest(PathTest, unittest.TestCase):
         self.path = Dijkstra(g, u, v)
 
     def test_path_to_with_weigth(self):
-        g = Graph.from_dict_with_weigth({0: [(1,5), (2,10)], 1: [(4,5)], 2: [(3,1)], 3: [(5,6)], 4: [(5,5), (6,10)], 5: [(6,2)]})
+        g = Graph.from_dict_with_weigth({
+            0: [(1, 5), (2, 10)],
+            1: [(4, 5)],
+            2: [(3, 1)],
+            3: [(5, 6)],
+            4: [(5, 5), (6, 10)],
+            5: [(6, 2)]
+        })
         self.create_path(g, 0, 6)
         self.assertListEqual(self.path.path_to(1), [0, 1])
         self.assertListEqual(self.path.path_to(2), [0, 2])
@@ -81,20 +88,54 @@ class DijkstraTest(PathTest, unittest.TestCase):
         self.assertListEqual(self.path.path_to(5), [0, 1, 4, 5])
 
     def test_partial_path_with_weigth(self):
-        g = Graph.from_dict_with_weigth({0: [(1,5), (2,1)], 1: [(4,5)], 2: [(3,21)], 3: [(5,6)], 4: [(5,5), (6,10)], 5: [(3,1)]})
+        g = Graph.from_dict_with_weigth({
+            0: [(1, 5), (2, 1)],
+            1: [(4, 5)],
+            2: [(3, 21)],
+            3: [(5, 6)],
+            4: [(5, 5), (6, 10)],
+            5: [(3, 1)]
+        })
         self.create_path(g, 0, 3)
         self.assertListEqual(self.path.path_to(1), [0, 1])
         self.assertListEqual(self.path.path_to(2), [0, 2])
         self.assertListEqual(self.path.path_to(3), [0, 1, 4, 5, 3])
 
-class HeuristicTest(PathTest, unittest.TestCase):
-    def create_path(self, g, u, v):
-        self.path = Heuristic(g, u, v)
+
+class HeuristicPathTest(object):
+    path = None
+
+    def heuristic(self, points):
+        return lambda u, v: (points[v][0] - points[u][0]) ^ 2 + (points[v][1] - points[u][1]) ^ 2
+
+    def test_path_to(self):
+        g = Graph.from_dict({0: [1, 2], 1: [4], 2: [3], 3: [5], 4: [5, 6]})
+        points = {
+            0: (0, 0),
+            1: (1, 0),
+            2: (0, 1),
+            3: (1, 1),
+            4: (2, 0),
+            5: (2, 1),
+            6: (3, 1)
+        }
+        self.create_path(g, 0, 4, self.heuristic(points))
+        self.assertListEqual(self.path.path_to(1), [0, 1])
+        self.assertListEqual(self.path.path_to(2), [0, 2])
+        self.assertListEqual(self.path.path_to(3), [0, 2, 3])
+        self.assertListEqual(self.path.path_to(4), [0, 1, 4])
+        self.assertListEqual(self.path.path_to(5), [0, 1, 4, 5])
 
 
-class AStarTest(PathTest, unittest.TestCase):
+class HeuristicTest(HeuristicPathTest, unittest.TestCase):
+    def create_path(self, g, u, v, heuristic):
+        self.path = Heuristic(g, u, v, heuristic)
+
+
+class AStarTest(HeuristicPathTest, unittest.TestCase):
     def create_path(self, g, u, v):
         self.path = A_Star(g, u, v)
+
 
 def main():
     return unittest.main()
