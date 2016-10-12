@@ -1,3 +1,7 @@
+\newpage
+
+# Camino mínimo en Grafos
+
 Para todos los casos llamaremos _s_ al nodo de salida u origen y _t_ al nodo de llegada u objetivo.
 
 ## BFS
