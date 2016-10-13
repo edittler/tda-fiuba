@@ -160,6 +160,13 @@ donde $u$, $v$ y $w$ son tres nodos cualesquiera. Se suele utilizar esta propied
 
 Esta propiedad es intuitivamente similar a la desigualdad triangular:
 
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.5\columnwidth]{desTriangular.png}
+    \caption{Comparación de la desigualdad triangular con la consistencia.}
+    \label{fig:bragg}
+\end{figure}
+
 Las heurísticas consistentes se llaman también monótonas porque se puede probar que en un camino cualquiera
 la función de evaluación f(v) = g(v) + h(v,t) es no decreciente a lo largo del camino. Esta propiedad permite
 ordenar según f(v) al igual que en Dijkstra se ordena según $g(v)$, sabiendo que al ser visitado un vértice,
