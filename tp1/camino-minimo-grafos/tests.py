@@ -71,8 +71,8 @@ class DijkstraTest(PathTest, unittest.TestCase):
     def create_path(self, g, u, v):
         self.path = Dijkstra(g, u, v)
 
-    def test_path_to_with_weigth(self):
-        g = Graph.from_dict_with_weigth({
+    def test_path_to_with_weight(self):
+        g = Graph.from_dict({
             0: [(1, 5), (2, 10)],
             1: [(4, 5)],
             2: [(3, 1)],
@@ -87,8 +87,8 @@ class DijkstraTest(PathTest, unittest.TestCase):
         self.assertListEqual(self.path.path_to(4), [0, 1, 4])
         self.assertListEqual(self.path.path_to(5), [0, 1, 4, 5])
 
-    def test_partial_path_with_weigth(self):
-        g = Graph.from_dict_with_weigth({
+    def test_partial_path_with_weight(self):
+        g = Graph.from_dict({
             0: [(1, 5), (2, 1)],
             1: [(4, 5)],
             2: [(3, 21)],
