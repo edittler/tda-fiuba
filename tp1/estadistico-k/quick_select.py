@@ -5,8 +5,8 @@ from math import floor
 import random
 
 def k_min(elements, k):
-    #return quick_select_algorithm(elements.copy(), k, 0, len(elements) - 1)
-    return quick_select_algorithm_recursive(elements.copy(), k, 0, len(elements) - 1)
+    return quick_select_algorithm(elements.copy(), k, 0, len(elements) - 1)
+    #return quick_select_algorithm_recursive(elements.copy(), k, 0, len(elements) - 1)
 
 def quick_select_algorithm(l, k, first_index, last_index):
     """
