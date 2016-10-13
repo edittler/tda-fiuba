@@ -234,5 +234,18 @@ al *k-máximo* con el mismo algoritmo.
 
 ## Comparación de tiempos de ejecución
 
+Visualizaremos los tiempos de ejecución de cada algoritmo, variando el tamaño de la entrada y obteniendo resultados para buscar los casos particulares $k = 0$, $k = n - 1$ y $k = n/2$
+
+### k = 0
+
+ Graficos
+
+### k = n - 1
+
+ Graficos
+
+### k = n/2
+
+ Graficos
 
 ## Elección de algoritmo óptimo para cada 'k' según 'n'
