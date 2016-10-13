@@ -1,5 +1,6 @@
 # Estadístico de orden k
 
+
 ## Brute Force
 
 ### Complejidad
@@ -19,7 +20,6 @@ $k = 4$
 $l = [4,15,2,1,0,14,6,11,8,9,3,13,12,7,5,10]$
 
 $O(n)$: En este caso, al comenzar a comparar desde el primer elemento, encontramos el 'k' requerido en la primer iteración.
-
 
 ### Peor caso
 
@@ -53,7 +53,6 @@ $k = cualquiera$
 $l = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]$
 
 $O(n)$
-
 
 ### Peor caso
 
@@ -95,6 +94,7 @@ $k = 15$
 
 $l = [4,15,2,1,0,14,6,11,8,9,3,13,12,7,5,10]$
 
+
 ## k-heapsort
 
 ### Complejidad
@@ -117,17 +117,24 @@ El orden sería $O(n + k \log n)$ con $k < n$.
 
 ### Mejor caso
 
+Como en este caso se realiza el heapify sea cual sea la entrada (no importa el tamaño), el mejor o peor caso se da 
+dependiendo de la cantidad de extracciones que deban hacerse. Es decir, depende de $k$.
+El mejor caso se da cuando hay que hacer una sola extracción, es decir, cuando $k = 0$
+
+$l = [4,15,2,1,0,14,6,11,8,9,3,13,12,7,5,10]$
+
 ### Peor caso
+
+Siguiendo el razonamiento anterior, el peor caso se da cuando $k = n-1$ ya que hay que realizar $n$ extracciones.
+
+$l = [4,15,2,1,0,14,6,11,8,9,3,13,12,7,5,10]$
+
 
 ## HeapSelect
 
-Esta es una función de `Python` que se encarga de algo parecido:
+### Complejidad
 
-### Nota sobre `heapq.nsmallest`
-
-Este algoritmo de `Python` que se encuentra en el
-[repositorio](https://hg.python.org/cpython/file/3.4/Lib/heapq.py#l195)
-consiste en lo siguiente:
+Este algoritmo consiste en lo siguiente:
 
 1. Toma los primeros $k$ elementos de la lista y los convierte en un heap de
   máximo con heapify. Esto es $O(k)$.
@@ -135,33 +142,36 @@ consiste en lo siguiente:
   lista y, si es menor al máximo lo agrega al heap y quita el nuevo máximo.
   Si es mayor al máximo, no lo agrega. Para cada elemento cuesta $O(\log k)$
   con lo cual este paso completo es $O(n \log k)$.
-3. Ordena el heap de $k$ elementos, lo cual es $O(k \log k)$ y devuelve esa lista.
+3. Observamos la raíz del heap final (Máximo de los $k$ mínimos elementos) lo cual es $O(1)$.
 
-El tiempo entonces es $O(k + n \log k + k \log k) = O(n \log k)$.
+El tiempo entonces es $O(k + n \log k + 1) = O(n \log k)$.
 
-Como explica la documentación, esta función es rápida para $k$ pequeño.
-Si $k$ se acerca a $n$, termina siendo más conveniente directamente ordenar
-la lista, ya que de todos modos tendremos que ordenar en el 3er paso la mayor
-parte de los elementos en el paso 3.
-Esta comparación de cuándo conviene cada una es justamente una comparación entre
-este algoritmo y el Order and Select.
-
-
-### Solución Diseñada
-
-No nos conviene usar el `heapq.nsmallest`, ya que el 3er paso ordena los $k$ más
-pequeños, siendo que nosotros solo necesitamos obtener el máximo de estos últimos.
-Nos basaremos en esta documentación para implementarlo, pero variando el paso 3.
-En aquel paso solo observaremos el máximo, que justamente es la cabeza del heap.
-Esto es $O(1)$ y es lo que se devuelve.
-
-El orden queda entonces: $O(k + n \log k + 1) = O(n \log k)$.
-Es básicamente la función de `Python`, pero sin el orden del final, lo cual
-reduce sustancialmente el tiempo.
+Esta función es rápida para $k$ pequeño. Si $k$ se acerca a $n$, termina siendo más conveniente directamente ordenar
+la lista, ya que de todos modos tendremos que ordenar en el 3er paso la mayor parte de los elementos en el paso 3.
+Esta comparación de cuándo conviene cada una es justamente una comparación entre este algoritmo y el Order and Select.
 
 ### Mejor caso
 
+Siendo que el paso número 1 es indiferente sea cual sea la entrada, $n$ y $k$, y que la observación del máximo elemento del heap es $O(1)$ siempre, resta entender que para que se dé el mejor caso, nos conviene realizar la menor cantidad de inserciones en el heap, a medida que recorremos la lista de $n - k$ elementos restantes en el paso número 2.
+
+Por ende, el mejor caso se da cuando la entrada está parcialmente ordenada, siendo los primeros $k$ elementos, ya los mínimos de toda la entrada (lo cual equivaldría a decir que de los $n - k$ elementos restantes que se iteran en el punto 2, ninguno se insertaría en el heap).
+
+$k = 4$
+
+$l = [4,3,2,1,0,14,6,11,8,9,15,13,12,7,5,10]$
+
+Puede verse que los primeros $k = 4$ elementos (0-based) entrarían en el heap inicial, y los restantes $n - k = 12$ no entrarían en el heap a medida que se los itera (ya que ninguno es más pequeño que $4$, la raíz del heap que se genera luego del punto 1.
+
+Vale aclarar que existe otro mejor caso, el cual depende absolutamente de $k$ y se da cuando $k = n-1$, es decir, cuando se quiere encontrar el máximo elemento del conjunto. Este caso equivale a un HeapSort (ya que hay que ordenar en un heap absolutamente todos los elementos, el paso 2 no existiría, y leer de la raíz es constante), por lo que también se da en $O(n)$
+
 ### Peor caso
+
+Con el mismo razonamiento anterior, el peor caso se da cuando hay que realizar absolutamente todas las inserciones al heap generado en el punto 1. El caso se daría cuando, con un $k$ determinado, los primeros $k$ elementos son los mayores del conjunto (no importa que este sub-conjunto esté ordenado), y luego los restantes $n-k$ elementos estén ordenados en orden decreciente.
+
+$k = 12$
+
+$l = [4,12,7,5,10,14,6,11,8,9,15,13,3,2,1,0]$
+
 
 ## QuickSelect
 
@@ -209,6 +219,7 @@ $k = 15$
 
 $l = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]$
 
+
 ## Nota general sobre k
 
 $k <= n$. Sería absurdo pedir algo como el $n + 1$ menor elemento.
@@ -220,6 +231,8 @@ sustancialmente con este razonamiento.
 Si $k > n/2$, entonces el *k-mínimo* es el *n-k-máximo* y será más barato buscar
 al *k-máximo* con el mismo algoritmo.
 
+
 ## Comparación de tiempos de ejecución
+
 
 ## Elección de algoritmo óptimo para cada 'k' según 'n'
