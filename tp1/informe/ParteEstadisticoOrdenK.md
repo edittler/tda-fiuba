@@ -2,21 +2,11 @@
 
 ## Brute Force
 
-### Orden
+### Complejidad
 
-A simple vista, calcular si un elemento es o no el 4to es $O(n)$, ya que se fija
-cuántos son menores a él entre todos los otros.
-Como lo hacemos potencialmente para todos los elementos, este método es $O(n^2)$.
-
-
-### Sugerencia
-
-Para almacenar los elementos menores al que se está analizando, no convendría
-directamente usar una lista y utilizar `append`?
-Cada elemento nuevo es **siempre** $O(1)$ (a diferencia del set, donde es en
-promedio $O(1)$, y seguramente es una estructura más sencilla y más rápida para
-estos fines).
-
+A simple vista, calcular si un elemento es o no, por ejemplo, el 4to elemento más pequeño, es $O(n)$, ya que se fija
+cuántos son menores a él entre todos los demás elementos del conjunto.
+Como lo hacemos potencialmente para todos los elementos (ya que, en el peor caso, el k-ésimo elemento puede ser el último), este método es $O(n^2)$.
 
 ### Mejor caso
 
@@ -28,7 +18,7 @@ $k = 4$
 
 $l = [4,15,2,1,0,14,6,11,8,9,3,13,12,7,5,10]$
 
-$O(n)$
+$O(n)$: En este caso, al comenzar a comparar desde el primer elemento, encontramos el 'k' requerido en la primer iteración.
 
 
 ### Peor caso
@@ -41,27 +31,20 @@ $k = 4$
 
 $l = [10,15,2,1,0,14,6,11,8,9,3,13,12,7,5,4]$
 
-$O(n^2)$
+$O(n^2)$: En este caso, encontramos el 'k' elegido en la última iteración (luego de recorrer todo el conjunto para cada uno de los elementos anteriores a 4).
 
 
 ## Sort and Select
 
-### Orden.
+### Complejidad
 
-El timsort (algoritmo de ordenamiento usado por Python) es $O(n \log n)$ en el
-peor caso (lineal en el mejor).
-Una vez que está hecho el orden solo se toma el elemento $k$ de la lista en $O(1)$.
+Para el presente trabajo práctico se utilizó el Timsort (algoritmo de ordenamiento usado por Python), que es $O(n \log n)$ en el peor caso y lineal en el mejor caso.
+Una vez que se ordena el conjunto, se toma el elemento $k$ de la lista en $O(1)$.
 Por lo tanto, este algoritmo sería $O(n \log n)$.
-
-
-### Potencial Problema
-
-La lista indexa desde 0. Debería devolver el elemento de índice $k-1$.
-
 
 ### Mejor caso
 
-El mejor caso del Timsort se da cuando la entrada ya está ordenada.
+El mejor caso del Timsort se da cuando la entrada ya está ordenada (ya sea en forma ascendente o descendente).
 
 Ejemplo:
 
@@ -81,41 +64,40 @@ $O(n \log n)$
 
 ## k-selecciones
 
+### Complejidad
+
 En la selección se analizan los $n$ elementos de la lista y se pone en primer
 lugar al más pequeño.
-Luego, sobre los $n-1$ restantes se repite el proceso.
-Luego sobre $n-2$ y así $k$ veces en total.
-Cada selección, sobre una lista de $n$ elementos, es $O(n)$ (debe recorrerlos
+Luego, sobre los $n-1$ restantes se repite el proceso, luego sobre $n-2$ y así $k$ veces en total.
+Cada una de las selecciones, sobre una lista de $n$ elementos, es $O(n)$ (debe recorrerlos
 todos para ver el mínimo).
 
-Este algoritmo tiene $k$ selecciones, con lo cual es entonces $kO(n)$ (tanto $k$
+Este algoritmo tiene $k$ selecciones, con lo cual es entonces $O(k * n)$ (tanto $k$
 como $n$ son parte de la entrada, ninguna es constante).
 Ya que $k < n$, esto seguramente sea menor a $O(n^2)$.
 Salvo que $k$ sea menor a $log(n)$, este algoritmo es superado por el Sort and
 Select.
 
-Ver: En estos casos estamos tomando $k$ como *0-based*, por lo que aquí,
-la selección se haría "$k+1$" veces.
-
-
-### Potencial Problema
-
-El mismo que en Sort and Select.
-
-
 ### Mejor caso
 
 La complejidad del algoritmo depende de $k$, por lo que el mejor caso se da
-cuando $k = 0$ (realiza la selección parcial 1 sola vez), y esto se da con
-cualquier entrada de cualquier tamaño $n$.
+cuando $k = 0$ (o 1, dependiendo dicha notación si se usa 0-based o no), donde realiza la selección parcial 1 sola vez, y esto se da con cualquier entrada de cualquier tamaño $n$.
 
+$k = 0$
+
+$l = [4,15,2,1,0,14,6,11,8,9,3,13,12,7,5,10]$
 
 ### Peor caso
 
-Por el mismo argumento anterior, el peor caso se da cuando $k = n$
+Por el mismo argumento anterior, el peor caso se da cuando $k = n$, ya que debe realizar las selecciones parciales de absolutamente todos los elementos del arreglo.
 
+$k = 15$
+
+$l = [4,15,2,1,0,14,6,11,8,9,3,13,12,7,5,10]$
 
 ## k-heapsort
+
+### Complejidad
 
 Un heapsort es un ordenamiento de selección, sólo que se usa un heap de mínimo
 para obtener el mínimo en $O(\log n)$ en lugar de $O(n)$.
@@ -133,6 +115,9 @@ Aquí, al igual que con el k-selecciones, quitaremos los primeros $k$ elementos.
 Por esto, aquí se hará el heapify, sucedido de $k$ extracciones del mínimo.
 El orden sería $O(n + k \log n)$ con $k < n$.
 
+### Mejor caso
+
+### Peor caso
 
 ## HeapSelect
 
@@ -174,8 +159,13 @@ El orden queda entonces: $O(k + n \log k + 1) = O(n \log k)$.
 Es básicamente la función de `Python`, pero sin el orden del final, lo cual
 reduce sustancialmente el tiempo.
 
+### Mejor caso
+
+### Peor caso
 
 ## QuickSelect
+
+### Complejidad
 
 Se usa la lógica del Quicksort: se define un pivote y se ponen todos los
 elementos mayores "a la derecha" y todos los menores "a la izquierda".
@@ -191,6 +181,33 @@ lado correspondiente del pivote).
 
 Utilizando el Teorema Maestro, esto es $O(n)$.
 
+Ahora bien, esto depende mucho de cómo se elige al pivote. Si se tiene una
+elección de pivote mala para lo que deseamos buscar, es factible ir
+particionando el arreglo de a 1 elemento, por lo que estaríamos en 
+un caso de $O(n^2)$
+
+### Mejor caso
+
+Como dijimos, depende mucho de la elección del pivote. Si, por ejemplo, elegimos
+el pivote que se encuentra en la primer posición del conjunto, se quiere buscar
+el primer mínimo (k == 0 en 0-based) y, además, el conjunto está ordenado, 
+entonces lo encontraremos en $O(n)$, ya que el primer pivote utilizado es el que
+quiero devolver
+
+$k = 0$
+
+$l = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]$
+
+### Peor caso
+
+Si por el contrario, y tomando como base el caso anterior, queremos el máximo
+elemento (es decir, el n-esimo elemento más pequeño), pero siempre elegimos al
+primer elemento como pivote y además el conjunto está ordenado en forma
+ascendente, llegamos al peor caso (ir particionando el conjunto de a 1 elemento)
+
+$k = 15$
+
+$l = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]$
 
 ## Nota general sobre k
 
@@ -202,3 +219,7 @@ De hecho, todos los algoritmos antes descriptos pueden ser mejorados
 sustancialmente con este razonamiento.
 Si $k > n/2$, entonces el *k-mínimo* es el *n-k-máximo* y será más barato buscar
 al *k-máximo* con el mismo algoritmo.
+
+## Comparación de tiempos de ejecución
+
+## Elección de algoritmo óptimo para cada 'k' según 'n'
