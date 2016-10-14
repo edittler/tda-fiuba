@@ -17,7 +17,6 @@ class A_Star(CommonPath):
     def search(self):
         # distancias a cada nodo.
         self.distance = {}
-        self.visitado = {}
         frontera = MinPQ()
 
         # Inicializo todos los vertices con distancia infinita
