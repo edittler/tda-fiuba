@@ -4,23 +4,14 @@
 
 ### Orden
 
-A simple vista, calcular si un elemento es o no el 4to es $O(n)$, ya que se fija
-cuántos son menores a él entre todos los otros.
+A simple vista, calcular si un elemento es o no el 4\textsuperscript{to} es
+$O(n)$, ya que se fija cuántos son menores a él entre todos los otros.
 Como lo hacemos potencialmente para todos los elementos, este método es $O(n^2)$.
-
-
-### Sugerencia
-
-Para almacenar los elementos menores al que se está analizando, no convendría
-directamente usar una lista y utilizar `append`?
-Cada elemento nuevo es **siempre** $O(1)$ (a diferencia del set, donde es en
-promedio $O(1)$, y seguramente es una estructura más sencilla y más rápida para
-estos fines).
 
 
 ### Mejor caso
 
-Cuando el *k-ésimo* elemento es el primero en la lista.
+Cuando el _k-ésimo_ elemento es el primero en la lista.
 
 Ejemplo:
 
@@ -33,7 +24,7 @@ $O(n)$
 
 ### Peor caso
 
-Cuando el k-ésimo elemento es el último en la lista.
+Cuando el _k-ésimo_ elemento es el último en la lista.
 
 Ejemplo:
 
@@ -44,24 +35,19 @@ $l = [10,15,2,1,0,14,6,11,8,9,3,13,12,7,5,4]$
 $O(n^2)$
 
 
-## Sort and Select
+## Order and Select
 
-### Orden.
+### Orden
 
-El timsort (algoritmo de ordenamiento usado por Python) es $O(n \log n)$ en el
-peor caso (lineal en el mejor).
+El timsort (algoritmo de ordenamiento usado por `Python`) es $O(n \log n)$ en el
+peor caso y $O(n)$ en el mejor caso.
 Una vez que está hecho el orden solo se toma el elemento $k$ de la lista en $O(1)$.
 Por lo tanto, este algoritmo sería $O(n \log n)$.
 
 
-### Potencial Problema
-
-La lista indexa desde 0. Debería devolver el elemento de índice $k-1$.
-
-
 ### Mejor caso
 
-El mejor caso del Timsort se da cuando la entrada ya está ordenada.
+El mejor caso del timsort se da cuando la entrada ya está ordenada.
 
 Ejemplo:
 
@@ -91,16 +77,8 @@ todos para ver el mínimo).
 Este algoritmo tiene $k$ selecciones, con lo cual es entonces $kO(n)$ (tanto $k$
 como $n$ son parte de la entrada, ninguna es constante).
 Ya que $k < n$, esto seguramente sea menor a $O(n^2)$.
-Salvo que $k$ sea menor a $log(n)$, este algoritmo es superado por el Sort and
+Salvo que $k$ sea menor a $\log(n)$, este algoritmo es superado por el Order and
 Select.
-
-Ver: En estos casos estamos tomando $k$ como *0-based*, por lo que aquí,
-la selección se haría "$k+1$" veces.
-
-
-### Potencial Problema
-
-El mismo que en Sort and Select.
 
 
 ### Mejor caso
@@ -164,8 +142,9 @@ este algoritmo y el Order and Select.
 
 ### Solución Diseñada
 
-No nos conviene usar el `heapq.nsmallest`, ya que el 3er paso ordena los $k$ más
-pequeños, siendo que nosotros solo necesitamos obtener el máximo de estos últimos.
+No nos conviene usar el `heapq.nsmallest`, ya que el 3\textsuperscript{er} paso
+ordena los $k$ más pequeños, siendo que nosotros solo necesitamos obtener el
+máximo de estos últimos.
 Nos basaremos en esta documentación para implementarlo, pero variando el paso 3.
 En aquel paso solo observaremos el máximo, que justamente es la cabeza del heap.
 Esto es $O(1)$ y es lo que se devuelve.
@@ -202,3 +181,6 @@ De hecho, todos los algoritmos antes descriptos pueden ser mejorados
 sustancialmente con este razonamiento.
 Si $k > n/2$, entonces el *k-mínimo* es el *n-k-máximo* y será más barato buscar
 al *k-máximo* con el mismo algoritmo.
+
+## Análisis de los algoritmos
+

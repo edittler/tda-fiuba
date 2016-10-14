@@ -2,8 +2,10 @@
 
 # Camino mínimo en Grafos
 
-Para todos los casos llamaremos $s$ al nodo de salida u origen y $t$ al nodo de
-llegada u objetivo.
+Para todos los casos llamaremos
+
+* $s$ al nodo de salida u origen
+* $t$ al nodo de llegada u objetivo.
 
 
 ## BFS
