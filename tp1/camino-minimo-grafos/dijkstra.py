@@ -38,7 +38,7 @@ class Dijkstra(CommonPath):
             # Corroboro que el nodo no haya sido visitado
             # (Puede que se haya insertado dos veces en la PQ por haber
             # encontrado otro camino minimo que el primero encontrado)
-            if u.node not in self._visited:
+            if not self.visited(u.node):
 
                 # Condicion de corte -> Mi nodo actual es el destino
                 if u.node == self.v:
