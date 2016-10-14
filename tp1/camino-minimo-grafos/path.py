@@ -10,16 +10,19 @@ class CommonPath(object):
     La idea (inicial) es que se llene el diccionario parents con vertices como
     claves y valores. Ese diccionario luego se va a usar para reproducir los
     caminos y calcular las distancias.
+    Si se le especifica search=False, no va a realizar la búsqueda en el
+    constructor y se tendrá que correr manualmente.
     """
 
-    def __init__(self, g, u, v, heuristic=None):
+    def __init__(self, g, u, v, heuristic=None, search=True):
         """
         g es el grafo a trabajar, u es el nodo origen, v es el nodo destino
         """
         self.g, self.u, self.v = g, u, v
         self.heuristic = heuristic
         self.parents = {}
-        self.search()
+        if search:
+            self.search()
 
     def search(self):
         """ Este método deberá ser redefinido en subclases. """
