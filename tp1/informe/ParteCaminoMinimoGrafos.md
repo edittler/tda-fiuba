@@ -238,3 +238,29 @@ Camino con A*:
     \caption{Recorridos en A* y en Heurísticas}
     \label{fig:ASvsH}
 \end{figure}
+
+### Heurísticas admisibles y no admisibles
+
+También fue mencionado anteriormente que las heurísticas que sobreestiman la distancia entre dos puntos no son admisibles y calculan caminos subóptimos en A*. En la figura \ref{fig:MvsE} se ve un grafo en forma de triángulo, y se ven las heurísticas y funciones de evaluación para cada vértice.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.5\columnwidth]{images/admisibleVsNo.png}
+    \caption{A* con Heurística Manhattan y Euclídea para un mismo problema.}
+    \label{fig:MvsE}
+\end{figure}
+
+En una de la arista entre el nodo 1 y el $t$ (nodo 3) la arista es diagonal, y la heurística Manhattan (la línea punteada) sobreestimará lo faltante. Por este motivo, A* con distancia manhattan elegirá el camino de arriba, ya que estima que para el vértice 2 faltan 9, mientras que para el vértice 1 faltan 21 y por lo tanto las funciones de evaluación entonces son 20 para el camino de arriba y 22 por el camino de abajo.
+
+Para la distancia euclídea, sin embargo, la distancia estimada para el vértice 1 es efectivamente 15 y elegirá el camino de abajo. La distancia total sería entonces 20 para la heurística Manhattan y 16 para la heurística Euclídea, que no sobreestima la verdadera distancia.
+
+De este modo se observa que la distancia Manhattan puede dominar a la Euclidea y ser consistente para los problemas de grillas, pero que en un problema libre como este, no es ni siquiera admisible.
+
+Como lo predicho, al ejecutar el programa la salida es la siguiente:
+
+\begin{verbatim}
+Camino de A* con Heurística Manhattan
+[0, 2, 3]
+Camino de A* con Heurística Euclídea
+[0, 1, 3]
+\end{verbatim}
