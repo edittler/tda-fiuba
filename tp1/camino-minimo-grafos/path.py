@@ -21,6 +21,7 @@ class CommonPath(object):
         self.g, self.u, self.v = g, u, v
         self.heuristic = heuristic
         self.parents = {}
+        self._visited = {}
         if search:
             self.search()
 
@@ -29,7 +30,7 @@ class CommonPath(object):
         pass
 
     def visited(self, v):
-        return v in self.parents
+        return v in self._visited
 
     def distance(self, v):
         return len(self.path_to(v))
@@ -45,4 +46,3 @@ class CommonPath(object):
                 path.append(self.parents[path[-1]])
             path.reverse()
             return path
-

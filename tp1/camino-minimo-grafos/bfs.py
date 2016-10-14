@@ -13,6 +13,7 @@ class BFS(CommonPath):
 
         while q:
             u = q.pop()
+            self._visited[u] = True
             for v in self.g.adj(u):
                 if v not in self.parents:
                     self.parents[v] = u

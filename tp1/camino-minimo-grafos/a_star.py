@@ -14,9 +14,6 @@ class A_Star(CommonPath):
     def f(self, v):
         return self.distance[v] + self.heuristic(v, self.v)
 
-    def visited(self, v):
-        return self.visitado[v]
-
     def search(self):
         # distancias a cada nodo.
         self.distance = {}
@@ -38,11 +35,11 @@ class A_Star(CommonPath):
 
             # Condicion de corte -> El nodo a visitar es el destino.
             if u == self.v:
-                self.visitado[self.v] = True
+                self._visited[self.v] = True
                 return
 
             if not self.visited(u):
-                self.visitado[u] = True
+                self._visited[u] = True
                 # Verifico todas las aristas salientes para computar distancias
                 for edge in self.g.adj_e(u):
                     v = edge.dst
@@ -52,4 +49,3 @@ class A_Star(CommonPath):
                             self.distance[v] = current_distance
                             self.parents[v] = u
                             frontera.push(self.f(v), v)
-                print (frontera.heap)

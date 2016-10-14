@@ -138,10 +138,10 @@ class HeuristicPathTest(object):
         }
         self.create_path(g, 0, 6, self.heuristic(points))
         self.assertListEqual(self.path.path_to(1), [0, 1])
-        self.assertListEqual(self.path.path_to(2), [0, 2])
+        self.assertIsNone(self.path.path_to(2))
         self.assertIsNone(self.path.path_to(3))
         self.assertListEqual(self.path.path_to(4), [0, 1, 4])
-        self.assertListEqual(self.path.path_to(5), [0, 1, 4, 5])
+        self.assertIsNone(self.path.path_to(5))
         self.assertListEqual(self.path.path_to(6), [0, 1, 4, 6])
 
 
@@ -151,8 +151,8 @@ class HeuristicTest(HeuristicPathTest, unittest.TestCase):
 
 
 class AStarTest(HeuristicPathTest, unittest.TestCase):
-    def create_path(self, g, u, v):
-        self.path = A_Star(g, u, v)
+    def create_path(self, g, u, v, heuristic):
+        self.path = A_Star(g, u, v, heuristic)
 
 
 def main():
