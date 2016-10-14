@@ -2,13 +2,22 @@
 
 # Camino mínimo en Grafos
 
-Los problemas de camino mínimo en grafos consisten en encontrar una secuencia de aristas desde un vértice de origen, al que llamaremos $s$ a uno de llegada, al que llamaremos $t$, que sea la secuencia de menor costo total posible. El costo total de un camino será la suma de los costos de cada una de las aristas. Abajo se desarrollan 4 algoritmos posibles para lograr este objetivo.
+Los problemas de camino mínimo en grafos consisten en encontrar una secuencia de
+aristas desde un vértice de origen, al que llamaremos $s$ a uno de llegada, al
+que llamaremos $t$, que sea la secuencia de menor costo total posible.
+El costo total de un camino será la suma de los costos de cada una de las aristas.
+Abajo se desarrollan 4 algoritmos posibles para lograr este objetivo.
 
-Si bien todos los algoritmos calculan la distancia del camino mínimo, es posible reconstruir ese camino si en el proceso se guarda en cada vértice el padre desde el cual se llegó a él. De esta manera, al finalizar, queda construida la hacia atrás de padres desde el destino que conforma el camino mínimo.
+Si bien todos los algoritmos calculan la distancia del camino mínimo, es posible
+reconstruir ese camino si en el proceso se guarda en cada vértice el padre desde
+el cual se llegó a él. De esta manera, al finalizar, queda construida la hacia
+atrás de padres desde el destino que conforma el camino mínimo.
+
 
 ## Búsquedas No Informadas
 
 Los primeros dos algoritmos que utilizaremos no conocen nada del problema modelado y por lo tanto no saben ni pueden estimar sobre lo que habrá más adelante en el grafo. Comienzan desde el vértice $t$ y su frontera de conocimiento sobre el grafo se va expandiendo desde allí.
+
 
 ### BFS
 
@@ -76,9 +85,9 @@ Estos puntos, teniendo en cuenta que **los pesos son positivos**, aseguran la op
 ## Best First Search
 Los dos algoritmos siguientes forman parte de parte de una familia llamada *Best First Search*, que ordena el siguiente nodo a visitar con una función de evaluación f(n) que toma información inherente al problema modelado. Esta es una familia de algoritmos de *Búsqueda informada*.
 
-Estos algoritmos, entonces, a diferencia de los anteriores, no utilizan solo 
+Estos algoritmos, entonces, a diferencia de los anteriores, no utilizan solo
 los datos de la estructura del grafo, si no de lo que representan en el modelo.
-Estos datos en general permiten estimar la distancia entre los nodos según la 
+Estos datos en general permiten estimar la distancia entre los nodos según la
 distancia en términos del problema, con una función llamada *heurística*.
 
 ### Heurísticas
@@ -91,7 +100,7 @@ que consiste en ordenar únicamente los nodos a visitar por su distancia estimad
 al nodo $t$. Esto es: $f(n) = h(n,t)$ De este modo, en lugar de recorrer por niveles
 de lejanía al origen, se recorre según la aparente cercanía al destino.
 
-El diseño de $h$ dependerá del problema modelado. Si, por ejemplo, el problema tiene 
+El diseño de $h$ dependerá del problema modelado. Si, por ejemplo, el problema tiene
 que ver con el mapa de una ciudad o un laberinto, una heurística puede ser la distancia Manhattan.
 En un recorrido a gran escala, se podría usar, por ejemplo, el arco de
 circunferencia mínimo entre $s$ y $t$.
@@ -193,6 +202,6 @@ admisible (supone que no hay paredes y que uno se puede mover en cualquier
 dirección), subestimará aún más a la distancia y por lo tanto es
 probablemente menos eficiente que la distancia Manhattan.
 
-De hecho, como $h_{euclidea} \le h_{manhattan}(u,v)$, se dice que la heurística con distancia Manhattan **domina** a la distancia euclídea y por lo tanto es mejor en cualquier punto.
+De hecho, como $h_{euclidea} \le h_{manhattan} \quad \forall (u,v)$, se dice que la heurística con distancia Manhattan **domina** a la distancia euclídea y por lo tanto es mejor en cualquier punto.
 
 Finalmente, si se tienen dos buenas heurísticas y ninguna domina a la otra, se puede calcular el máximo entre ambas, y esto dará una mejor heurística (y puede probarse que se mantiene la consistencia).
