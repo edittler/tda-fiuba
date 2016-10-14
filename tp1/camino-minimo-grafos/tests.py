@@ -3,7 +3,7 @@
 
 import unittest
 
-from graph import Graph
+from graph import Graph, create_grid_graph
 from bfs import BFS
 from dijkstra import Dijkstra
 from heuristic import Heuristic
@@ -37,6 +37,23 @@ class GraphTest(unittest.TestCase):
         self.assertListEqual(list(g.adj(0)), [1, 2])
         self.assertListEqual(list(g.adj(1)), [2])
         self.assertListEqual(list(g.adj(2)), [1])
+
+
+class GridGraphTest(unittest.TestCase):
+
+    def test_grid_graph(self):
+        g = create_grid_graph(2, 2)[0]
+        self.assertCountEqual(list(g.adj(0)), [1, 2])
+        self.assertCountEqual(list(g.adj(1)), [0, 3])
+        self.assertCountEqual(list(g.adj(2)), [0, 3])
+        self.assertCountEqual(list(g.adj(3)), [1, 2])
+
+    def test_grid_graph_3x3(self):
+        g = create_grid_graph(3, 3)[0]
+        self.assertCountEqual(list(g.adj(0)), [1, 3])
+        self.assertCountEqual(list(g.adj(1)), [0, 2, 4])
+        self.assertCountEqual(list(g.adj(2)), [1, 5])
+        self.assertCountEqual(list(g.adj(8)), [7, 5])
 
 
 class PathTest(object):

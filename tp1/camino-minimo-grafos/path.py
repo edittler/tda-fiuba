@@ -42,3 +42,4 @@ class CommonPath(object):
                 path.append(self.parents[path[-1]])
             path.reverse()
             return path
+

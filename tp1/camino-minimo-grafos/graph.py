@@ -110,6 +110,7 @@ class Graph(object):
                     g.add_edge(src, dst[0], dst[1])
         return g
 
+
 class Edge(object):
     """ Arista de un grafo. """
 
@@ -117,3 +118,30 @@ class Edge(object):
         self.src = src
         self.dst = dst
         self.weight = weight
+
+
+def create_grid_graph(x, y):
+    """
+    Devuelve un grafo grilla de x por y, y una heurística que devuelve la
+    distancia entre 2 nodos.
+    """
+    max_node = x * y
+    points = {}
+    g = Graph(max_node)
+    for i in range(x):
+        for j in range(y):
+            node = i + j * x
+            points[node] = (i, j)
+            if i - 1 >= 0:
+                g.add_edge(node, (i - 1) + j * x)
+            if i + 1 < x:
+                g.add_edge(node, (i + 1) + j * x)
+            if j - 1 >= 0:
+                g.add_edge(node, i + (j - 1) * x)
+            if j + 1 < y:
+                g.add_edge(node, i + (j + 1) * x)
+
+    def heuristic(v, u):
+        return abs(points[v][0] - points[u][0])  + abs(points[v][1] - points[u][1])
+
+    return g, heuristic
