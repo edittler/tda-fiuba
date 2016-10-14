@@ -8,7 +8,6 @@ class _PriorityQueueNode():
         def __init__(self, distance, node):
             self.distance = distance
             self.node = node
-            self.removed = False
 
         def __lt__(self, other):
             return self.distance <= other.distance
@@ -23,7 +22,6 @@ class Dijkstra(CommonPath):
 
         distance = {}
         priority_queue = []
-        priority_queue_node_finder = {}
 
         # Inicializo todos los vertices con distancia infinita
         for v in self.g:
@@ -37,12 +35,14 @@ class Dijkstra(CommonPath):
         while priority_queue:
             u = heapq.heappop(priority_queue)
 
-            # Corroboro que el nodo no fue eliminado anteriormente
-            # (es mas facil chequear un tag que eliminar de la PQ)
-            if not u.removed:
+            # Corroboro que el nodo no haya sido visitado
+            # (Puede que se haya insertado dos veces en la PQ por haber
+            # encontrado otro camino minimo que el primero encontrado)
+            if u.node not in self._visited:
 
                 # Condicion de corte -> Mi nodo actual es el destino
                 if u.node == self.v:
+                    self._visited.add(u.node)
                     return
 
                 # Verifico todas las aristas salientes para computar distancias
@@ -52,16 +52,8 @@ class Dijkstra(CommonPath):
                         distance[edge.dst] = current_distance
                         self.parents[edge.dst] = u.node
 
-                        try:
-                            # Si consigo una menor distancia, "elimino" el nodo
-                            # que representa este vertice de la PQ
-                            to_remove_node = priority_queue_node_finder[edge.dst]
-                            to_remove_node.removed = True
-                        except KeyError:
-                            # Es la primera vez que se inserta el nodo en la PQ
-                            pass
-
                         # Actualizo la distancia minima hacia este vertice en la PQ
                         to_insert_node = _PriorityQueueNode(current_distance, edge.dst)
                         heapq.heappush(priority_queue, to_insert_node)
-                        priority_queue_node_finder[edge.dst] = to_insert_node
+
+                self._visited.add(u.node)
