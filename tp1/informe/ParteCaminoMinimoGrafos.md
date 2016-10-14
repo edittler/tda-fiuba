@@ -2,13 +2,22 @@
 
 # Camino mínimo en Grafos
 
-Los problemas de camino mínimo en grafos consisten en encontrar una secuencia de aristas desde un vértice de origen, al que llamaremos $s$ a uno de llegada, al que llamaremos $t$, que sea la secuencia de menor costo total posible. El costo total de un camino será la suma de los costos de cada una de las aristas. Abajo se desarrollan 4 algoritmos posibles para lograr este objetivo.
+Los problemas de camino mínimo en grafos consisten en encontrar una secuencia de
+aristas desde un vértice de origen, al que llamaremos $s$ a uno de llegada, al
+que llamaremos $t$, que sea la secuencia de menor costo total posible.
+El costo total de un camino será la suma de los costos de cada una de las aristas.
+Abajo se desarrollan 4 algoritmos posibles para lograr este objetivo.
 
-Si bien todos los algoritmos calculan la distancia del camino mínimo, es posible reconstruir ese camino si en el proceso se guarda en cada vértice el padre desde el cual se llegó a él. De esta manera, al finalizar, queda construida la hacia atrás de padres desde el destino que conforma el camino mínimo.
+Si bien todos los algoritmos calculan la distancia del camino mínimo, es posible
+reconstruir ese camino si en el proceso se guarda en cada vértice el padre desde
+el cual se llegó a él. De esta manera, al finalizar, queda construida la hacia
+atrás de padres desde el destino que conforma el camino mínimo.
+
 
 ## Búsquedas No Informadas
 
 Los primeros dos algoritmos que utilizaremos no conocen nada del problema modelado y por lo tanto no saben ni pueden estimar sobre lo que habrá más adelante en el grafo. Comienzan desde el vértice $t$ y su frontera de conocimiento sobre el grafo se va expandiendo desde allí.
+
 
 ### BFS
 
