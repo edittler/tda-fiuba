@@ -61,7 +61,7 @@ $O(n)$
 
 ### Peor caso
 
-TODO
+Lamentablemente no pudimos encontrar un ejemplo claro y concreto para demostrar el peor caso del Timsort
 
 $O(n \log n)$
 
@@ -284,3 +284,23 @@ Visualizaremos los tiempos de ejecución de cada algoritmo, variando el tamaño 
  Graficos
 
 ## Elección de algoritmo óptimo para cada 'k' según 'n'
+
+Podemos ver una aproximación del cálculo cualitativo en el siguiente gráfico
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=150mm,scale=0.5]{GraficoKOptimo.png}
+    \caption{Comparación del k óptimo para todos los algoritmos}
+    \label{fig:bragg}
+\end{figure}
+
+El grafico muestra una relación entre la complejidad de cada algoritmo variando el parámetro 'k'. Simplemente a modo de ejemplo, se eligió un tamaño de entrada determinado (n = 16).
+
+Ahora bien, fuera del tamaño determinado, podemos rescatar que hay 3 algoritmos que no tienen un determinado 'k' para el cual alguno es mejor que el otro. Es el caso del algoritmo de fuerza bruta, el de order and select y el QuickSelect. Lógicamente, el algoritmo de fuerza bruta no puede competir contra absolutamente nadie. Solo resta decir para el mismo que la complejidad de el k-selections se equipara con el de fuerza bruta cuando k = n.
+
+Para valores pequeños de k, observamos que el algoritmo más óptimo es el HeapSelect. A medida que aumentamos el k pedido, éste algoritmo es superado por el k-heapsort. Partiendo de la complejidad de los dos algoritmos, esto comienza a ocurrir a partir de que k*log(n) = n*log(k) -> k/log(k) = n/log(n).
+Luego, podemos ver que el QuickSelect es el que termina siendo el más óptimo para valores de k más altos. Tomando los órdenes de complejidad mostrados anteriormente, esto ocurre a partir de que n = k * log(n) -> k = n/log(n).
+Para el ejemplo dado con n = 16, esto comienza a ocurrir para k >= 6.
+
+Es de notar también que para valores altos de k, tanto el k-heapsort como el HeapSelect convergen al mismo orden que el Timsort utilizado.
+También vemos que el k-selections es más eficiente que el Timsort para elecciones k menores a 3 (igualando la complejidad calculada de ambos, se da cuando n*log(n) = k*n -> log(n) = k, lo cual da un k ~ 2.77 para el ejemplo).
