@@ -10,8 +10,8 @@ Abajo se desarrollan 4 algoritmos posibles para lograr este objetivo.
 
 Si bien todos los algoritmos calculan la distancia del camino mínimo, es posible
 reconstruir ese camino si en el proceso se guarda en cada vértice el padre desde
-el cual se llegó a él. De esta manera, al finalizar, queda construida la hacia
-atrás de padres desde el destino que conforma el camino mínimo.
+el cual se llegó a él. De esta manera, al finalizar, queda construida la lista hacia
+atrás de padres desde el origen que conforma el camino mínimo.
 
 
 ## Búsquedas No Informadas
@@ -33,14 +33,13 @@ distancia estará mal calculada o podrá no ser la mínima.
 Este recorrido utiliza una cola para guardar todos los nodos adyascentes a cada
 vértice, y luego desencolar un vértice de esa cola para repetir el proceso con
 los aydascentes del nuevo.
-De esta forma, la cola comineza únicamente con el vértice $s$, se desencola,
+De esta forma, la cola comienza únicamente con el vértice $s$, se desencola,
 se encolan sus vecinos, y comienza el recorrido desde allí.
 
 En el caso de su uso para búsqueda de camino mínimo, se etiqueta a cada vértice
 al ser encolado con un nivel: una distancia discreta a $s$, el primer vértice
 encolado, se lo etiqueta con nivel 0.
-Luego, cada vértice encolado es etiquetado con el nivel de su padre,
-incrementado en 1.
+Luego, cada vértice encolado es etiquetado con el nivel de su padre incrementado en 1.
 Al llegar el momento de encolar $t$, su nivel será la longitud del camino mínimo.
 
 #### Optimalidad
@@ -49,7 +48,7 @@ Es importante notar que se recorre por niveles.
 Es decir, siempre se recorrerán primero los vértices de distancia 0 ($s$),
 luego se encolarán todos los vértices de nivel 1, luego se encolarán los de
 nivel 2 (y antes de llegar a los de nivel 2 se habrán recorrido todos los del
-nivel 1, gracias gracias al orden FIFO) y así sucesivamente.
+nivel 1, gracias al orden FIFO) y así sucesivamente.
 Esto permite asegurar que nunca se dará el caso de encontrar un camino
 alternativo a un vértice que sea menor al antes calculado.
 
@@ -63,15 +62,16 @@ vertices una sola vez (se agregan a la cola si y solo si no fueron ya
 agregados antes) cortando cuando se llega a destino. Además se recorren las
 adyacencias de cada uno también una sola vez, por lo que se visitan las 
 aristas una sola vez.
-En el peor de los casos, el nodo destino es el último que se encuentra, por 
-lo que este algoritmo es O(|V| + |E|).
+En el peor de los casos, el nodo destino es el último que se encuentra, y se
+habrán recorrido todos los nodos y aristas adyascentes, por 
+lo que este algoritmo es $O(|V| + |E|)$.
 
 ### Dijkstra
 
-Dado un Grafo G y un vértice v del mismo, el algoritmo calcula la distancia de
-$v$ a todos los otros vértices de G.
+Dado un Grafo G y un vértice u del mismo, el algoritmo calcula la distancia de
+$u$ a todos los otros vértices de G.
 Opcionalmente, para calcular el camino mínimo entre dos vértices $u$ y $v$, se
-puede utilizar Dijkstra hasta que se llegue a calcular la distancia a $u$ y se
+puede utilizar Dijkstra hasta que se llegue a calcular la distancia a $v$ y se
 lo detiene ahí.
 
 
@@ -92,11 +92,11 @@ Estos puntos, teniendo en cuenta que **los pesos son positivos**, aseguran la op
 
 #### Complejidad
 
-El algoritmo de Dijkstra se desarrolló utilizando una cola de prioridad implementando con un heap. Por lo que la extracción del siguiente nodo a procesar (menor distancia) es O(1) y la inserción es O(log |V|).
-Ahora bien, en el peor de los casos, cada vertice está conectado a |V| - 1 vértices, que equivale a la cantidad de aristas por vértice. Habiendo implementado un heap, si tengo que encnontrar y updatear el heap por cada arista -> O(|E| * (1 + log|V|)) -> O(|E| * log (|V|)). Ahora, esto es iterativo para cada uno de los vertices del grafo (en el peor de los casos), por lo que sería O( |V| * |E| * log(|V|)). Finalmente, puede ajustarse a O(|E| * log(|V|)).
+El algoritmo de Dijkstra se desarrolló utilizando una cola de prioridad implementada con un heap. Por lo que la extracción del siguiente nodo a procesar (menor distancia == raiz) es $O(1)$ y la inserción es $O(log |V|)$.
+Ahora bien, en el peor de los casos, cada vertice está conectado a |V| - 1 vértices, que equivale a la cantidad de aristas por vértice. Habiendo implementado un heap, si tengo que encontrar y actualizar el heap por cada arista, entonces $O(|E| * (1 + log|V|))$ -> $O(|E| * log (|V|))$. Ahora, esto es iterativo para cada uno de los vertices del grafo (en el peor de los casos), por lo que sería $O( |V| * |E| * log(|V|))$. Finalmente, puede ajustarse a $O(|E| * log(|V|))$.
 
 ## Best First Search
-Los dos algoritmos siguientes forman parte de parte de una familia llamada *Best First Search*, que ordena el siguiente nodo a visitar con una función de evaluación f(n) que toma información inherente al problema modelado. Esta es una familia de algoritmos de *Búsqueda informada*.
+Los dos algoritmos siguientes forman parte de una familia llamada *Best First Search*, que ordena el siguiente nodo a visitar con una función de evaluación f(n) que toma información inherente al problema modelado. Esta es una familia de algoritmos de *Búsqueda informada*.
 
 Estos algoritmos, entonces, a diferencia de los anteriores, no utilizan solo
 los datos de la estructura del grafo, si no de lo que representan en el modelo.
@@ -105,7 +105,7 @@ distancia en términos del problema, con una función llamada *heurística*.
 
 ### Heurísticas
 
-Una heurística $h,u,v) es una función que *estima* la distancia entre los
+Una heurística $h(u,v)$ es una función que *estima* la distancia entre los
 vértices $u$ y $v$.
 
 La forma más básica de Best First Search es la usualmente llamada greedy,
@@ -158,9 +158,7 @@ Una heurística es admisible cuando nunca sobreestima una distancia.
     h(v,t) \le d(v,t)
 \end{equation}
 
-Si en la búsqueda permitiéramos expandir un nodo múltiples veces (lo que se suele llamar búsqueda en árboles) entonces se puede probar que una heurística hace que A\* sea óptimo. Esto se demuestra en el anexo 1, donde se ve que siempre se elegirá un vértice de camino óptimo antes que un estado final $t$ por un camino subóptimo.
-
-`TODO prueba en un anexo`
+Si en la búsqueda permitiéramos expandir un nodo múltiples veces (lo que se suele llamar búsqueda en árboles) entonces se puede probar que una heurística hace que A\* sea óptimo. Puede demostrarse que siempre se elegirá un vértice de camino óptimo antes que un estado final $t$ por un camino subóptimo.
 
 Para el diseño de heurísticas admisibles se suele tomar la estrategia de *problema relajado*, que consiste en simplificar el problema, para asegurarse de que la estimación subestime a la distancia.
 
@@ -194,8 +192,6 @@ la función de evaluación f(v) = g(v) + h(v,t) es no decreciente a lo largo del
 ordenar según f(v) al igual que en Dijkstra se ordena según $g(v)$, sabiendo que al ser visitado un vértice,
 no habrá un camino alternativo más corto (o en este caso con menor $f$) que el que se está expandiendo.
 
-`TODO demostración en el anexo 2`
-
 Además, se puede probar fácilmente por inducción que una heurística consistente también es admisible.
 
 **Obs**: en el caso de $h(v) = 0 \quad \forall v$, se cae en el caso de Dijkstra, que es consistente.
@@ -208,7 +204,7 @@ Si bien es normal que las admisibles sean también consistentes, no ocurre siemp
 
 #### Eficiencia
 
-Cuanto más se acerque una heurística consistente a la verdadera distancia, las elecciones que se tomen primero serán más probablemente las del camino óptimo y por lo tanto se llegará antes al destinto $t$. De este modo, Dijkstra constituye la peor heurística de consistente para A\*.
+Cuanto más se acerque una heurística consistente a la verdadera distancia, las elecciones que se tomen primero serán más probablemente las del camino óptimo y por lo tanto se llegará antes al destino $t$. De este modo, Dijkstra constituye la peor heurística consistente para A\*.
 
 Por este motivo, en el problema del laberinto, si bien la distancia euclídea es
 admisible (supone que no hay paredes y que uno se puede mover en cualquier

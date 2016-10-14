@@ -50,7 +50,7 @@ Por lo tanto, este algoritmo sería $O(n \log n)$.
 ### Mejor caso
 
 El mejor caso del Timsort se da cuando la entrada ya está ordenada (ya sea en
-forma ascendente o descendente).
+forma ascendente o descendente). Luego, encontrar el k-esimo elemento es constante.
 
 Ejemplo:
 
