@@ -43,7 +43,6 @@ Luego, cada vértice encolado es etiquetado con el nivel de su padre,
 incrementado en 1.
 Al llegar el momento de encolar $t$, su nivel será la longitud del camino mínimo.
 
-
 #### Optimalidad
 
 Es importante notar que se recorre por niveles.
@@ -57,6 +56,15 @@ alternativo a un vértice que sea menor al antes calculado.
 Esto no seguirá valiendo para grafos pesados, donde para asegurar aquello habrá
 necesidad de utilizar una cola de prioridad, y en eso se basa Dijkstra.
 
+#### Complejidad
+
+Teniendo en cuenta el algoritmo desarrollado, lo que se hace es recorrer los 
+vertices una sola vez (se agregan a la cola si y solo si no fueron ya 
+agregados antes) cortando cuando se llega a destino. Además se recorren las
+adyacencias de cada uno también una sola vez, por lo que se visitan las 
+aristas una sola vez.
+En el peor de los casos, el nodo destino es el último que se encuentra, por 
+lo que este algoritmo es O(|V| + |E|).
 
 ### Dijkstra
 
@@ -81,6 +89,11 @@ A su vez, nunca ocurrirá que encontremos un camino alternativo más corto a un 
 de ser visitado.
 
 Estos puntos, teniendo en cuenta que **los pesos son positivos**, aseguran la optimalidad del algoritmo. Si hubiera pesos negativos, este algoritmo ya no sirve, porque bien podría ocurrir que se encuentrara un camino que supere al anterior en peso, y que al final tenga una arista que compensaba.
+
+#### Complejidad
+
+El algoritmo de Dijkstra se desarrolló utilizando una cola de prioridad implementando con un heap. Por lo que la extracción del siguiente nodo a procesar (menor distancia) es O(1) y la inserción es O(log |V|).
+Ahora bien, en el peor de los casos, cada vertice está conectado a |V| - 1 vértices, que equivale a la cantidad de aristas por vértice. Habiendo implementado un heap, si tengo que encnontrar y updatear el heap por cada arista -> O(|E| * (1 + log|V|)) -> O(|E| * log (|V|)). Ahora, esto es iterativo para cada uno de los vertices del grafo (en el peor de los casos), por lo que sería O( |V| * |E| * log(|V|)). Finalmente, puede ajustarse a O(|E| * log(|V|)).
 
 ## Best First Search
 Los dos algoritmos siguientes forman parte de parte de una familia llamada *Best First Search*, que ordena el siguiente nodo a visitar con una función de evaluación f(n) que toma información inherente al problema modelado. Esta es una familia de algoritmos de *Búsqueda informada*.
