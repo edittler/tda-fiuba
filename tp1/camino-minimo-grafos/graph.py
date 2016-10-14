@@ -80,7 +80,7 @@ class Graph(object):
         g = cls(max_node + 1)
         for src, v in d.items():
             for dst in v:
-                weight = 0
+                weight = 1
                 if isinstance(dst, tuple):
                     weight = dst[1]
                     dst = dst[0]
