@@ -2,16 +2,28 @@
 
 # Camino mínimo en Grafos
 
-Para todos los casos llamaremos
+Los problemas de camino mínimo en grafos consisten en encontrar una secuencia de
+aristas desde un vértice de origen, al que llamaremos $s$ a uno de llegada, al
+que llamaremos $t$, que sea la secuencia de menor costo total posible.
+El costo total de un camino será la suma de los costos de cada una de las aristas.
+Abajo se desarrollan 4 algoritmos posibles para lograr este objetivo.
 
-* $s$ al nodo de salida u origen
-* $t$ al nodo de llegada u objetivo.
+Si bien todos los algoritmos calculan la distancia del camino mínimo, es posible
+reconstruir ese camino si en el proceso se guarda en cada vértice el padre desde
+el cual se llegó a él. De esta manera, al finalizar, queda construida la hacia
+atrás de padres desde el destino que conforma el camino mínimo.
 
 
-## BFS
+## Búsquedas No Informadas
+
+Los primeros dos algoritmos que utilizaremos no conocen nada del problema modelado y por lo tanto no saben ni pueden estimar sobre lo que habrá más adelante en el grafo. Comienzan desde el vértice $t$ y su frontera de conocimiento sobre el grafo se va expandiendo desde allí.
+
+
+### BFS
 
 BFS es un recorrido en anchura de uso general para grafos no pesados (o de pesos
 iguales, lo cual es equivalente).
+
 Se puede utilizar para medir caminos mínimos en este tipo de grafos y la
 solución devuelta es verdaderamente la óptima.
 En grafos pesados, sin embargo, no queda garantizado que la solución sea
@@ -32,7 +44,7 @@ incrementado en 1.
 Al llegar el momento de encolar $t$, su nivel será la longitud del camino mínimo.
 
 
-### Optimalidad
+#### Optimalidad
 
 Es importante notar que se recorre por niveles.
 Es decir, siempre se recorrerán primero los vértices de distancia 0 ($s$),
@@ -46,47 +58,7 @@ Esto no seguirá valiendo para grafos pesados, donde para asegurar aquello habr�
 necesidad de utilizar una cola de prioridad, y en eso se basa Dijkstra.
 
 
-### Reconstrucción
-
-Tanto para este algoritmo como para otros, para reconstruir el camino basta
-guardar los padres de cada nodo encolado para luego armar la lista hacia atrás
-desde el destino.
-
-
-## Heurísticas
-
-La búsqueda con Heurísticas utiliza un criterio distinto para recorrer el grafo.
-En lugar de una cola común utiliza una cola de prioridad, ordenada según una
-función $h(u,v)$ llamada Heurística, que *estima* la distancia entre los
-vértices $u$ y $v$.
-De este modo, en lugar de recorrer por niveles, se recorre según lo estimado,
-recorriendo siempre primero lo que *aparenta* estar más cercano del destino.
-
-La función heurística requiere un diseño que no es inherente al grafo como
-estructura abstracta, sino que responde al problema que se está modelando.
-Si por ejemplo, el problema tiene que ver con el mapa de una ciudad o un
-laberinto, una heurística puede ser la distancia Manhattan.
-En un recorrido a gran escala, se podríausar, por ejemplo, el arco de
-circunferencia mínimo entre $s$ y $t$.
-
-
-### Optimalidad
-
-La búsqueda con heurísticas no asegura optimalidad y es tan buena como lo sea
-la estimación de h sobre la distancia real del camino.
-Por ejemplo, en una manzana de Manhattan, si bien la distancia real entre dos
-esquinas es la diagonal que cruza la manzana (distancia euclídea), la distancia
-que debemos estimar es la que efectivamente costará llegar de una esquina a la
-otra, y esta tendrá que ser dando la vuelta a la manzana.
-Entonces es importante tener en cuenta que **la distancia estimada es la del
-camino en el grafo**, no la *distancia física* si la hubiera.
-
-Si la distancia estimada fuera *exactamente igual* a la distancia real en el
-grafo, entonces recorreríamos primero el camino mínimo y obtendríamos una
-resolución óptima.
-
-
-## Dijkstra
+### Dijkstra
 
 Dado un Grafo G y un vértice v del mismo, el algoritmo calcula la distancia de
 $v$ a todos los otros vértices de G.
@@ -95,77 +67,141 @@ puede utilizar Dijkstra hasta que se llegue a calcular la distancia a $u$ y se
 lo detiene ahí.
 
 
-### Optimalidad
+#### Optimalidad
 
-Al igual que BFS para caminos mínimos, se basa en que en todo momento, si se
-desencola un elemento, se asegura que se llegó a él con el menor costo posible.
-Para esto se utiliza una cola de prioridad, ordenada por el costo total en
-llegar hasta cada vértice.
-De este modo nos aseguramos que al visitar un vértice (desencolarlo) se está
-llegando a él con el menor costo posible (si hubiese un costo menor, ya se lo
-habría visitado antes).
-Así como BFS aseguraba que primero se visitaran todos los elementos de nivel 1,
-luego los de nivel 2, etc, Dijkstra asegura que siempre se visitarán los
-elementos de menor distancia a $s$ antes de los de mayor distancia.
+Al igual que BFS para caminos mínimos, Dijkstra se basa en que en todo momento, si se desencola un elemento, se asegura que se llegó a él con el menor costo posible. Para esto se utiliza una cola de prioridad, ordenada por el costo total en llegar desde $s$ hasta cada vértice por el camino desde el cual se lo agregó. Llamaremos a esta distancia $g(v)$.
 
-Entonces la prioridad se calcula: $f(v) = d(s,v)$, donde $d(s,v)$ se calcula
-vértice a vértice incrementalmente.
+De este modo nos aseguramos que al visitar un vértice (desencolarlo) se está llegando a él con el menor costo posible (si hubiese un costo menor, ya se lo habría visitado antes). Así como BFS aseguraba que primero se visitaran todos los elementos de nivel 1, luego los de nivel 2, etc, Dijkstra asegura que siempre se visitarán los elementos de menor distancia a $s$ antes de los de mayor distancia.
 
-Si se encuentra un camino alternativo a un vértice con costo menor, se lo agrega
-a la cola otra vez, con su nueva prioridad, con lo cual la alternativa más corta
-será la primera en ser visitada.
-Esto puede verse como una "actualización de prioridad".
+Entonces la prioridad se calcula con $g(v)$, vértice a vértice, incrementalmente.
 
-A su vez, nunca ocurrirá que encontremos un camino alternativo más corto a un
-vértice ya visitado, ya que si así fuera, el subcamino hacia su padre nuevo
-habría sido visitado antes que él y habría sido agregado con esa prioridad antes
+Si se encuentra un camino alternativo a un vértice con costo menor, se lo agrega a la cola otra vez, con su nueva prioridad, con lo cual la alternativa más corta será la primera en ser visitada. Esto puede verse como una "actualización de prioridad".
+
+A su vez, nunca ocurrirá que encontremos un camino alternativo más corto a un vértice ya visitado, ya que si así fuera, el subcamino hacia su padre nuevo habría sido visitado antes que él y habría sido agregado con esa prioridad antes
 de ser visitado.
 
-Estos puntos, teniendo en cuenta que **los pesos son positivos**, aseguran
-optimalidad.
-Si hubiera pesos negativos, este algoritmo ya no sirve, porque bien podría
-ocurrir que se encuentre un camino que superaba al anterior en peso, y que al
-final tenía una arista que compensaba.
+Estos puntos, teniendo en cuenta que **los pesos son positivos**, aseguran la optimalidad del algoritmo. Si hubiera pesos negativos, este algoritmo ya no sirve, porque bien podría ocurrir que se encuentrara un camino que supere al anterior en peso, y que al final tenga una arista que compensaba.
 
+## Best First Search
+Los dos algoritmos siguientes forman parte de parte de una familia llamada *Best First Search*, que ordena el siguiente nodo a visitar con una función de evaluación f(n) que toma información inherente al problema modelado. Esta es una familia de algoritmos de *Búsqueda informada*.
 
-## A*
+Estos algoritmos, entonces, a diferencia de los anteriores, no utilizan solo
+los datos de la estructura del grafo, si no de lo que representan en el modelo.
+Estos datos en general permiten estimar la distancia entre los nodos según la
+distancia en términos del problema, con una función llamada *heurística*.
 
-A* es una mejora de Dijkstra, utilizando heurísticas.
-Así como Dijsktra minimiza la distancia total hasta un vértice, A* minimiza la
-distancia de $s$ hasta ese vértice sumada a la distancia estimada de ese vértice
-a $t$ (la heurística) y ese es su criterio para el orden en la cola de prioridad.
-Numéricamente la prioridad $f(v) = d(s,v) + h(v,t)$.
+### Heurísticas
 
-De este modo, lo minimizado tiene en cuenta lo ocurrido y la estimación de lo
-que va a ocurrir, lo cual permite una decisión más informada que Dijkstra.
+Una heurística $h,u,v) es una función que *estima* la distancia entre los
+vértices $u$ y $v$.
 
+La forma más básica de Best First Search es la usualmente llamada greedy,
+que consiste en ordenar únicamente los nodos a visitar por su distancia estimada
+al nodo $t$. Esto es: $f(n) = h(n,t)$ De este modo, en lugar de recorrer por niveles
+de lejanía al origen, se recorre según la aparente cercanía al destino.
 
-### Optimalidad
+El diseño de $h$ dependerá del problema modelado. Si, por ejemplo, el problema tiene
+que ver con el mapa de una ciudad o un laberinto, una heurística puede ser la distancia Manhattan.
+En un recorrido a gran escala, se podría usar, por ejemplo, el arco de
+circunferencia mínimo entre $s$ y $t$.
 
-Para que se mantenga la optimalidad que brindaba Dijkstra, se debe cumplir que
-la heurística sea **admisible**, es decir que nunca sobreestime la distancia
-faltante.
-Numéricamente $h(v,t) <= d(v,t)$.
+Es importante notar que para que la estimación tenga sentido, los nodos deben tener información
+de estado (en los ejemplos, la posición física) y los pesos de las aristas deben
+también responder al modelo (por ejemplo, con la distancia real entre dos nodos conectados).
 
-Por este motivo se suele tomar la estrategia de _problema relajado_ para el
-diseño de heurísticas.
-Esta estrategia consiste en simplificar el problema, para asegurarse de que la
-estimación subestime a la distancia.
-En un laberinto, por ejemplo, utilizar la distancia Manhattan entre dos puntos
-consiste en la suposición de que no hay paredes.
-De esta manera, la distancia estimada siempre será menor a la real, donde habrá
-obstáculos, y por lo tanto, será admisible.
+Del mismo modo, cabe aclarar que en problems de recorrido físico, $h$ no debe estimar
+la distancia entre las posiciones de cada nodo, sino la distancia recorrible entre ambos **en el grafo**.
+Por ejemplo, en una manzana de Manhattan, si bien la distancia real entre dos
+esquinas es la diagonal que cruza por el centro de la manzana (distancia euclídea), la distancia
+que debemos estimar es la que efectivamente costará llegar de una esquina a la
+otra, y esta tendrá que ser dando la vuelta a la manzana.
 
-`TODO: explicar por qué una heurística admisible permite optimalidad.`
+#### Optimalidad
 
+Esta búsqueda, solo con heurísticas, no asegura optimalidad, aunque mejora con la precisión de
+la estimación de h sobre la distancia real del camino.
 
-### Eficiencia
+Si la distancia estimada fuera *exactamente igual* a la distancia real en el
+grafo, entonces recorreríamos primero un camino mínimo y obtendríamos una
+resolución óptima.
 
-Por otro lado, cuanto más se acerque una heurística admisible a la verdadera
-distancia, las elecciones que se tomen primero serán más probablemente las del
-camino óptimo y por lo tanto se llegará antes al destinto $t$.
+### A*
+
+A\* es una mejora de Dijkstra, utilizando heurísticas. Así como Dijsktra ordena según la distancia total hasta un vértice $g(n)$ y la búsqueda con heurísticas minimiza $h(v,t)$, A\* ordena según la suma de ambas. Esta función de evaluación es entonces:
+
+\begin{equation}
+    f(v) = d(s,v) + h(v,t)
+\end{equation}
+
+De este modo, el orden tiene en cuenta tanto lo ocurrido como la estimación de lo que va a ocurrir por ese camino, lo cual permite una decisión más informada que Dijkstra.
+
+A\* no es óptimo según cualquier heurística, y por eso hay dos propiedades importantes a estudiar.
+
+#### Admisibilidad
+
+Una heurística es admisible cuando nunca sobreestima una distancia.
+
+\begin{equation}
+    h(v,t) \le d(v,t)
+\end{equation}
+
+Si en la búsqueda permitiéramos expandir un nodo múltiples veces (lo que se suele llamar búsqueda en árboles) entonces se puede probar que una heurística hace que A\* sea óptimo. Esto se demuestra en el anexo 1, donde se ve que siempre se elegirá un vértice de camino óptimo antes que un estado final $t$ por un camino subóptimo.
+
+`TODO prueba en un anexo`
+
+Para el diseño de heurísticas admisibles se suele tomar la estrategia de *problema relajado*, que consiste en simplificar el problema, para asegurarse de que la estimación subestime a la distancia.
+
+En un laberinto, por ejemplo, utilizar la distancia Manhattan entre dos puntos consiste en la suposición de que no hay paredes.
+De esta manera, la distancia estimada siempre será menor a la real, donde habrá obstáculos, y por lo tanto, será admisible.
+
+Como propiedad adicional, si una heurística es admisible se cumple que $h(u,u) = 0$, lo cual hace que la función de evaluación en $t$ tenga heurística 0.
+
+#### Consistencia
+
+Que una heurística sea admisible, sin embargo, no es suficiente para poder ejecutar el algoritmo de la misma manera que Dijkstra, visitando una sola vez a cada nodo y sin necesidad de tener que actualizarlo. Para poder hacer esto, la heurística debe ser **consistente**.
+
+Una heurística es consistente cuando se cumple que:
+
+\begin{equation}
+    h(u,w) \le h(v,w) + d(u,v)
+\end{equation}
+donde $u$, $v$ y $w$ son tres nodos cualesquiera. Se suele utilizar esta propiedad con $w=t$.
+
+Esta propiedad es intuitivamente similar a la desigualdad triangular:
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.5\columnwidth]{desTriangular.png}
+    \caption{Comparación de la desigualdad triangular con la consistencia.}
+    \label{fig:bragg}
+\end{figure}
+
+Las heurísticas consistentes se llaman también monótonas porque se puede probar que en un camino cualquiera
+la función de evaluación f(v) = g(v) + h(v,t) es no decreciente a lo largo del camino. Esta propiedad permite
+ordenar según f(v) al igual que en Dijkstra se ordena según $g(v)$, sabiendo que al ser visitado un vértice,
+no habrá un camino alternativo más corto (o en este caso con menor $f$) que el que se está expandiendo.
+
+`TODO demostración en el anexo 2`
+
+Además, se puede probar fácilmente por inducción que una heurística consistente también es admisible.
+
+**Obs**: en el caso de $h(v) = 0 \quad \forall v$, se cae en el caso de Dijkstra, que es consistente.
+
+#### Optimalidad
+
+Para que una ejecución de A\* sea óptima (que devuelva el mejor camino) y que no se repitan vértices, la heurística utilizada debe ser consistente, y por lo tanto, también admisible.
+
+Si bien es normal que las admisibles sean también consistentes, no ocurre siempre de este modo y es algo que hay que demostrar según el caso.
+
+#### Eficiencia
+
+Cuanto más se acerque una heurística consistente a la verdadera distancia, las elecciones que se tomen primero serán más probablemente las del camino óptimo y por lo tanto se llegará antes al destinto $t$. De este modo, Dijkstra constituye la peor heurística de consistente para A\*.
 
 Por este motivo, en el problema del laberinto, si bien la distancia euclídea es
 admisible (supone que no hay paredes y que uno se puede mover en cualquier
-dirección), pero subestimará aún más a la distancia y por lo tanto es
+dirección), subestimará aún más a la distancia y por lo tanto es
 probablemente menos eficiente que la distancia Manhattan.
+
+De hecho, como $h_{euclidea} \le h_{manhattan} \quad \forall (u,v)$, se dice que la heurística con distancia Manhattan **domina** a la distancia euclídea y por lo tanto es mejor en cualquier punto.
+
+Finalmente, si se tienen dos buenas heurísticas y ninguna domina a la otra, se puede calcular el máximo entre ambas, y esto dará una mejor heurística (y puede probarse que se mantiene la consistencia).
