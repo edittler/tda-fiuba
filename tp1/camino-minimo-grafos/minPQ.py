@@ -9,3 +9,6 @@ class MinPQ(object):
 
     def push(self, priority, element):
         heapq.heappush(self.heap, (priority, element))
+
+    def empty(self):
+        return self.heap == []
