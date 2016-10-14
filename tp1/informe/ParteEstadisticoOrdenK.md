@@ -269,18 +269,123 @@ al *k-máximo* con el mismo algoritmo.
 
 ## Comparación de tiempos de ejecución
 
-Visualizaremos los tiempos de ejecución de cada algoritmo, variando el tamaño de la entrada y obteniendo resultados para buscar los casos particulares $k = 0$, $k = n - 1$ y $k = n/2$
+Visualizaremos los tiempos de ejecución de cada algoritmo, variando el tamaño de la entrada y obteniendo resultados para buscar los casos particulares $k = 1$, $k = n/2$ y $k = n$.
 
-### k = 0
+### k = 1
 
- Graficos
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{images/algoritmos_10_0.png}
+  \caption{Con algoritmos exponenciales}
+  \label{fig:k_one_with_exponential}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{images/algoritmos_12_0.png}
+  \caption{Sin algoritmos exponenciales}
+  \label{fig:k_one_without_exponential}
+\end{subfigure}
+\caption{$k=1$, elementos desordenados}
+\label{fig:k_1_desordenada}
+\end{figure}
 
-### k = n - 1
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{images/algoritmos_18_0.png}
+  \caption{Con algoritmos exponenciales}
+  \label{fig:k_one_with_exponential}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{images/algoritmos_20_0.png}
+  \caption{Sin algoritmos exponenciales}
+  \label{fig:k_one_without_exponential}
+\end{subfigure}
+\caption{$k=1$, elemento único}
+\label{fig:k_1_elemento único}
+\end{figure}
 
- Graficos
 
 ### k = n/2
 
- Graficos
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{images/algoritmos_10_1.png}
+  \caption{Con algoritmos exponenciales}
+  \label{fig:k_n2_with_exponential}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{images/algoritmos_12_1.png}
+  \caption{Sin algoritmos exponenciales}
+  \label{fig:k_n2_without_exponential}
+\end{subfigure}
+\caption{$k=n/2$, elementos desordenados}
+\label{fig:k_n2}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{images/algoritmos_18_1.png}
+  \caption{Con algoritmos exponenciales}
+  \label{fig:k_n2_with_exponential}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{images/algoritmos_20_1.png}
+  \caption{Sin algoritmos exponenciales}
+  \label{fig:k_n2_without_exponential}
+\end{subfigure}
+\caption{$k=n/2$, elemento único}
+\label{fig:k_n2}
+\end{figure}
+
+
+### k = n
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{images/algoritmos_10_2.png}
+  \caption{Con algoritmos exponenciales}
+  \label{fig:k_n_with_exponential}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{images/algoritmos_12_2.png}
+  \caption{Sin algoritmos exponenciales}
+  \label{fig:k_n_without_exponential}
+\end{subfigure}
+\caption{$k=n$, elementos desordenados}
+\label{fig:k_n}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{images/algoritmos_18_2.png}
+  \caption{Con algoritmos exponenciales}
+  \label{fig:k_n_with_exponential}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{images/algoritmos_20_2.png}
+  \caption{Sin algoritmos exponenciales}
+  \label{fig:k_n_without_exponential}
+\end{subfigure}
+\caption{$k=n$, elemento único}
+\label{fig:k_n}
+\end{figure}
+
 
 ## Elección de algoritmo óptimo para cada 'k' según 'n'
