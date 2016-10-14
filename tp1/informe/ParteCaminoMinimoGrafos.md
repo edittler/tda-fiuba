@@ -57,13 +57,13 @@ necesidad de utilizar una cola de prioridad, y en eso se basa Dijkstra.
 
 #### Complejidad
 
-Teniendo en cuenta el algoritmo desarrollado, lo que se hace es recorrer los 
-vertices una sola vez (se agregan a la cola si y solo si no fueron ya 
+Teniendo en cuenta el algoritmo desarrollado, lo que se hace es recorrer los
+vertices una sola vez (se agregan a la cola si y solo si no fueron ya
 agregados antes) cortando cuando se llega a destino. Además se recorren las
-adyacencias de cada uno también una sola vez, por lo que se visitan las 
+adyacencias de cada uno también una sola vez, por lo que se visitan las
 aristas una sola vez.
 En el peor de los casos, el nodo destino es el último que se encuentra, y se
-habrán recorrido todos los nodos y aristas adyascentes, por 
+habrán recorrido todos los nodos y aristas adyascentes, por
 lo que este algoritmo es $O(|V| + |E|)$.
 
 ### Dijkstra
@@ -182,7 +182,7 @@ Esta propiedad es intuitivamente similar a la desigualdad triangular:
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=0.5\columnwidth]{desTriangular.png}
+    \includegraphics[width=0.5\columnwidth]{images/desTriangular.png}
     \caption{Comparación de la desigualdad triangular con la consistencia.}
     \label{fig:bragg}
 \end{figure}
@@ -214,3 +214,27 @@ probablemente menos eficiente que la distancia Manhattan.
 De hecho, como $h_{euclidea} \le h_{manhattan} \quad \forall (u,v)$, se dice que la heurística con distancia Manhattan **domina** a la distancia euclídea y por lo tanto es mejor en cualquier punto.
 
 Finalmente, si se tienen dos buenas heurísticas y ninguna domina a la otra, se puede calcular el máximo entre ambas, y esto dará una mejor heurística (y puede probarse que se mantiene la consistencia).
+
+## Ejemplos
+
+### Camino con Heurísticas contra A\*
+Previamente se mencionó que mientras la búsqueda con Heurísticas plana se fija únicamente en lo estimado de lo que ocurrirá a futuro, mientras que A\* tiene en cuenta además lo que ocurrió hasta el momento. Esta diferencia puede verse clara en el grafo de la figura \ref{fig:ASvsH}.
+
+Para la búsqueda con heurísticas se ve muy bien que ir por el camino de la derecha se acerca más rápido hacia el destinto $t$. Sin embargo, el desvío producido a partir del nodo 3 no empeora la distancia lo suficiente como para explorar a partir del nodo 14. Como este algoritmo no tiene en cuenta cuánto ya recorrió, entonces nunca explorará el camino de la izquierda, ya que estima la distancia estimada desde allí será de 6, mientras que a la derecha nunca supera 5.
+
+Por este motivo, el programa ejecuta y muestra:
+
+\begin{verbatim}
+Camino con búsqueda por heurísticas:
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+Camino con A*:
+[0, 14, 15, 16, 17, 18, 19, 13]
+----.----
+\end{verbatim}
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.5\columnwidth]{images/ASvsH.png}
+    \caption{Recorridos en A* y en Heurísticas}
+    \label{fig:ASvsH}
+\end{figure}

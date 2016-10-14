@@ -229,14 +229,14 @@ Utilizando el Teorema Maestro, esto es $O(n)$.
 
 Ahora bien, esto depende mucho de cómo se elige al pivote. Si se tiene una
 elección de pivote mala para lo que deseamos buscar, es factible ir
-particionando el arreglo de a 1 elemento, por lo que estaríamos en 
+particionando el arreglo de a 1 elemento, por lo que estaríamos en
 un caso de $O(n^2)$
 
 ### Mejor caso
 
 Como dijimos, depende mucho de la elección del pivote. Si, por ejemplo, elegimos
 el pivote que se encuentra en la primer posición del conjunto, se quiere buscar
-el primer mínimo (k == 0 en 0-based) y, además, el conjunto está ordenado, 
+el primer mínimo (k == 0 en 0-based) y, además, el conjunto está ordenado,
 entonces lo encontraremos en $O(n)$, ya que el primer pivote utilizado es el que
 quiero devolver
 
@@ -451,7 +451,7 @@ Podemos ver una aproximación del cálculo cualitativo en el siguiente gráfico
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=.9\textwidth]{GraficoKOptimo.png}
+  \includegraphics[width=.9\textwidth]{images/GraficoKOptimo.png}
   \caption{Comparación del $k$ óptimo para todos los algoritmos}
   \label{fig:bragg}
 \end{figure}
