@@ -1,5 +1,6 @@
-# Estadístico de orden k
+\newpage
 
+# Estadístico de orden k
 
 ## Brute Force
 
@@ -271,19 +272,21 @@ al *k-máximo* con el mismo algoritmo.
 
 Visualizaremos los tiempos de ejecución de cada algoritmo, variando el tamaño de la entrada y obteniendo resultados para buscar los casos particulares $k = 1$, $k = n/2$ y $k = n$.
 
-### k = 1
+\newpage
+
+### $k = 1$
 
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{images/algoritmos_10_0.png}
+  \includegraphics[width=.8\linewidth]{images/algoritmos_10_0.png}
   \caption{Con algoritmos exponenciales}
   \label{fig:k_one_with_exponential}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{images/algoritmos_12_0.png}
+  \includegraphics[width=.8\linewidth]{images/algoritmos_12_0.png}
   \caption{Sin algoritmos exponenciales}
   \label{fig:k_one_without_exponential}
 \end{subfigure}
@@ -295,13 +298,13 @@ Visualizaremos los tiempos de ejecución de cada algoritmo, variando el tamaño 
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{images/algoritmos_18_0.png}
+  \includegraphics[width=.8\linewidth]{images/algoritmos_18_0.png}
   \caption{Con algoritmos exponenciales}
   \label{fig:k_one_with_exponential}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{images/algoritmos_20_0.png}
+  \includegraphics[width=.8\linewidth]{images/algoritmos_20_0.png}
   \caption{Sin algoritmos exponenciales}
   \label{fig:k_one_without_exponential}
 \end{subfigure}
@@ -309,20 +312,38 @@ Visualizaremos los tiempos de ejecución de cada algoritmo, variando el tamaño 
 \label{fig:k_1_elemento único}
 \end{figure}
 
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{images/algoritmos_22_0.png}
+  \caption{Con algoritmos exponenciales}
+  \label{fig:k_one_with_exponential}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{images/algoritmos_24_0.png}
+  \caption{Sin algoritmos exponenciales}
+  \label{fig:k_one_without_exponential}
+\end{subfigure}
+\caption{$k=1$, elementos ordenados}
+\label{fig:k_1_elementos_ordenados}
+\end{figure}
 
-### k = n/2
+
+### $k = n/2$
 
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{images/algoritmos_10_1.png}
+  \includegraphics[width=.8\linewidth]{images/algoritmos_10_1.png}
   \caption{Con algoritmos exponenciales}
   \label{fig:k_n2_with_exponential}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{images/algoritmos_12_1.png}
+  \includegraphics[width=.8\linewidth]{images/algoritmos_12_1.png}
   \caption{Sin algoritmos exponenciales}
   \label{fig:k_n2_without_exponential}
 \end{subfigure}
@@ -334,13 +355,13 @@ Visualizaremos los tiempos de ejecución de cada algoritmo, variando el tamaño 
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{images/algoritmos_18_1.png}
+  \includegraphics[width=.8\linewidth]{images/algoritmos_18_1.png}
   \caption{Con algoritmos exponenciales}
   \label{fig:k_n2_with_exponential}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{images/algoritmos_20_1.png}
+  \includegraphics[width=.8\linewidth]{images/algoritmos_20_1.png}
   \caption{Sin algoritmos exponenciales}
   \label{fig:k_n2_without_exponential}
 \end{subfigure}
@@ -348,20 +369,38 @@ Visualizaremos los tiempos de ejecución de cada algoritmo, variando el tamaño 
 \label{fig:k_n2}
 \end{figure}
 
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{images/algoritmos_22_1.png}
+  \caption{Con algoritmos exponenciales}
+  \label{fig:k_one_with_exponential}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{images/algoritmos_24_1.png}
+  \caption{Sin algoritmos exponenciales}
+  \label{fig:k_one_without_exponential}
+\end{subfigure}
+\caption{$k=n/2$, elementos ordenados}
+\label{fig:k_n2_elementos_ordenados}
+\end{figure}
 
-### k = n
+
+### $k = n$
 
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{images/algoritmos_10_2.png}
+  \includegraphics[width=.8\linewidth]{images/algoritmos_10_2.png}
   \caption{Con algoritmos exponenciales}
   \label{fig:k_n_with_exponential}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{images/algoritmos_12_2.png}
+  \includegraphics[width=.8\linewidth]{images/algoritmos_12_2.png}
   \caption{Sin algoritmos exponenciales}
   \label{fig:k_n_without_exponential}
 \end{subfigure}
@@ -373,13 +412,13 @@ Visualizaremos los tiempos de ejecución de cada algoritmo, variando el tamaño 
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{images/algoritmos_18_2.png}
+  \includegraphics[width=.8\linewidth]{images/algoritmos_18_2.png}
   \caption{Con algoritmos exponenciales}
   \label{fig:k_n_with_exponential}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.9\linewidth]{images/algoritmos_20_2.png}
+  \includegraphics[width=.8\linewidth]{images/algoritmos_20_2.png}
   \caption{Sin algoritmos exponenciales}
   \label{fig:k_n_without_exponential}
 \end{subfigure}
@@ -387,25 +426,58 @@ Visualizaremos los tiempos de ejecución de cada algoritmo, variando el tamaño 
 \label{fig:k_n}
 \end{figure}
 
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{images/algoritmos_22_2.png}
+  \caption{Con algoritmos exponenciales}
+  \label{fig:k_n_with_exponential}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{images/algoritmos_24_2.png}
+  \caption{Sin algoritmos exponenciales}
+  \label{fig:k_n_without_exponential}
+\end{subfigure}
+\caption{$k=n$, elementos ordenados}
+\label{fig:k_n_elementos_ordenados}
+\end{figure}
 
-## Elección de algoritmo óptimo para cada 'k' según 'n'
+
+## Elección de algoritmo óptimo para cada $k$ según $n$
 
 Podemos ver una aproximación del cálculo cualitativo en el siguiente gráfico
 
-\begin{figure}[ht!]
-    \centering
-    \includegraphics[width=150mm,scale=0.5]{GraficoKOptimo.png}
-    \caption{Comparación del k óptimo para todos los algoritmos}
-    \label{fig:bragg}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.9\textwidth]{GraficoKOptimo.png}
+  \caption{Comparación del $k$ óptimo para todos los algoritmos}
+  \label{fig:bragg}
 \end{figure}
 
-El grafico muestra una relación entre la complejidad de cada algoritmo variando el parámetro 'k'. Simplemente a modo de ejemplo, se eligió un tamaño de entrada determinado (n = 16).
+El grafico muestra una relación entre la complejidad de cada algoritmo variando
+el parámetro $k$.
+Simplemente a modo de ejemplo, se eligió un tamaño de entrada determinado ($n = 16$).
 
-Ahora bien, fuera del tamaño determinado, podemos rescatar que hay 3 algoritmos que no tienen un determinado 'k' para el cual alguno es mejor que el otro. Es el caso del algoritmo de fuerza bruta, el de order and select y el QuickSelect. Lógicamente, el algoritmo de fuerza bruta no puede competir contra absolutamente nadie. Solo resta decir para el mismo que la complejidad de el k-selections se equipara con el de fuerza bruta cuando k = n.
+Ahora bien, fuera del tamaño determinado, podemos rescatar que hay 3 algoritmos
+que no tienen un determinado $k$ para el cual alguno es mejor que el otro.
+Es el caso del algoritmo de fuerza bruta, el de order and select y el QuickSelect.
+Lógicamente, el algoritmo de fuerza bruta no puede competir contra absolutamente nadie.
+Solo resta decir para el mismo que la complejidad de el k-selections se equipara
+con el de fuerza bruta cuando $k = n$.
 
-Para valores pequeños de k, observamos que el algoritmo más óptimo es el HeapSelect. A medida que aumentamos el k pedido, éste algoritmo es superado por el k-heapsort. Partiendo de la complejidad de los dos algoritmos, esto comienza a ocurrir a partir de que k*log(n) = n*log(k) -> k/log(k) = n/log(n).
-Luego, podemos ver que el QuickSelect es el que termina siendo el más óptimo para valores de k más altos. Tomando los órdenes de complejidad mostrados anteriormente, esto ocurre a partir de que n = k * log(n) -> k = n/log(n).
-Para el ejemplo dado con n = 16, esto comienza a ocurrir para k >= 6.
+Para valores pequeños de $k$, observamos que el algoritmo más óptimo es el HeapSelect.
+A medida que aumentamos el k pedido, éste algoritmo es superado por el k-heapsort.
+Partiendo de la complejidad de los dos algoritmos, esto comienza a ocurrir a
+partir de que $k*\log(n) = n*\log(k) -> k/\log(k) = n/\log(n)$.
+Luego, podemos ver que el QuickSelect es el que termina siendo el más óptimo
+para valores de $k$ más altos. Tomando los órdenes de complejidad mostrados
+anteriormente, esto ocurre a partir de que $n = k * \log(n) -> k = n/\log(n)$.
+Para el ejemplo dado con $n = 16$, esto comienza a ocurrir para $k >= 6$.
 
-Es de notar también que para valores altos de k, tanto el k-heapsort como el HeapSelect convergen al mismo orden que el Timsort utilizado.
-También vemos que el k-selections es más eficiente que el Timsort para elecciones k menores a 3 (igualando la complejidad calculada de ambos, se da cuando n*log(n) = k*n -> log(n) = k, lo cual da un k ~ 2.77 para el ejemplo).
+Es de notar también que para valores altos de $k$, tanto el k-heapsort como el
+HeapSelect convergen al mismo orden que el Timsort utilizado.
+También vemos que el k-selections es más eficiente que el Timsort para elecciones
+$k$ menores a 3 (igualando la complejidad calculada de ambos, se da cuando
+$n*\log(n) = k*n -> \log(n) = k$, lo cual da un $k$ ~ $2.77$ para el ejemplo).

@@ -3,13 +3,14 @@ documentclass: article
 papersize: a4
 fontsize: 10pt
 geometry:
-  - left=2cm
-  - right=2cm
-  - top=3cm
-  - bottom=3cm
+  - left=2.5cm
+  - right=2.5cm
+  - top=3.5cm
+  - bottom=3.5cm
 lang: spanish
 toc: true
-title: 'Teoría de Algoritmos - Trabajo Práctico 1'
+title: 75.29 Teoría de Algoritmos
+subtitle: Trabajo Práctico 1
 author:
   - Arjovsky, Tomás
   - Gavrilov, Seva
