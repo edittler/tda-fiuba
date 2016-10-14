@@ -75,9 +75,10 @@ $endif$
 \lhead{\itshape $title$}
 \chead{}
 \rhead{\itshape{\nouppercase{\leftmark}}}
-\lfoot{v $version$}
-\cfoot{}
-\rfoot{\thepage}
+\lfoot{}
+\cfoot{\thepage}
+\rfoot{}
+\renewcommand{\footrulewidth}{0.4pt}% default is 0pt
 $if(lang)$
 \ifxetex
   \usepackage{polyglossia}
@@ -170,8 +171,59 @@ $endfor$
 
 \begin{document}
 $if(title)$
-\maketitle
+%\maketitle
+\begin{titlepage}
+  \centering
+
+  \vfill % Relleno vertical
+
+  \textbf{\Huge Universidad de Buenos Aires} % Institución
+
+  \bigskip
+
+  \textbf{\huge Facultad de Ingeniería} % Institución
+
+  \vfill
+
+  \includegraphics{images/logo-fiuba}
+
+  \vfill % Relleno vertical
+
+  \rule{\textwidth}{1pt} % Linea horizontal del mismo ancho del texto
+
+  \vspace{0.5cm} % Espacio vertical de 0.5 cm
+
+  \textbf{\LARGE $title$} % Título
+
+  \bigskip % Espacio grande (determinado por el estilo del documento)
+
+  \textbf{\Large $subtitle$} % Título
+
+  \medskip % Espacio mediano (determinado por el estilo del documento)
+
+  \rule{\textwidth}{1pt} % Linea horizontal
+
+  \vspace{0.5cm} % Espacio vertical de 0.5 cm
+
+  \vfill % Inserta relleno vertical.
+
+  % Pie de página
+
+$if(author)$
+  \raggedright
+  \textbf{\large Integrantes}
+  \begin{itemize}
+  $for(author)$\item $author$ $endfor$
+  \end{itemize}
+  \vfill
 $endif$
+
+  \centering
+  \textit{Segundo cuatrimestre de 2016}
+
+\end{titlepage}
+$endif$
+
 $if(abstract)$
 \begin{abstract}
 $abstract$
