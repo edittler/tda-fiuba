@@ -15,6 +15,7 @@ class Heuristic(CommonPath):
 
         while queue:
             u = heapq.heappop(queue)[1]
+            self._visited.add(u)
             nodes = [(self.heuristic(v, self.v), v) for v in self.g.adj(u)]
             for tuple in nodes:
                 v = tuple[1]
@@ -22,4 +23,5 @@ class Heuristic(CommonPath):
                     self.parents[v] = u
                     heapq.heappush(queue, tuple)
                 if v == self.v:
+                    self._visited.add(v)
                     return
