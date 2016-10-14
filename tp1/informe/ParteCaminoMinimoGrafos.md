@@ -183,7 +183,7 @@ Esta propiedad es intuitivamente similar a la desigualdad triangular:
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=0.5\columnwidth]{images/desTriangular.png}
-    \caption{Comparación de la desigualdad triangular con la consistencia.}
+    \caption{Comparación de la desigualdad triangular con la consistencia \cite{bib:AI}.}
     \label{fig:bragg}
 \end{figure}
 
@@ -264,3 +264,9 @@ Camino de A* con Heurística Manhattan
 Camino de A* con Heurística Euclídea
 [0, 1, 3]
 \end{verbatim}
+
+
+\begin{thebibliography}{9}
+
+\bibitem{bib:AI} Kostas Bekris. Lecture Notes for AI (CS 482/682) of UNR. Fall 2009, Lecture 05
+\end{thebibliography}
