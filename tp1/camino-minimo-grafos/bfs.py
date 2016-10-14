@@ -13,10 +13,11 @@ class BFS(CommonPath):
 
         while q:
             u = q.pop()
-            self._visited[u] = True
+            self._visited.add(u)
             for v in self.g.adj(u):
                 if v not in self.parents:
                     self.parents[v] = u
                     q.append(v)
                 if v == self.v:
+                    self._visited.add(self.v)
                     return

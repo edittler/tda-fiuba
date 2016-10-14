@@ -72,7 +72,7 @@ class PathTest(object):
     def test_partial_path(self):
         g = Graph.from_dict({0: [1, 2], 1: [4], 2: [3], 3: [5], 4: [5, 6]})
         self.create_path(g, 0, 3)
-        self.assertListEqual(self.path.path_to(1), [0, 1])
+        self.assertIsNone(self.path.path_to(1))
         self.assertListEqual(self.path.path_to(2), [0, 2])
         self.assertListEqual(self.path.path_to(3), [0, 2, 3])
         self.assertIsNone(self.path.path_to(4))

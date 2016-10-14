@@ -23,7 +23,6 @@ class A_Star(CommonPath):
         # Inicializo todos los vertices con distancia infinita
         for v in self.g:
             self.distance[v] = math.inf
-            self.visitado[v] = False;
 
         # Inicializo nodo origen y lo agrego a la PQ
         self.distance[self.u] = 0
@@ -35,11 +34,11 @@ class A_Star(CommonPath):
 
             # Condicion de corte -> El nodo a visitar es el destino.
             if u == self.v:
-                self._visited[self.v] = True
+                self._visited.add(self.v)
                 return
 
             if not self.visited(u):
-                self._visited[u] = True
+                self._visited.add(u)
                 # Verifico todas las aristas salientes para computar distancias
                 for edge in self.g.adj_e(u):
                     v = edge.dst

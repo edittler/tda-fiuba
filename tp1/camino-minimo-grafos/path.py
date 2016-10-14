@@ -21,7 +21,7 @@ class CommonPath(object):
         self.g, self.u, self.v = g, u, v
         self.heuristic = heuristic
         self.parents = {}
-        self._visited = {}
+        self._visited = set()
         if search:
             self.search()
 
