@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+from knapsack_file_parser import Parser
+
 def knapsack_bottom_up(items_value, items_weight, knapsack_weight):
     # Inicializo mi matriz de resultados
     cant_items = len(items_value)
     results = [[0 for x in range(knapsack_weight + 1)] for y in range(cant_items + 1)]
-    print(str(results))
+    #print(str(results))
     knapsack(items_value, items_weight, knapsack_weight, results)
-    print(str(results))
+    #print(str(results))
     return results[cant_items][knapsack_weight]
 
 def knapsack(items_value, items_weight, knapsack_weight, results):
@@ -21,7 +23,10 @@ def knapsack(items_value, items_weight, knapsack_weight, results):
 
 if __name__ == "__main__":
     # Testeo del algoritmo
-    values = [1, 1, 1]
-    weights = [2, 2, 3]
-    optimum_value = knapsack_bottom_up(values, weights, 6)
+    #values = [1, 1, 1]
+    #weights = [2, 2, 3]
+    #optimum_value = knapsack_bottom_up(values, weights, 6)
+    parser = Parser('test_files/knapPI_1_50_1000.csv')
+    parser.parse_first_example()
+    optimum_value = knapsack_bottom_up(parser.values, parser.weights, parser.knapsack_weight)
     print(str(optimum_value))
