@@ -26,7 +26,14 @@ if __name__ == "__main__":
     #values = [1, 1, 1]
     #weights = [2, 2, 3]
     #optimum_value = knapsack_bottom_up(values, weights, 6)
-    parser = Parser('test_files/knapPI_1_50_1000.csv')
-    parser.parse_first_example()
-    optimum_value = knapsack_bottom_up(parser.values, parser.weights, parser.knapsack_weight)
-    print(str(optimum_value))
+    problems = Parser.parse_file('test_files/knapPI_1_50_1000.csv')
+    cant_problems = 0
+    for problem in problems:
+        cant_problems += 1
+        optimum_value = knapsack_bottom_up(problem.values, problem.weights, problem.knapsack_weight)
+        print(str(optimum_value))
+        if optimum_value == problem.value_found:
+            print("Eureka!")
+        else:
+            print("Mal ahi loco. Vos encontraste: " + str(optimum_value) + " y el chabon encontro " + str(problem.value_found))
+    print("Se acabaron los problemas de este archivo. Fueron: " + str(cant_problems))
