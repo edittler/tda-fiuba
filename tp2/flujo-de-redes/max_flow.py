@@ -59,3 +59,12 @@ class Flow(Graph):
 
             for edge in path:
                 flow[edge] -= b if edge.is_residual else -b
+
+    def repr_max_flow(g, source, target):
+        flow = g.get_max_flow(source, target)
+        edges = sorted(flow.keys(), key=lambda x: (x.src, x.dst))
+        res = ''
+        for e in edges:
+            if not e.is_residual:
+                res += str(e.src) + ' -> ' + str(e.dst) + ': ' + str(flow[e]) + '\n'
+        return res

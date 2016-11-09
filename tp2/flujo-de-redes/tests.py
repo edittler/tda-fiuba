@@ -29,6 +29,18 @@ class MaxFlow(unittest.TestCase):
         flow = f.get_max_flow(0, 2)
         self.assertEqual(max(flow.values()), 10)
 
+    def test_max_flow_with_some_more_paths(self):
+        f = Flow(4)
+        f.add_edge(0, 1, 10)
+        f.add_edge(0, 2, 30)
+        f.add_edge(1, 3, 20)
+        f.add_edge(2, 3, 20)
+
+        self.assertEqual(f.repr_max_flow(0, 3), ('0 -> 1: 10\n'
+                                                 '0 -> 2: 20\n'
+                                                 '1 -> 3: 10\n'
+                                                 '2 -> 3: 20\n'))
+
 
 def main():
     return unittest.main()
