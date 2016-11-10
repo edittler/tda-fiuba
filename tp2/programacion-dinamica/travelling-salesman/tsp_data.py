@@ -8,6 +8,16 @@ class tsp_data(object):
         self.edge_weight_format = edge_weight_format
         self.matrix = matrix
 
+    def __repr__(self):
+        return self.__str__()
+
+    def __str__(self):
+        text = "EDGE_WEIGHT_FORMAT: " + self.edge_weight_format + "\n"
+        for row in self.matrix:
+            str_row = " ".join([str(i) for i in row]) + "\n"
+            text += str_row
+        return text
+
     def dimension(self):
         return len(self.matrix)
 

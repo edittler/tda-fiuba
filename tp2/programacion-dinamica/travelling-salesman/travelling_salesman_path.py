@@ -3,6 +3,7 @@
 
 import itertools
 from tsp_data import tsp_data
+from tsp_parser import tsp_parser
 
 
 def travelling_salesman_path(data):
@@ -21,7 +22,7 @@ def travelling_salesman_path(data):
     for k in range(1, n):
         costs[(1 << k, k)] = (data.cost(0, k), 0)
 
-    print(costs)
+    # print(costs)
 
     for subset_size in range(2, n):
         subsets = itertools.combinations(range(1, n), subset_size)
@@ -69,7 +70,15 @@ def main(args):
     # M = [[0, 1, 15, 6], [2, 0, 7, 3], [9, 6, 0, 12], [10, 4, 8, 0]]
     M = [[0, 2, 9, 10], [1, 0, 6, 4], [15, 7, 0, 8], [6, 3, 12, 0]]
     data = tsp_data("FULL_MATRIX", M)
-    print("Resultado")
+    print("\nPrimer ejemplo")
+    print(travelling_salesman_path(data))
+
+    data = tsp_parser.parse_tsp_file("test_files/p01.tsp")
+    print("\nSegundo ejemplo")
+    print(travelling_salesman_path(data))
+
+    data = tsp_parser.parse_tsp_file("test_files/fri26.tsp")
+    print("\nTercer ejemplo")
     print(travelling_salesman_path(data))
     return 0
 
