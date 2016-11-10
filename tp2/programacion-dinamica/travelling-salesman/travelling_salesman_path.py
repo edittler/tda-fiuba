@@ -1,29 +1,25 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import numpy
 import itertools
+from tsp_data import tsp_data
 
 
-def travelling_salesman_path(matrix):
+def travelling_salesman_path(data):
     """
-    Recibe una matriz de costos de todos los destinos y el vertice de inicio.
+    Recibe los datos del problema del viajante de comercio.
     Retorna una lista con el orden de ciudades que minimiza el costo del viaje.
     """
 
-    matrix_shape = numpy.shape(matrix)
-    if len(matrix_shape) != 2:
-        print("La matriz no es de dimension 2")
-        return []
-    elif matrix_shape[0] != matrix_shape[1]:
-        print("La matriz no es cuadrada")
-        return []
+    if not isinstance(data, tsp_data):
+        print("Los datos no son del tipo tsp_data")
+        return
 
-    n = matrix_shape[0]
+    n = data.dimension()
     costs = {}
 
     for k in range(1, n):
-        costs[(1 << k, k)] = (matrix[0][k], 0)
+        costs[(1 << k, k)] = (data.cost(0, k), 0)
 
     print(costs)
 
@@ -43,7 +39,7 @@ def travelling_salesman_path(matrix):
                 for m in subset:
                     if m == 0 or m == k:
                         continue
-                    res.append((costs[(prev, m)][0] + matrix[m][k], m))
+                    res.append((costs[(prev, m)][0] + data.cost(m, k), m))
                 costs[(bits, k)] = min(res)
                 # print(costs)
 
@@ -52,7 +48,7 @@ def travelling_salesman_path(matrix):
     # Calcular el costo óptimo
     res = []
     for k in range(1, n):
-        res.append((costs[(bits, k)][0] + matrix[k][0], k))
+        res.append((costs[(bits, k)][0] + data.cost(k, 0), k))
     opt, parent = min(res)
 
     # Busca el camino óptimo (incluye el origen como fin)
@@ -72,8 +68,9 @@ def travelling_salesman_path(matrix):
 def main(args):
     # M = [[0, 1, 15, 6], [2, 0, 7, 3], [9, 6, 0, 12], [10, 4, 8, 0]]
     M = [[0, 2, 9, 10], [1, 0, 6, 4], [15, 7, 0, 8], [6, 3, 12, 0]]
+    data = tsp_data("FULL_MATRIX", M)
     print("Resultado")
-    print(travelling_salesman_path(M))
+    print(travelling_salesman_path(data))
     return 0
 
 
