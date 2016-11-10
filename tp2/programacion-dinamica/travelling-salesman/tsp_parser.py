@@ -9,12 +9,12 @@ class tsp_parser(object):
 
     @classmethod
     def parse_tsp_file(cls, filename):
-        file = open(filename, 'r')
+        edge_weight_format = "FULL_MATRIX"
         edge_weight_section = False
         matrix_strings = []
-        edge_weight_format = "FULL_MATRIX"
         matrix = []
 
+        file = open(filename, 'r')
         for line in file:
             key_value = line.split(':')
 
@@ -55,4 +55,13 @@ class tsp_parser(object):
 
     @classmethod
     def parse_matrix_file(cls, filename):
-        return []
+        edge_weight_format = "FULL_MATRIX"
+        matrix = []
+
+        file = open(filename, 'r')
+        for line in file:
+            values = line.strip().split(' ')
+            row = [int(float(i)) for i in values if i != '']
+            matrix.append(row)
+
+        return tsp_data(edge_weight_format, matrix)
