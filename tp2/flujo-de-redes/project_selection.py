@@ -10,7 +10,7 @@ class ProjectSelection(object):
     Esta es la clase que va a resolver el problema de ganancias por proyecto.
     En el Kleinberg-Tardos aparece bajo ese nombre.
 
-    Necesita un archivo que tenga el siguiente formato:
+    Necesita un string que tenga el siguiente formato:
 
         N
         M
@@ -26,24 +26,41 @@ class ProjectSelection(object):
     r11..r1k son las capacidades requeridas del proyecto 1.
     """
 
-    def __init__(self, filename):
-        self.capacities = []
+    def __init__(self, definition):
         self.proyects = []
 
-        with open(filename) as f:
-            self.n = int(f.readline().strip())
-            self.m = int(f.readline().strip())
-            for _ in range(self.n):
-                self.capacities.append(f.readline().strip())
-            for _ in range(self.m):
-                self.proyects.append(f.readline().strip().split(' '))
+        lines = definition.split('\n')
+        self.n = int(lines[0])
+        self.m = int(lines[1])
+        self.capacities = lines[2:2 + self.n]
+        self.proyects = [x.split(' ') for x in lines[2 + self.n:2 + self.n + self.m]]
 
     def solve(self):
-        pass
+        source = 0
+        target = self.n + self.m + 1
+        f = Flow(target + 1)
+
+        for i, proy in enumerate(self.proyects):
+            # proy es una lista del estilo [ganancia, capacidad1, capacidad2, ...]
+            proyect_node = 1 + i
+            f.add_edge(source, proyect_node, int(proy[0]))
+            for req in proy[1:]:
+                # Como los nodos se cuentan desde 0, y las capacidades requeridas
+                # desde 1, necesito restar 1.
+                capacity_node = 1 + self.m + int(req) - 1
+                f.add_edge(proyect_node, capacity_node, float('inf'))
+
+        for i, cap in enumerate(self.capacities):
+            capacity_node = 1 + self.m + i
+            f.add_edge(capacity_node, target, int(cap))
+
+        print(f.repr_max_flow(source, target))
 
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
         print('Por favor, pase un archivo!')
     else:
-        ProjectSelection(sys.argv[1]).solve()
+        with open(sys.argv[1]) as f:
+            ps = ProjectSelection(f.read())
+        ps.solve()
