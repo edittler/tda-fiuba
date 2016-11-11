@@ -11,6 +11,7 @@ class Parser(object):
     def parse_file(cls, filename):
 
         parsed_problems = []
+        identificator = 1
 
         with open(filename, "r+") as file_handler:
 
@@ -21,7 +22,6 @@ class Parser(object):
                 if not name:
                     # Llegue al final del archivo
                     return parsed_problems
-                print("El nombre de la instancia es " + name)
 
                 # Segunda linea: Cantidad de items
                 cant_items = int(file_handler.readline().rstrip().split(' ')[1])
@@ -59,7 +59,8 @@ class Parser(object):
                     included[i] = int(separated_line[3])
                     i += 1
 
-                parsed_problems.append(ProblemContainer(name, cant_items, knapsack_weight, value_found, time, values, weights, included))
+                parsed_problems.append(ProblemContainer(identificator, name, cant_items, knapsack_weight, value_found, time, values, weights, included))
+                identificator += 1
 
                 blank_line = file_handler.readline()
                 if not blank_line:
