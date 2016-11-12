@@ -7,7 +7,7 @@ geometry:
   - right=2.5cm
   - top=3.5cm
   - bottom=3.5cm
-lang: spanish
+babel-lang: spanish
 toc: true
 title: 75.29 Teoría de Algoritmos
 subtitle: Trabajo Práctico 2
@@ -16,4 +16,5 @@ author:
   - Gavrilov, Seva
   - Pereira, Fernando
   - Pérez Dittler, Ezequiel
+bibliography: referencias.bib
 ---
