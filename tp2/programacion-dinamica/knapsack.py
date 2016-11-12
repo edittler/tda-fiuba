@@ -12,10 +12,7 @@ def knapsack_bottom_up(items_value, items_weight, knapsack_weight):
     results = [[0 for x in range(knapsack_weight + 1)] for y in range(cant_items + 1)]
 
     # Corro el algoritmo en si, midiendo el tiempo    
-    start_time = time.time()
     knapsack_bottom_up_core(items_value, items_weight, knapsack_weight, results)
-    total_time = time.time() - start_time
-    print("Bottom Up: " + str(total_time))
 
     return results[cant_items][knapsack_weight]
 
@@ -42,10 +39,7 @@ def knapsack_top_down(items_value, items_weight, knapsack_weight):
     td_knapsack_weight = knapsack_weight
 
     # Corro el algoritmo top-down midiendo el tiempo
-    start_time = time.time()
     knapsack_top_down_core(cant_items, knapsack_weight)
-    total_time = time.time() - start_time
-    print("Top Down: " + str(total_time))
 
     return td_results[cant_items][knapsack_weight]
 
