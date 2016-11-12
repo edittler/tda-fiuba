@@ -6,15 +6,14 @@ import time
 from knapsack_file_parser import Parser
 
 def knapsack_bottom_up(items_value, items_weight, knapsack_weight):
+
     # Inicializo mi matriz de resultados
     cant_items = len(items_value)
     results = [[0 for x in range(knapsack_weight + 1)] for y in range(cant_items + 1)]
-    
-    start_time = time.time()
-    knapsack_bottom_up_core(items_value, items_weight, knapsack_weight, results)
-    total_time = time.time() - start_time
 
-    print("Bottom Up: " + str(total_time))
+    # Corro el algoritmo en si, midiendo el tiempo    
+    knapsack_bottom_up_core(items_value, items_weight, knapsack_weight, results)
+
     return results[cant_items][knapsack_weight]
 
 def knapsack_bottom_up_core(items_value, items_weight, knapsack_weight, results):
@@ -27,6 +26,8 @@ def knapsack_bottom_up_core(items_value, items_weight, knapsack_weight, results)
                 results[i][w] = max(results[i - 1][w], items_value[i - 1] + results[i - 1][w - items_weight[i - 1]])
 
 def knapsack_top_down(items_value, items_weight, knapsack_weight):
+
+    # Inicializo mis variables (se hacen globales para no pasarlas siempre en la recursividad)
     cant_items = len(items_value)
     global td_results
     td_results = [[None for x in range(knapsack_weight + 1)] for y in range(cant_items + 1)]
@@ -37,11 +38,9 @@ def knapsack_top_down(items_value, items_weight, knapsack_weight):
     global td_knapsack_weight
     td_knapsack_weight = knapsack_weight
 
-    start_time = time.time()
+    # Corro el algoritmo top-down midiendo el tiempo
     knapsack_top_down_core(cant_items, knapsack_weight)
-    total_time = time.time() - start_time
 
-    print("Top Down: " + str(total_time))
     return td_results[cant_items][knapsack_weight]
 
 def knapsack_top_down_core(cant_items, knapsack_weight):
