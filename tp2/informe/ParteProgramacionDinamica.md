@@ -47,43 +47,44 @@ Es decir, cada cantidad de elementos distinta y peso restante distinto es un sub
 
    En esta sección se encontrarán tiempos de ejecución alcanzados por las soluciones implementadas para el problema de la mochila. Vale aclarar que se implementó tanto una solución Top-Down como una solución Bottom-Up, con sus respectivas ventajas y desventajas, y justamente, uno de los enfoques de esta sección es mostrar la diferencia de tiempos entre cada una en base a las características de los parámetros de entrada (como ser el peso de la mochila o el peso de cada uno de los ítems de entrada).
    
-   Primeramente, mostramos un par de casos básicos, con 50 y 100 elementos, pesos de mochila máximo de 26000 y 52000 respectivamente, y valores y pesos distribuidos uniformemente.
+   Primeramente, mostramos un par de casos básicos, con 50 y 100 elementos, pesos de mochila máximo cerca de los 26000 y 52000 respectivamente, y valores y pesos de los elementos distribuidos uniformemente.
    
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/images/n_50_maxWeight_26440.png}
-  \caption{Con algoritmos exponenciales}
-  \label{fig:k_one_with_exponential}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/images/n_50_maxWeight_24469.png}
+  \caption{$n = 50$, $W_{max} \approx 26000$}
+  \label{fig:n_fifty_ucorrelated}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.8\linewidth]{../programacion-dinamica/images/n_100_maxWeight_52857.png}
-  \caption{Sin algoritmos exponenciales}
-  \label{fig:k_one_without_exponential}
+  \caption{$n = 100$, $W_{max} \approx 52000$}
+  \label{fig:n_one_hundred_ucorrelated}
 \end{subfigure}
-\caption{$k=1$, elementos desordenados}
-\label{fig:k_1_desordenada}
+\caption{Diferencia de tiempos entre instancias con $n = 50$ y un peso $W$ y $n = 100$ y un peso $2*W$}
+\label{fig:ucorrelated_instance}
 \end{figure}
 
-   Como podemos ver, los tiempos entre la solución Top-Down y Bottom-Up crecen relativamente en forma similar para esta instancia del problema, siendo la solución Bottom-Up la que mejor se ajusta. Lo que hay que notar de estos dos ejemplos es que el tiempo de ejecución del problema con $n = 100$ es el cuádruple del tiempo encontrado para el problema con $n = 50$ ya que, además de duplicar la cantidad de ítems, se duplica el peso máximo de la mochila (siendo que la complejidad depende de ambos parámetros).
+   Como podemos ver, los tiempos entre la solución Top-Down y Bottom-Up crecen relativamente en forma similar para esta instancia del problema, siendo la solución Bottom-Up la que mejor se ajusta. Lo que hay que notar de estos dos ejemplos es que el tiempo de ejecución del problema con $n = 100$ es el doble del tiempo encontrado para el problema con $n = 50$. Podemos ver, por ejemplo, con un peso $W = 20000$, que en el gráfico con 50 elementos, la solución Bottom-Up tardó aproximadamente 0.5 [s] y la Top-Down 0.6 [s], mientras que para 100 elementos y mismo peso, los tiempos son aproximadamente de 1 [s] y 1.2 [s] respectivamente.
    
-   Ahora pasamos a un caso más particular e interesante. Nos enfocamos en una instancia en la que la capacidad máxima de la mochila es grande y tenemos un set de entrada con pesos $w_i$ muy altos (tal que solo uno de los elementos entra en la mochila, por lo que el problema, a priori, casi se reduce a encontrar el valor $v_i$ más alto de entre todos).
+   Ahora pasamos a un caso más particular e interesante. Nos enfocamos en una instancia del problema en la que la capacidad máxima de la mochila es grande y tenemos un set de entrada con pesos $w_i$ similares entre sí y muy altos (tal que solo uno de los elementos entra en la mochila).
    
 \begin{figure}[H]
 \centering
 \includegraphics[width=.8\linewidth]{../programacion-dinamica/images/n_50_maxWeight_445775.png}
-\caption{Con algoritmos exponenciales}
-\label{fig:k_one_with_exponential}
+\caption{$n = 50$, $w_i$ altos y similares entre sí}
+\label{fig:similar_weights}
 \end{figure}
 
    Una de las cosas que queríamos remarcar es la diferencia entre los tiempos de ejecución de la implementación Top-Down y la Bottom-Up en este tipo de instancias del problema.
    
    La enorme diferencia se debe básicamente a la forma de resolver el problema que tiene cada técnica. La implementación Bottom-Up va resolviendo desde los sub-problemas más pequeños hasta llegar al problema final deseado iterativamente, obteniendo la solución óptima para absolutamente todos los sub-problemas cuyos parámetros de entrada son menores o iguales al problema original. La desventaja de esta técnica, es que está desperdiciando mucho tiempo en resolver sub-problemas que *podrían no utilizarse* para resolver el problema deseado. En otras palabras, la solución Bottom-Up llena completamente la matriz $M$ de resultados óptimos, cuando hay muchos sub-problemas que no son necesarios.
+   
    Por otro lado, la solución Top-Down arranca desde el problema con los parámetros originales que queremos resolver, y recursivamente va partiendo el original en sub-problemas y resolviéndolos hasta obtener todos los resultados deseados. Es decir, la solución Top-Down solo se enfoca en resolver los sub-problemas estrictamente necesarios en los que se divide el problema original, sin gastar tiempo de cómputo en sub-problemas cuya solución jamás utilizaríamos. La desventaja de la solución Top-Down es el overhead que puede traer una solución recursiva, y el espacio en el stack que ésta requiere, el cual se reduce de cierta forma utilizando correctamente variables globales.
    
-   Informalmente, podemos decir que la solución Bottom-Up se toma su tiempo en resolver absolutamente todo, mientras que la solución Top-Down va al grano y resuelve lo estrictamente necesario. Es por eso
+   Informalmente, podemos decir que la solución Bottom-Up se toma su tiempo en resolver absolutamente todo, mientras que la solución Top-Down va al grano y resuelve lo estrictamente necesario. Es por eso que en este tipo de problemas, la solución Top-Down puede resultar mucho más eficiente que la Bottom-Up.
    
    
 ## El problema del viajante de comercio
