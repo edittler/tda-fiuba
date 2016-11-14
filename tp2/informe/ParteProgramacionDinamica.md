@@ -53,13 +53,13 @@ Es decir, cada cantidad de elementos distinta y peso restante distinto es un sub
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/images/n_50_maxWeight_24469.png}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_24469.png}
   \caption{$n = 50$, $W_{max} \approx 26000$}
   \label{fig:n_fifty_ucorrelated}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/images/n_100_maxWeight_52857.png}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_52857.png}
   \caption{$n = 100$, $W_{max} \approx 52000$}
   \label{fig:n_one_hundred_ucorrelated}
 \end{subfigure}
@@ -73,7 +73,7 @@ Es decir, cada cantidad de elementos distinta y peso restante distinto es un sub
    
 \begin{figure}[H]
 \centering
-\includegraphics[width=.8\linewidth]{../programacion-dinamica/images/n_50_maxWeight_445775.png}
+\includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_445775.png}
 \caption{$n = 50$, $w_i$ altos y similares entre sí}
 \label{fig:similar_weights}
 \end{figure}

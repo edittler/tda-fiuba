@@ -1,4 +1,4 @@
-\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$lang$,$endif$$if(papersize)$$papersize$,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
+\documentclass[$if(fontsize)$$fontsize$,$endif$$if(babel-lang)$$babel-lang$,$endif$$if(papersize)$$papersize$,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
 $if(fontfamily)$
 \usepackage{$fontfamily$}
 $else$
@@ -79,13 +79,13 @@ $endif$
 \cfoot{\thepage}
 \rfoot{}
 \renewcommand{\footrulewidth}{0.4pt}% default is 0pt
-$if(lang)$
+$if(babel-lang)$
 \ifxetex
   \usepackage{polyglossia}
   \setmainlanguage{$mainlang$}
   \setotherlanguages{$for(otherlang)$$otherlang$$sep$,$endfor$}
 \else
-  \usepackage[shorthands=off,$lang$]{babel}
+  \usepackage[shorthands=off,$babel-lang$]{babel}
 \fi
 $endif$
 $if(natbib)$
