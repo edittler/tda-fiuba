@@ -63,11 +63,86 @@ Es decir, cada cantidad de elementos distinta y peso restante distinto es un sub
   \caption{$n = 100$, $W_{max} \approx 52000$}
   \label{fig:n_one_hundred_ucorrelated}
 \end{subfigure}
-\caption{Diferencia de tiempos entre instancias con $n = 50$ y un peso $W$ y $n = 100$ y un peso $2*W$}
+\caption{Instancias con pesos y valores desvinculados (uncorrelated)}
 \label{fig:ucorrelated_instance}
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_40983uspan.png}
+  \caption{$n = 50$, $W_{max} \approx 41000$}
+  \label{fig:n_fifty_spanucorrelated}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_75752uspan.png}
+  \caption{$n = 100$, $W_{max} \approx 75000$}
+  \label{fig:n_one_hundred_spanucorrelated}
+\end{subfigure}
+\caption{Instancias con pesos y valores desvinculados difícil ($uncorrelated\_span(2,10)$)}
+\label{fig:initial_instances}
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_40983wspan.png}
+  \caption{$n = 50$, $W_{max} \approx 41000$}
+  \label{fig:n_fifty_spanwcorrelated}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_75752wspan.png}
+  \caption{$n = 100$, $W_{max} \approx 75000$}
+  \label{fig:n_one_hundred_spanwcorrelated}
+\end{subfigure}
+\caption{Instancias con pesos y valores debilmente vinculados difícil ($strongly\_correlated\_span(2,10)$)}
+\label{fig:initial_instances}
 \end{figure}
 
-   Como podemos ver, los tiempos entre la solución Top-Down y Bottom-Up crecen relativamente en forma similar para esta instancia del problema, siendo la solución Bottom-Up la que mejor se ajusta. Lo que hay que notar de estos dos ejemplos es que el tiempo de ejecución del problema con $n = 100$ es el doble del tiempo encontrado para el problema con $n = 50$. Podemos ver, por ejemplo, con un peso $W = 20000$, que en el gráfico con 50 elementos, la solución Bottom-Up tardó aproximadamente 0.5 [s] y la Top-Down 0.6 [s], mientras que para 100 elementos y mismo peso, los tiempos son aproximadamente de 1 [s] y 1.2 [s] respectivamente.
+Como podemos ver en el caso básico inicial, los tiempos entre la solución Top-Down y Bottom-Up crecen relativamente en forma similar para esta instancia del problema, siendo la solución Bottom-Up la que mejor se ajusta. Lo que hay que notar de estos dos ejemplos es que el tiempo de ejecución del problema con $n = 100$ (para el mismo peso) es el doble del tiempo encontrado para el problema con $n = 50$. Podemos ver, por ejemplo, con un peso $W = 20000$, que en el gráfico con 50 elementos, la solución Bottom-Up tardó aproximadamente 0.5 [s] y la Top-Down 0.6 [s], mientras que para 100 elementos y mismo peso, los tiempos son aproximadamente de 1 [s] y 1.2 [s] respectivamente.
+   Un comportamiento similar (aunque un tanto más variable, por ser instancias más difíciles), se puede ver en los tiempos de las demás ejecuciones.
+   
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_37766sspan.png}
+  \caption{$n = 50$, $W_{max} \approx 37000$}
+  \label{fig:n_fifty_spanscorrelated}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_69134sspan.png}
+  \caption{$n = 100$, $W_{max} \approx 75000$}
+  \label{fig:n_one_hundred_spanscorrelated}
+\end{subfigure}
+\caption{Instancias con pesos y valores fuertemente vinculados difícil ($strongly\_correlated\_span(2,10)$)}
+\label{fig:initial_instances}
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_25154pceil.png}
+  \caption{$n = 50$, $W_{max} \approx 25000$}
+  \label{fig:n_fifty_pceil}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_48907pceil.png}
+  \caption{$n = 100$, $W_{max} \approx 49000$}
+  \label{fig:n_one_hundred_pceil}
+\end{subfigure}
+\caption{Instancia difícil ($pceil(3)$)}
+\label{fig:initial_instances}
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_25154circle.png}
+  \caption{$n = 50$, $W_{max} \approx 25000$}
+  \label{fig:n_fifty_pceil}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_48907circle.png}
+  \caption{$n = 100$, $W_{max} \approx 49000$}
+  \label{fig:n_one_hundred_pceil}
+\end{subfigure}
+\caption{Instancia difícil ($circle(2/3)$)}
+\label{fig:initial_instances}
+\end{figure}
    
    Ahora pasamos a un caso más particular e interesante. Nos enfocamos en una instancia del problema en la que la capacidad máxima de la mochila es grande y tenemos un set de entrada con pesos $w_i$ similares entre sí y muy altos (tal que solo uno de los elementos entra en la mochila).
    
