@@ -12,7 +12,10 @@ class ProblemContainer(object):
         self.time = time
         self.values = items_value
         self.weights = items_weight
-        self.items_included = items_included
+        self.solution_items = []
+        for i in range(1, cant_items + 1):
+            if items_included[i - 1]:
+                self.solution_items.append(i)
 
     def __lt__(self, other):
         # Ordeno por peso
