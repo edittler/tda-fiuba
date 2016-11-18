@@ -11,8 +11,10 @@ class tsp_parser(object):
     def parse_tsp_file(cls, filename):
         edge_weight_format = "FULL_MATRIX"
         edge_weight_section = False
+        tour_section = False
         matrix_strings = []
         matrix = []
+        tour = []
 
         file = open(filename, 'r')
         for line in file:
@@ -27,13 +29,24 @@ class tsp_parser(object):
                 key = key_value[0].strip()
                 if key == "EDGE_WEIGHT_SECTION":
                     edge_weight_section = True
+                    tour_section = False
                     continue
-                if key == "TOUR_SECTION" or key == "EOF":
+                if key == "TOUR_SECTION":
                     edge_weight_section = False
+                    tour_section = True
+                    continue
+                if key == "EOF":
+                    edge_weight_section = False
+                    tour_section = False
                     continue
 
             if edge_weight_section:
                 matrix_strings.append(line)
+                continue
+
+            if tour_section:
+                tour.append(int(line.strip()))
+
                 continue
 
         if edge_weight_format == "FULL_MATRIX":
@@ -45,13 +58,18 @@ class tsp_parser(object):
         if edge_weight_format == "LOWER_DIAG_ROW":
             row = []
             for line in matrix_strings:
-                value = int(float(line.strip()))
-                row.append(value)
-                if value == 0:
-                    matrix.append(row)
-                    row = []
+                values = line.strip().split(' ')
+                for value in values:
+                    if value == '':
+                        continue
+                    value = int(float(value.strip()))
+                    row.append(value)
+                    if value == 0:
+                        matrix.append(row)
+                        row = []
 
-        return tsp_data(edge_weight_format, matrix)
+        file.close()
+        return tsp_data(edge_weight_format, matrix, tour)
 
     @classmethod
     def parse_matrix_file(cls, filename):
