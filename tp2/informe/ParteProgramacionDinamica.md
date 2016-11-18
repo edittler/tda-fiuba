@@ -267,7 +267,7 @@ distancias desde conjuntos pequeños hasta llegar al conjunto de tamaño $n-1$.
 Los datos utilizados para 15, 17 y 21 ciudades son los recopilados por
 [John Burkardt](http://people.sc.fsu.edu/~jburkardt/datasets/tsp/tsp.html).
 El resto de los datos fueron generados aleatoriamente y se pueden encontrar en el
-[repositorio](https://github.com/ezeperez26/tda-fiuba/tree/master/tp2/programacion-dinamica/traveling-salesman/test_files)
+[repositorio](https://github.com/ezeperez26/tda-fiuba/tree/master/tp2/programacion-dinamica/travelling-salesman/test_files)
 con el prefijo *ex*.
 
 En la Figura \ref{fig:tsp_times} se puede visualizar el tiempo de ejecución para
