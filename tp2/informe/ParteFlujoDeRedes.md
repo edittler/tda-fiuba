@@ -52,7 +52,7 @@ El problema en análisis tiene como objetivo maximizar las ganancias del Ing. F.
 
 - Un conjunto $P = \{P_1, P_2, \dotsc , P_m\}$ de proyectos posibles para tomar. Cada proyecto $P_i$ llevado a cabo provee una ganancia $g_i$ a la empresa.
 - Un conjunto $A = \{A_1, A_2, \dotsc , A_n\}$ de áreas de investigación posibles a tomar. Cada área $A_k$ investigada conlleva un costo $a_k$ de inversión para la empresa.
-- Cada proyecto requiere para ser ejecutado que se hayan investigado un cierto conjunto de áreas $R_{i} \subseteq A$ para poder ser efectuados.
+- Cada proyecto requiere que se haya investigado un cierto conjunto de áreas $R_{i} \subseteq A$ para poder ser ejecutado.
 
 El objetivo es elegir los proyectos (y por lo tanto también las áreas de investigación) adecuados para maximizar la ganancia del Ingeniero.
 
