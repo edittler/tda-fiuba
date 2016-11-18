@@ -4,9 +4,10 @@
 
 class tsp_data(object):
 
-    def __init__(self, edge_weight_format, matrix):
+    def __init__(self, edge_weight_format, matrix, solution=[]):
         self.edge_weight_format = edge_weight_format
         self.matrix = matrix
+        self.solution = solution
 
     def __repr__(self):
         return self.__str__()

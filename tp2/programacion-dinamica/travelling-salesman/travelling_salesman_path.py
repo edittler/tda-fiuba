@@ -17,7 +17,7 @@ def travelling_salesman_path(data):
         return
 
     n = data.dimension()
-    print("Cities: " + str(n))
+    # print("Cities: " + str(n))
     costs = {}
 
     for k in range(1, n):
@@ -27,9 +27,9 @@ def travelling_salesman_path(data):
 
     for subset_size in range(2, n):
         subsets = itertools.combinations(range(1, n), subset_size)
-        subset_size_text = "(subset size: " + str(subset_size) + ")"
-        progress_text = "Progress " + str(int(float(subset_size / n * 100))) + "%"
-        print(progress_text + " " + subset_size_text)
+        # subset_size_text = "(subset size: " + str(subset_size) + ")"
+        # progress_text = "Progress " + str(int(float(subset_size / n * 100))) + "%"
+        # print(progress_text + " " + subset_size_text)
         for subset in subsets:
             # Seteo los bits de todos los nodos del subconjunto
             bits = 0
@@ -71,7 +71,6 @@ def travelling_salesman_path(data):
 
 
 def main(args):
-    # M = [[0, 1, 15, 6], [2, 0, 7, 3], [9, 6, 0, 12], [10, 4, 8, 0]]
     M = [[0, 2, 9, 10], [1, 0, 6, 4], [15, 7, 0, 8], [6, 3, 12, 0]]
     data = tsp_data("FULL_MATRIX", M)
     print("\nPrimer ejemplo")
@@ -87,7 +86,7 @@ def main(args):
 
     data = tsp_parser.parse_matrix_file("test_files/att48_d.txt")
     print("\nCuarto ejemplo")
-    #print(travelling_salesman_path(data))
+    # print(travelling_salesman_path(data))
     return 0
 
 
