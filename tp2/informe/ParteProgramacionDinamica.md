@@ -264,30 +264,36 @@ Por lo tanto, su orden espacial es $O(n2^n)$.
 El argoritmo implementado es de tipo bottom-up, es decir, se van calculando las
 distancias desde conjuntos pequeños hasta llegar al conjunto de tamaño $n-1$.
 
-En la Figura \ref{fig:tsp_times} se puede ver el tiempo de ejecución para 4
-ciudades en adelante. Se muestran los valores hasta el conjunto de 18 ciudades
-por que no sólo demora cada vez más la ejecución del algoritmo si no que también
-se eleva el consumo de espacio de memoria, como se verá más adelante, alcanzando
-el valor de memoria disponible.
+Los datos utilizados para 15, 17 y 21 ciudades son los recopilados por
+[John Burkardt](http://people.sc.fsu.edu/~jburkardt/datasets/tsp/tsp.html).
+El resto de los datos fueron generados aleatoriamente y se pueden encontrar en el
+[repositorio](https://github.com/ezeperez26/tda-fiuba/tree/master/tp2/programacion-dinamica/travelling-salesman/test_files)
+con el prefijo *ex*.
+
+En la Figura \ref{fig:tsp_times} se puede visualizar el tiempo de ejecución para
+4 ciudades en adelante. Se muestran los valores hasta el conjunto de 21 ciudades
+dado que no sólo demora cada vez más la ejecución del algoritmo si no que
+también se eleva el consumo de espacio de memoria, como se verá más adelante,
+alcanzando el valor de memoria disponible.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=.7\linewidth]{../programacion-dinamica/travelling-salesman/images/n_temp}
+  \includegraphics[width=.65\linewidth]{../programacion-dinamica/travelling-salesman/images/tsp_times}
   \caption{Tiempo de ejecución del problema del viajante}
   \label{fig:tsp_times}
 \end{figure}
 
 El espacio consumido que se representa en la Figura \ref{fig:tsp_space} se
 refiere a la cantidad de valores almacenados de los costos para ir desde el
-origen a cada conjunto. Es decir, la cantidad de registros almacenados para cada
-conjuntos.
+origen a cada conjunto.
+Es decir, la cantidad de registros almacenados para cada conjunto.
 Para obtener la información del espacio ocupado en una unidad en particular,
 por ejemplo en Megabytes, basta con determinar el espacio que ocupa cada
 registro en esa unidad y luego multiplicar por los valores dados.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=.7\linewidth]{../programacion-dinamica/travelling-salesman/images/n_space}
+  \includegraphics[width=.65\linewidth]{../programacion-dinamica/travelling-salesman/images/tsp_space}
   \caption{Espacio utilizado por el problema del viajante}
   \label{fig:tsp_space}
 \end{figure}
@@ -302,23 +308,24 @@ el ahorro logrado.
     \hline
     Ciudades & Sin programación dinámica & Con programación dinámica & Ahorro \\
     \hline \hline
-     4 &                  6 &      12 & -6 \\ \hline
-     5 &                 24 &      32 & -8 \\ \hline
-     6 &                120 &      80 & 40 \\ \hline
-     7 &                720 &     192 & 528 \\ \hline
-     8 &               5040 &     448 & 4592 \\ \hline
-     9 &              40320 &    1024 & 39296 \\ \hline
-    10 &             362880 &    2304 & 360576 \\ \hline
-    11 &            3628800 &    5120 & 3623680 \\ \hline
-    12 &           39916800 &   11264 & 39905536 \\ \hline
-    13 &          479001600 &   24576 & 478977024 \\ \hline
-    14 &         6227020800 &   53248 & 6226967552 \\ \hline
-    15 &        87178291200 &  114688 & 87178176512 \\ \hline
-    16 &      1307674368000 &  245760 & 1307674122240 \\ \hline
-    17 &     20922789888000 &  524288 & 20922789363712 \\ \hline
-    18 &    355687428096000 & 1114112 & 355687426981888 \\ \hline
-    19 &   6402373705728000 & 2359296 & 6402373703368704 \\ \hline
-    20 & 121645100408832000 & 4980736 & 121645100403851000 \\ \hline
+     4 &                   6 &       12 & -6 \\ \hline
+     5 &                  24 &       32 & -8 \\ \hline
+     6 &                 120 &       80 & 40 \\ \hline
+     7 &                 720 &      192 & 528 \\ \hline
+     8 &                5040 &      448 & 4592 \\ \hline
+     9 &               40320 &     1024 & 39296 \\ \hline
+    10 &              362880 &     2304 & 360576 \\ \hline
+    11 &             3628800 &     5120 & 3623680 \\ \hline
+    12 &            39916800 &    11264 & 39905536 \\ \hline
+    13 &           479001600 &    24576 & 478977024 \\ \hline
+    14 &          6227020800 &    53248 & 6226967552 \\ \hline
+    15 &         87178291200 &   114688 & 87178176512 \\ \hline
+    16 &       1307674368000 &   245760 & 1307674122240 \\ \hline
+    17 &      20922789888000 &   524288 & 20922789363712 \\ \hline
+    18 &     355687428096000 &  1114112 & 355687426981888 \\ \hline
+    19 &    6402373705728000 &  2359296 & 6402373703368704 \\ \hline
+    20 &  121645100408832000 &  4980736 & 121645100403851000 \\ \hline
+    21 & 2432902008176640000 & 10485760 & 2432902008166150000 \\ \hline
   \end{tabular}
   \caption{Espacio utilizado por el problema del viajante}
   \label{tab:tsp_compatariva}
@@ -331,10 +338,10 @@ problema a tener en cuenta.
 A partir de las 7 ciudades en adelante, el orden de magnitud de ambos comienza a
 distanciarse, resultando un ahorro importante con la programación dinámica.
 
-A efectos ejemplificadores del espacio de memoria real ocupado, se toma una
-unidad aproximada del tamaño de un registro de 256 bytes, sin considerar el
-espacio adicional que consume la estructura de datos donde se almacenan los
-registros, pudiendo ser depreciable.
+A efecto ejemplificador del espacio de memoria real ocupado, se toma una unidad
+aproximada del tamaño de un registro de 256 bytes, sin considerar el espacio
+adicional que consume la estructura de datos donde se almacenan los registros,
+pudiendo ser depreciable.
 
 En el Cuadro \ref{tab:tsp_espacio_megabytes} se detalla el espacio consumido
 según la cantidad de ciudades del problema.
@@ -373,7 +380,7 @@ según la cantidad de ciudades del problema.
   \label{tab:tsp_espacio_megabytes}
 \end{table}
 
-A partir de las 22 ciudades el consumo de memoria supera la memoria física
+A partir de las 22 ciudades el consumo de memoria supera la memoria RAM
 disponible en la PC utilizada para correr el algoritmo.
 
 Una propuesta para superar el problema del límite de memoria RAM es utilizar la
