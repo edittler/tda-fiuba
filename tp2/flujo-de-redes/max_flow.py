@@ -26,19 +26,35 @@ class Flow(Graph):
         g._i[v].append(r)
         return e
 
-    def flow_path(g, source, target, flow):
-        return g._flow_path_rec(source, target, flow, [])
+    def e_transitable(g, e, flow):
+        return (e.is_residual and e.capacity > 0) or ((not e.is_residual) and flow[e] < e.capacity)
 
-    def _flow_path_rec(g, source, target, flow, path):
-        if source == target:
+    # Búsqueda de Camino por DFS
+    def flow_path(g, source, target, flow):
+        visited = set()
+        parents = {}
+
+        if g._flow_path_rec(source, target, flow, visited, parents):
+            path = []
+            v = target
+            while(v != source):
+                path.append(parents[v])
+                v = parents[v].src
+                path.reverse()
             return path
+        else:
+            return None
+
+    def _flow_path_rec(g, source, target, flow, visited, parents):
+        visited.add(source)
+        if source == target:
+            return True
         for edge in g.adj_e(source):
-            residual = edge.capacity - flow[edge]
-            if not edge.is_residual and residual > 0:
-                path.append(edge)
-                result = g._flow_path_rec(edge.dst, target, flow, path)
-                if result is not None:
-                    return result
+            if g.e_transitable(edge, flow) and not edge.dst in visited:
+                parents[edge.dst] = edge
+                if g._flow_path_rec(edge.dst, target, flow, visited, parents):
+                    return True
+        return False
 
     def bottleneck(g, path, flow):
         return min((e.capacity - flow[e]) for e in path)
@@ -59,6 +75,18 @@ class Flow(Graph):
 
             for edge in path:
                 flow[edge] -= b if edge.is_residual else -b
+
+    # Reachable from s.
+    def get_min_cut(g, source, flow):
+        visited = set()
+        g.visit(source, flow, visited)
+        return visited
+
+    def visit(g, src, flow, visited):
+        visited.add(src)
+        for e in g.adj_e(src):
+            if g.e_transitable(e, flow) and not e.dst in visited:
+                DFS(g, e.dst, flow)
 
     def repr_max_flow(g, source, target):
         flow = g.get_max_flow(source, target)

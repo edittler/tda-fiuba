@@ -53,7 +53,7 @@ class ProjectSelectionTest(unittest.TestCase):
         self.assertEqual(ps.n, 2)
         self.assertEqual(ps.m, 3)
         self.assertListEqual(ps.capacities, ['50', '100'])
-        self.assertListEqual(ps.proyects, [['100', '1'], ['200', '1', '2'], ['300', '1']])
+        self.assertListEqual(ps.proyects, [['100', '1'], ['200', '1', '2'], ['300', '2']])
 
 
 def main():
