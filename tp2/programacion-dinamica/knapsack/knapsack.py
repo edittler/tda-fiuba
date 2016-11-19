@@ -15,7 +15,8 @@ def knapsack_bottom_up(items_value, items_weight, knapsack_weight):
     # Corro el algoritmo en si, midiendo el tiempo    
     knapsack_bottom_up_core(items_value, items_weight, knapsack_weight, results)
 
-    return KnapsackSolution(results[cant_items][knapsack_weight], knapsack_get_solution(cant_items, knapsack_weight, items_value, items_weight, results))
+    #return KnapsackSolution(results[cant_items][knapsack_weight], knapsack_get_solution(cant_items, knapsack_weight, items_value, items_weight, results))
+    return results[cant_items][knapsack_weight]
 
 def knapsack_bottom_up_core(items_value, items_weight, knapsack_weight, results):
 
@@ -75,12 +76,3 @@ def knapsack_top_down_core(cant_items, knapsack_weight):
         td_results[cant_items][knapsack_weight] = max(knapsack_top_down_core(cant_items - 1, knapsack_weight), td_items_value[cant_items - 1] + knapsack_top_down_core(cant_items - 1, knapsack_weight - td_items_weight[cant_items - 1]))
         return td_results[cant_items][knapsack_weight]
 
-
-if __name__ == '__main__':
-
-    problems = Parser.parse_file('test_files/small_coef/knapPI_1_50_1000.csv')
-
-    for problem in problems:
-
-        print( str(problem.id) + ") " + str(problem.solution_items))
-        print(knapsack_bottom_up(problem.values, problem.weights, problem.knapsack_weight))
