@@ -86,7 +86,7 @@ class ProjectSelectionTest(unittest.TestCase):
         self.assertEqual(ps.selectedAreas, [1])
         self.assertEqual(ps.selectedProyects, [1,2,3])
 
-    def test_saturated_proyect(self):
+    def test_saturated_project(self):
         saturated_def = "1\n3\n100\n100 1\n100 1\n100 1\n"
         ps = ProjectSelection(saturated_def)
         self.assertEqual(ps.selectedAreas, [1])
