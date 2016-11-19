@@ -31,7 +31,7 @@ class Flow(Graph):
 
     # Búsqueda de Camino por DFS
     def flow_path(g, source, target, flow):
-        visited = set()
+        visited = set([source])
         parents = {}
 
         if g._flow_path_rec(source, target, flow, visited, parents):
@@ -46,11 +46,11 @@ class Flow(Graph):
             return None
 
     def _flow_path_rec(g, source, target, flow, visited, parents):
-        visited.add(source)
         if source == target:
             return True
         for edge in g.adj_e(source):
             if g.e_transitable(edge, flow) and not edge.dst in visited:
+                visited.add(edge.dst)
                 parents[edge.dst] = edge
                 if g._flow_path_rec(edge.dst, target, flow, visited, parents):
                     return True
@@ -63,7 +63,6 @@ class Flow(Graph):
         return {e: 0 for e in g.iter_edges()}
 
     def get_max_flow(g, source, target):
-        """ """
         flow = g.get_empty_flow()
         path = g.flow_path(source, target, flow)
 
@@ -77,7 +76,7 @@ class Flow(Graph):
 
     # Reachable from s.
     def get_min_cut(g, source, flow):
-        visited = set()
+        visited = set([source])
         g.visit(source, flow, visited)
         return visited
 
@@ -85,6 +84,7 @@ class Flow(Graph):
         visited.add(src)
         for e in g.adj_e(src):
             if g.e_transitable(e, flow) and not e.dst in visited:
+                visited.add(e.dst)
                 g.visit(e.dst, flow, visited)
 
     def repr_max_flow(g, source, target):
