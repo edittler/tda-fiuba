@@ -67,7 +67,31 @@ class ProjectSelectionTest(unittest.TestCase):
         self.assertListEqual(ps.proyects, [['100', '1'], ['50', '1']])
         self.assertEqual(ps.selectedAreas, [])
         self.assertEqual(ps.selectedProyects, [])
-        
+
+    def test_hard_selection(self):
+        definition = "3\n4\n8\n8\n10\n10 1 2\n10 2\n4 3\n4 3\n"
+        ps = ProjectSelection(definition)
+        self.assertEqual(ps.selectedAreas, [1,2])
+        self.assertEqual(ps.selectedProyects, [1,2])
+
+    def test_hard_2(self):
+        definition = "3\n4\n8\n8\n10\n10 1 2\n10 2\n5 3\n6 3\n"
+        ps = ProjectSelection(definition)
+        self.assertEqual(ps.selectedAreas, [1,2,3])
+        self.assertEqual(ps.selectedProyects, [1,2,3,4])
+
+    def test_low_cost(self):
+        uno_def = "1\n3\n1\n100 1\n100 1\n100 1\n"
+        ps = ProjectSelection(uno_def)
+        self.assertEqual(ps.selectedAreas, [1])
+        self.assertEqual(ps.selectedProyects, [1,2,3])
+
+    def test_saturated_proyect(self):
+        saturated_def = "1\n3\n100\n100 1\n100 1\n100 1\n"
+        ps = ProjectSelection(saturated_def)
+        self.assertEqual(ps.selectedAreas, [1])
+        self.assertEqual(ps.selectedProyects, [1,2,3])
+
 def main():
     return unittest.main()
 

@@ -10,7 +10,7 @@ class FlowEdge(object):
         self.dst = dst
         self.capacity = capacity
         self.is_backwards = is_backwards
-
+        self.reciproca = None
 
 class Flow(Graph):
 
@@ -21,9 +21,13 @@ class Flow(Graph):
         """
         e = FlowEdge(u, v, capacity)
         r = FlowEdge(v, u, is_backwards=True)
+        e.reciproca = r
+        r.reciproca = e
+
         g._i[u].append(e)
-        g._a[u].append(v)
         g._i[v].append(r)
+
+        g._a[u].append(v)
         return e
 
     def e_transitable(g, e, flow):
@@ -69,7 +73,11 @@ class Flow(Graph):
         while path != None:
             b = g.bottleneck(path, flow)
             for edge in path:
-                flow[edge] -= b if edge.is_backwards else -b
+                if edge.is_backwards:
+                    edge.capacity -= b
+                else:
+                    edge.reciproca.capacity += b
+                    flow[edge] += b
             path = g.flow_path(source, target, flow)
 
         return flow

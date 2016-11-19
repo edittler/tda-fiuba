@@ -26,7 +26,7 @@ class ProjectSelection(object):
     r11..r1k son las capacidades requeridas del proyecto 1.
     """
 
-    def __init__(self, definition):
+    def __init__(self, definition, solve = True):
         self.proyects = []
 
         lines = definition.split('\n')
@@ -35,31 +35,34 @@ class ProjectSelection(object):
         self.areas = lines[2:2 + self.n]
         self.proyects = [x.split(' ') for x in lines[2 + self.n:2 + self.n + self.m]]
         self.selectedProyects = []
-        self.solve()
+        self.createNet()
+        if solve:
+            self.solve()
 
-    def solve(self):
+    def createNet(self):
         # Armado de la red.
-        source = 0
-        target = self.n + self.m + 1
-        f = Flow(target + 1)
+        self.source = 0
+        self.target = self.n + self.m + 1
+        self.f = Flow(self.target + 1)
 
         for i, proy in enumerate(self.proyects):
             # proy es una lista del estilo [ganancia, capacidad1, capacidad2, ...]
             proyect_node = 1 + i
-            f.add_edge(source, proyect_node, int(proy[0]))
+            self.f.add_edge(self.source, proyect_node, int(proy[0]))
             for req in proy[1:]:
                 # Como los nodos se cuentan desde 0, y las capacidades requeridas
                 # desde 1, necesito restar 1.
                 area_node = 1 + self.m + int(req) - 1
-                f.add_edge(proyect_node, area_node, float('inf'))
+                self.f.add_edge(proyect_node, area_node, float('inf'))
 
         for i, cap in enumerate(self.areas):
             area_node = 1 + self.m + i
-            f.add_edge(area_node, target, int(cap))
+            self.f.add_edge(area_node, self.target, int(cap))
 
+    def solve(self):
         # Max-Flow, Min-Cut
-        flow = f.get_max_flow(source, target)
-        cut = f.get_min_cut(source, flow)
+        flow = self.f.get_max_flow(self.source, self.target)
+        cut = self.f.get_min_cut(self.source, flow)
 
         # En el corte están los proyectos y las áreas a elegir.
         self.selectedProyects = [p for p in cut if 1 <= p <= self.m]
