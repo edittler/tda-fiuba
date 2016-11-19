@@ -53,91 +53,91 @@ Primeramente, mostramos un par de casos básicos, con 50 y 100 elementos, pesos 
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_24469.png}
-  \caption{$n = 50$, $W_{max} \approx 26000$}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_19819ucorr.png}
+  \caption{$n = 50$, $W_{max} \approx 20000$}
   \label{fig:n_fifty_ucorrelated}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_52857.png}
-  \caption{$n = 100$, $W_{max} \approx 52000$}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_39514ucorr.png}
+  \caption{$n = 100$, $W_{max} \approx 40000$}
   \label{fig:n_one_hundred_ucorrelated}
 \end{subfigure}
 \caption{Instancias con pesos y valores desvinculados (uncorrelated)}
 \label{fig:ucorrelated_instance}
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_40983uspan.png}
-  \caption{$n = 50$, $W_{max} \approx 41000$}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_15897uspan.png}
+  \caption{$n = 50$, $W_{max} \approx 16000$}
   \label{fig:n_fifty_spanucorrelated}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_75752uspan.png}
-  \caption{$n = 100$, $W_{max} \approx 75000$}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_30802uspan.png}
+  \caption{$n = 100$, $W_{max} \approx 31000$}
   \label{fig:n_one_hundred_spanucorrelated}
 \end{subfigure}
 \caption{Instancias con pesos y valores desvinculados difícil ($uncorrelated\_span(2,10)$)}
 \label{fig:initial_instances}
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_40983wspan.png}
-  \caption{$n = 50$, $W_{max} \approx 41000$}
-  \label{fig:n_fifty_spanwcorrelated}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_22531sspan.png}
+  \caption{$n = 50$, $W_{max} \approx 22000$}
+  \label{fig:n_fifty_spanscorrelated}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_75752wspan.png}
-  \caption{$n = 100$, $W_{max} \approx 75000$}
-  \label{fig:n_one_hundred_spanwcorrelated}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_44534sspan.png}
+  \caption{$n = 100$, $W_{max} \approx 44000$}
+  \label{fig:n_one_hundred_spanscorrelated}
 \end{subfigure}
 \caption{Instancias con pesos y valores debilmente vinculados difícil ($strongly\_correlated\_span(2,10)$)}
 \label{fig:initial_instances}
 \end{figure}
 
-Como podemos ver en el caso básico inicial, los tiempos entre la solución Top-Down y Bottom-Up crecen relativamente en forma similar para esta instancia del problema, siendo la solución Bottom-Up la que mejor se ajusta. Lo que hay que notar de estos dos ejemplos es que el tiempo de ejecución del problema con $n = 100$ (para el mismo peso) es el doble del tiempo encontrado para el problema con $n = 50$. Podemos ver, por ejemplo, con un peso $W = 20000$, que en el gráfico con 50 elementos, la solución Bottom-Up tardó aproximadamente 0.5 [s] y la Top-Down 0.6 [s], mientras que para 100 elementos y mismo peso, los tiempos son aproximadamente de 1 [s] y 1.2 [s] respectivamente.
-Un comportamiento similar (aunque un tanto más variable, por ser instancias más difíciles), se puede ver en los tiempos de las demás ejecuciones.
+Como podemos ver en el caso básico inicial, los tiempos entre la solución Top-Down y Bottom-Up crecen relativamente en forma similar para esta instancia del problema. Lo que hay que notar de estos dos ejemplos es que el tiempo de ejecución del problema con $n = 100$ (para el mismo peso) es el doble del tiempo encontrado para el problema con $n = 50$. Podemos ver, por ejemplo, con un peso $W = 10000$, que en el gráfico con 50 elementos, la solución Bottom-Up tardó aproximadamente 0.5 [s] y la Top-Down 0.8 [s], mientras que para 100 elementos y mismo peso, los tiempos son aproximadamente de 1 [s] y 1.6 [s] respectivamente.
+Un comportamiento similar (aunque más variable, por ser instancias más difíciles), se puede ver en los tiempos de las demás ejecuciones.
 
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_37766sspan.png}
-  \caption{$n = 50$, $W_{max} \approx 37000$}
-  \label{fig:n_fifty_spanscorrelated}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_15897wspan.png}
+  \caption{$n = 50$, $W_{max} \approx 16000$}
+  \label{fig:n_fifty_spanwcorrelated}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_69134sspan.png}
-  \caption{$n = 100$, $W_{max} \approx 75000$}
-  \label{fig:n_one_hundred_spanscorrelated}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_30802wspan.png}
+  \caption{$n = 100$, $W_{max} \approx 31000$}
+  \label{fig:n_one_hundred_spanwcorrelated}
 \end{subfigure}
-\caption{Instancias con pesos y valores fuertemente vinculados difícil ($strongly\_correlated\_span(2,10)$)}
+\caption{Instancias con pesos y valores fuertemente vinculados difícil ($weakly\_correlated\_span(2,10)$)}
 \label{fig:initial_instances}
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_25154pceil.png}
-  \caption{$n = 50$, $W_{max} \approx 25000$}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_7221pceil.png}
+  \caption{$n = 50$, $W_{max} \approx 7000$}
   \label{fig:n_fifty_pceil}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_48907pceil.png}
-  \caption{$n = 100$, $W_{max} \approx 49000$}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_15444pceil.png}
+  \caption{$n = 100$, $W_{max} \approx 15000$}
   \label{fig:n_one_hundred_pceil}
 \end{subfigure}
 \caption{Instancia difícil ($pceil(3)$)}
 \label{fig:initial_instances}
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_25154circle.png}
-  \caption{$n = 50$, $W_{max} \approx 25000$}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_5782circle.png}
+  \caption{$n = 50$, $W_{max} \approx 6000$}
   \label{fig:n_fifty_pceil}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_48907circle.png}
-  \caption{$n = 100$, $W_{max} \approx 49000$}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_11976circle.png}
+  \caption{$n = 100$, $W_{max} \approx 12000$}
   \label{fig:n_one_hundred_pceil}
 \end{subfigure}
 \caption{Instancia difícil ($circle(2/3)$)}
@@ -148,18 +148,18 @@ Ahora pasamos a un caso más particular e interesante. Nos enfocamos en una inst
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_445775.png}
+\includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_1485862similarWeights.png}
 \caption{$n = 50$, $w_i$ altos y similares entre sí}
 \label{fig:similar_weights}
 \end{figure}
 
-Una de las cosas que queríamos remarcar es la diferencia entre los tiempos de ejecución de la implementación Top-Down y la Bottom-Up en este tipo de instancias del problema.
+Una de las cosas a remarcar es la diferencia entre los tiempos de ejecución de la implementación Top-Down y la Bottom-Up en este tipo de instancias del problema.
 
 La enorme diferencia se debe básicamente a la forma de resolver el problema que tiene cada técnica. La implementación Bottom-Up va resolviendo desde los sub-problemas más pequeños hasta llegar al problema final deseado iterativamente, obteniendo la solución óptima para absolutamente todos los sub-problemas cuyos parámetros de entrada son menores o iguales al problema original. La desventaja de esta técnica, es que está desperdiciando mucho tiempo en resolver sub-problemas que *podrían no utilizarse* para resolver el problema deseado. En otras palabras, la solución Bottom-Up llena completamente la matriz $M$ de resultados óptimos, cuando hay muchos sub-problemas que no son necesarios.
 
 Por otro lado, la solución Top-Down arranca desde el problema con los parámetros originales que queremos resolver, y recursivamente va partiendo el original en sub-problemas y resolviéndolos hasta obtener todos los resultados deseados. Es decir, la solución Top-Down solo se enfoca en resolver los sub-problemas estrictamente necesarios en los que se divide el problema original, sin gastar tiempo de cómputo en sub-problemas cuya solución jamás utilizaríamos. La desventaja de la solución Top-Down es el overhead que puede traer una solución recursiva, y el espacio en el stack que ésta requiere, el cual se reduce de cierta forma utilizando correctamente variables globales.
 
-Informalmente, podemos decir que la solución Bottom-Up se toma su tiempo en resolver absolutamente todo, mientras que la solución Top-Down va al grano y resuelve lo estrictamente necesario. Es por eso que en este tipo de problemas, la solución Top-Down puede resultar mucho más eficiente que la Bottom-Up.
+Informalmente, podemos decir que la solución Bottom-Up se toma su tiempo en resolver absolutamente todo, mientras que la solución Top-Down va al grano y resuelve lo estrictamente necesario. Es por eso que en este tipo de escenarios, la solución Top-Down puede resultar mucho más eficiente que la Bottom-Up.
 
 ## El problema del viajante de comercio
 
