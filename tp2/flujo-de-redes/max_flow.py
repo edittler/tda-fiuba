@@ -86,7 +86,7 @@ class Flow(Graph):
         visited.add(src)
         for e in g.adj_e(src):
             if g.e_transitable(e, flow) and not e.dst in visited:
-                DFS(g, e.dst, flow)
+                g.visit(e.dst, flow, visited)
 
     def repr_max_flow(g, source, target):
         flow = g.get_max_flow(source, target)

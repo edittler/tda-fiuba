@@ -52,10 +52,22 @@ class ProjectSelectionTest(unittest.TestCase):
         ps = ProjectSelection(self.definition)
         self.assertEqual(ps.n, 2)
         self.assertEqual(ps.m, 3)
-        self.assertListEqual(ps.capacities, ['50', '100'])
+        self.assertListEqual(ps.areas, ['50', '100'])
         self.assertListEqual(ps.proyects, [['100', '1'], ['200', '1', '2'], ['300', '2']])
 
+    def test_simple_selection(self):
+        ps = ProjectSelection(self.definition)
+        self.assertEqual(ps.selectedProyects, [1,2,3])
+        self.assertEqual(ps.selectedAreas, [1,2])
 
+    def test_no_selection(self):
+        no_problem_definition = "1\n2\n200\n100 1\n50 1\n"
+        ps = ProjectSelection(no_problem_definition)
+        self.assertListEqual(ps.areas, ['200'])
+        self.assertListEqual(ps.proyects, [['100', '1'], ['50', '1']])
+        self.assertEqual(ps.selectedAreas, [])
+        self.assertEqual(ps.selectedProyects, [])
+        
 def main():
     return unittest.main()
 

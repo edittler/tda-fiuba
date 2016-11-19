@@ -32,10 +32,13 @@ class ProjectSelection(object):
         lines = definition.split('\n')
         self.n = int(lines[0])
         self.m = int(lines[1])
-        self.capacities = lines[2:2 + self.n]
+        self.areas = lines[2:2 + self.n]
         self.proyects = [x.split(' ') for x in lines[2 + self.n:2 + self.n + self.m]]
+        self.selectedProyects = []
+        self.solve()
 
     def solve(self):
+        # Armado de la red.
         source = 0
         target = self.n + self.m + 1
         f = Flow(target + 1)
@@ -47,15 +50,20 @@ class ProjectSelection(object):
             for req in proy[1:]:
                 # Como los nodos se cuentan desde 0, y las capacidades requeridas
                 # desde 1, necesito restar 1.
-                capacity_node = 1 + self.m + int(req) - 1
-                f.add_edge(proyect_node, capacity_node, float('inf'))
+                area_node = 1 + self.m + int(req) - 1
+                f.add_edge(proyect_node, area_node, float('inf'))
 
-        for i, cap in enumerate(self.capacities):
-            capacity_node = 1 + self.m + i
-            f.add_edge(capacity_node, target, int(cap))
+        for i, cap in enumerate(self.areas):
+            area_node = 1 + self.m + i
+            f.add_edge(area_node, target, int(cap))
 
-        print(f.repr_max_flow(source, target))
+        # Max-Flow, Min-Cut
+        flow = f.get_max_flow(source, target)
+        cut = f.get_min_cut(source, flow)
 
+        # En el corte están los proyectos y las áreas a elegir.
+        self.selectedProyects = [p for p in cut if 1 <= p <= self.m]
+        self.selectedAreas = [a - self.m for a in cut if self.m < a <= self.n+self.m]
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
