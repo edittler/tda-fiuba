@@ -30,7 +30,7 @@ En general, este modelo deviene en problemas de optimización, que son el de _ma
 
 El teorema de máximo flujo, mínimo corte muestra que el máximo flujo corresponde a la capacidad del mínimo corte. Este teorema se basa en la importante propiedad de que la capacidad de cualquier corte en una red es cota superior del valor del flujo.
 
-Una demostración común, como la encontrada en el capítulo 7 del Kleinberg-Tardos **(CITAR)** acude a mostrar la situación final del algoritmo de Ford Fulkerson para maximización del flujo.
+Una demostración común, como la encontrada en el capítulo 7 del libro [@KT] acude a mostrar la situación final del algoritmo de Ford Fulkerson para maximización del flujo.
 
 ### Algoritmo de Ford Fulkerson
 
@@ -64,7 +64,14 @@ Para este modelo creamos la siguiente red de flujo:
 - El nodo $t$ simbolizará las inversiones, con lo cual apuntará a las áreas de investigación. En este caso, las capacidades serán los costos $a_k$.
 - Entre requerimientos y proyectos habrá aristas de dependencia: una arista $(i,j)$ donde $i$ es un proyecto y $j$ es un requerimiento simboliza que $i$ necesita de $j$ para poder llevarse a cabo. Las capacidades de aquellas serán tratadas más adelante.
 
-Esto da grafos como el siguiente: **(DIBUJAR IMAGEN)**
+Esto da grafos como el siguiente:
+
+\begin{figure}[ht!]
+    \label{fig:redModelo}
+    \center
+    \includegraphics[width=0.5\columnwidth]{images/redModelo.png}
+    \caption{Red Prototipo}
+\end{figure}
 
 La idea de este modelo es utilizar el algoritmo de Ford-Fulkerson para obtener un corte mínimo de forma tal que el conjunto alcanzable por $s$ sea el conjunto de proyectos a tomar, con sus áreas correspondientes.
 
@@ -90,13 +97,20 @@ Para comprobar que el córte mínimo es efectivamente el que buscamos, necesitam
     G(A) = \sum_{i/P_i \in A} g_i - \sum_{k / A_k \in A} a_k
 \end{equation}
 
-Por otro lado, a la capacidad del corte contribuyen las aristas de las áreas investigadas y las de proyectos no tomados (**IMAGEN**), con lo cual puede ser escrita de la siguiente:
+Por otro lado, a la capacidad del corte contribuyen las aristas de las áreas investigadas y las de proyectos no tomados, como puede verse en la figura \ref{fig:corteSaliente}. Entonces, Entonces calculamos:
 
 \begin{equation}
     c(A,B) = \sum_{k / A_k \in A} a_k + \sum_{i / P_i \notin A} g_i = \sum_{k / A_k \in A} a_k + C - \sum_{i / P_i \in A} g_i = C - G(A)
 \end{equation}
 
 De este modo, ya que C es constante, vemos que minimizar el corte es igual a maximizar la ganancia, con lo cual este modelo resuelve el problema planteado.
+
+\begin{figure}[ht!]
+    \center
+    \includegraphics[width=0.5\columnwidth]{images/corteSaliente.png}
+    \caption{Capacidad del corte mínimo expresado con las aristas salientes en rojo}
+    \label{fig:corteSaliente}
+\end{figure}
 
 ### Detalles de implementación
 
@@ -136,7 +150,7 @@ La **búsqueda de caminos** entre s y t fue implementada con **DFS**, ya que ten
 
 El **Mínimo corte** también fue implementado con un DFS recursivo, pero esto ocurrió por comodidad y no por eficiencia, ya que tanto en ese caso como en BFS buscar el mínimo corte implica recorrer todos los nodos alcanzables por $s$.
 
-### Complejidad
+### Complejidad \label{sec:complejidad}
 
 Para calcular la complejidad es necesario acotar la cantidad de iteraciones que tendrá el algoritmo. Como sabemos que el flujo aumentará en una cantidad positiva en cada iteración y sabemos que $v(f) < C$, entonces a lo sumo habrá $C$ iteraciones.
 
@@ -152,21 +166,104 @@ Para simplificar las cuentas (con pérdida de generalidad) suponemos que $g_i = 
 
 Esta fuerte dependencia de los costos se debe a que no se implementó un mecanismo inteligente de elección de caminos, permitiendo que el bottleneck pueda ser tan pequeño como 1. Teniendo en cuenta que lo ideal sería aumentar primero los paths de mayor bottleneck, hay algoritmos mejorados como el _Scaling Max Flow_, cuya complejidad resulta de $O((n+m+r)log_2(C))$, lo cual baja el orden de los cuadráticos a $O(xlogx)$ según mostrado en la sección 7.3 del libro [@KT].
 
-### Algunos casos
+## Algunos Ejemplos
 
-En los tests provistos pueden verse algunos casos interesantes.
+### Sin presupuesto
+Uno de los tests provistos (_test_no_selection_) muestra que cuando se gastaría más dinero en cualquier investigación que la que se obtendría con sus respectivos proyectos, el algoritmo elige no tomar ningún área ni proyecto.
 
-#### Sin presupuesto.
-El _test_no_selection_ muestra que cuando se gastaría más dinero en cualquier investigación que la que se obtendría con sus respectivos proyectos, el algoritmo elige no tomar ningún área ni proyecto.
-
-**(IMAGEN)**
+\begin{figure}[ht!]
+    \label{fig:noSelection}
+    \center
+    \includegraphics[width=0.5\columnwidth]{images/noSelection.png}
+    \caption{El corte solo incluye a la salida (no se escoge ningún proyecto o área).}
+\end{figure}
 
 Teóricamente esto es esperable, dado que el corte por $s$, que tiene las ganancias, será más pequeño que el corte por $t$.
 
-#### Aumento de $m$
-#### Aumento de $n$
-#### Aumento de $r$
+### Proyecto saturado
+El flujo de la red, irónicamente, tiene muy poco protagonismo en la intuición de este modelo del problema. Tal es así que un trabajo saturado no significa que no podrá elegirse, salvo que su área de investigación no sea compartida por nadie más.
 
+El _test_saturated_project_ es un claro ejemplo.
+
+\begin{figure}[ht!]
+    \label{fig:saturacion}
+    \center
+    \includegraphics[width=0.5\columnwidth]{images/saturacion.png}
+    \caption{El proyecto $P_1$ todavía es accesible mediante la backward edge desde su área requerida.}
+\end{figure}
+
+Del mismo modo, Proyectos de flujo nulo serán elegidos sin ninguna diferencia.
+
+### Dependencia real del tamaño de la entrada
+El mayor problema con el cálculo teórico efectuado en la sección \ref{sec:complejidad} es que no tiene en cuenta las restricciones que presenta la estructura del grafo en este modelo.
+
+Estas restricciones no son tenidas en cuenta por el problema original de selección de proyectos con un nivel arbitrario de dependencias. Teniendo en cuenta esa estructura es que justamente fue elegido DFS para buscar caminos, ya que los niveles son pocos, pero el ancho abarca toda la red en esos tres niveles.
+
+Estos son algunos casos que demuestran lo particular de red:
+
+### Aumento de m
+
+El problema con el "aumento de m", como de cualquier otra variable, es que el problema no depende en sí de esa cantidad aislada, sino de su relación con las otras.
+
+Para mostrarlo claramente, estos son 3 experimentos con el mismo aumento de $m$.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.5\columnwidth]{images/m1.png}
+    \caption{Aumento de m para un solo área de investigación, de distintos modos.}
+\end{figure}
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.5\columnwidth]{images/m1zoom.png}
+    \caption{Zoom en las curvas menores.}
+\end{figure}
+
+La **curva verde** corresponde al aumento de la cantidad de proyectos, pero **sin conectarlos** al único área de investigación. Como este grafo está desconectado, no habrá ni siquiera un aumento de flujo, y el tiempo de ejecución será el de un DFS que no encontrará caminos y otro para encontrar el corte. De este modo, como la cantidad de aristas y nodos aumenta **linealmente**, esta curva aumentará de la misma manera.
+
+La **curva azul** corresponde a la misma cantidad $m$ de proyectos, pero con **todos los proyectos dependiendo del mismo área**. Esto muestra un poco mejor el **comportamiento cuadrático** previsto en el análisis teórico, y se ve que la curva es notoriamente superior a las otras.
+
+La **curva intermedia, la roja**, correponde también a $m$ proyectos conectados a una sola dependencia, con la diferencia de que ahora los proyectos producen **ganancia 10** en lugar de 1, como en los casos anteriores. Si bien habíamos predicho que el aumento de C produciría un aumento importante en el tiempo de ejecución (lo cual puede verse al principio de la curva) esto también produce que se sature el área más rápidamente, con lo cual desde el 100, donde se produce esa saturación, ya no habrá caminos en el grafo residual y solo restará un DFS al igual que para la curva verde. Esto se ve muy claramente en el **cambio a un comportamiento lineal**, que en la totalidad, termina logrando tiempos de ejecución mucho más pequeños que la curva azul, pese al aumento de C.
+
+### Distintas organizaciones de dependencias
+
+Para mostrar aún más la dependencia del modelo según la estructura de la red, se muestran tres casos de organización diferentes para la misma cantidad de elementos:
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.5\columnwidth]{images/organizaciones.png}
+    \caption{Comparación.}
+\end{figure}
+
+En este caso hay $m = n$ áreas de investigacón.
+
+En la curva azul se da el mismo caso que el anterior: todos los proyectos dependiendo de un área. Este parece ser un caso particularmente patológico de organización, lo cual puede deberse a que al estar todos conectados, siempre se evaluarán los posibles caminos residuales por los anteriores flujos.
+
+En la curva roja el esquema es entrelazado (Proyectos a distancia 2 comparten un área), de forma que todos los nodos están conectados por un mismo camino.
+
+En la curva verde se ve un esquema enfrentado (cada nodo depende del área que tiene en frente). Como los DFS individuales no tienen opciones, resulta ser el más pequeño.
+
+De todas maneras es muy importante tener en cuenta que se mantiene la forma parabólica, lo cual nos puede hacer suponer que se mantiene esta dependencia cuadrática y la organización causa quizás el aumento de una constante asintótica.
+
+### Estructura densa
+
+El último caso expuesto es el de una red densa, con todos los proyectos dependiendo de todas las áreas de investigación. El experimento se efectuó para ganancias y costos de 100 y de 1 con los siguientes resultados:
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.5\columnwidth]{images/densa.png}
+    \caption{Tiempo de ejecución para altas dependencias}
+\end{figure}
+
+A simple vista, el gráfico parece muy similar a los anteriores, solo que con un crecimiento mucho más rápido (Se puede comparar en gráficos anteriores la altura para $m = 100$ de la curva de todos contra uno). Para $m \ge 500$ la ejecución fue demasiado lenta como para obtener resultados en un tiempo razonable ($>20$ minutos).
+
+Lo único destacable de este experimento es la falta total de variación con el aumento del costo. Para este caso es esperable, dado que las aristas no saturarán con la misma rapidez que antes y no hay dependencias entre proyectos, lo cual haría sustancialmente más complicada y lenta la ejecución del algoritmo.
+
+## Conclusiones
+
+Si bien la dependencia parece ser clara en la teoría, en los experimentos es muy difícil desligar las variables entre sí, ya que si solo se aumenta una variable sin tener en cuenta las otras, no hay un aumento como el predicho. Tal es el ejemplo anterior de añadir proyectos sin sus dependencias. El mismo efecto produce (y por eso no se adjunta al informe) el aumento de áreas sin proyectos, y la dependencia en cuanto al crecimiento conjunto también es similar.
+
+Resulta particularmente interesante la idea de usar un algoritmo como este para algo que intuitivamente no tiene que ver con el flujo y donde la importancia radica en clasificar elementos según una relación dinámica entre ellos. Una adaptación que inicialmente parece forzada, resulta ser cómoda, eficiente y óptima.
 
 \newpage
 
