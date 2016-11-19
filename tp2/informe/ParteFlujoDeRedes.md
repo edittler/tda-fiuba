@@ -39,9 +39,9 @@ Este algoritmo, que será el utilizado en el trabajo, trabaja con el _Grafo Resi
 - Una arista $e \in E(G)$ tal que $f(e) < c_e$ produce una _arista residual hacia adelante_ (foreward edge) $e' \in E(G_f)$ tal que $c_{e'} = c_e - f(e)$. Esto puede verse como lo que aún puede aumentarse de flujo en esa arista.
 - Una arista $e \in E(G)$ tal que $f(e) > 0$ produce una _arista residual hacia atrás_ (backward edge) $e' \in E(G_f)$ tal que $c_{e'} = f(e)$. Esto puede verse como "lo que puede quitarse de flujo para ser asignado en otro lado".
 
-La estrategia del algoritmo para maximizar el flujo se basa en buscar caminos de $s$ a $t$ en el grafo residual para aumentar el flujo en un cuello de botella (bottleneck) $b$ correspondiente a la mínima capacidad de ese camino. Finalizará cuando ya no haya caminos $s-t$ en $G_f$.
+La estrategia del algoritmo para maximizar el flujo se basa en buscar caminos de $s$ a $t$ en el grafo residual para aumentar el flujo en un cuello de botella (bottleneck) $b$ correspondiente a la mínima capacidad de ese camino. Finalizará cuando ya no haya caminos $s$-$t$ en $G_f$.
 
-La importancia reside en que en cada paso se aumenta $v(f)$ en $b$ (que es mayor a 0), y sabemos que $v(f)$ está acotado, con lo cual **sabemos que el algoritmo termina**. Además, al terminar, hay un corte natural $(A,B)$ donde $A$ es el conjunto de todos los nodos alcanzables por $s$ y $B$ todo el resto. Como la ejecución termina cuando ya no hay caminos $s-t$, sabemos que la capacidad residual de las aristas entre $A$ y $B$ es nula. Entonces, la capacidad de ese corte está saturada hacia adelante (si no, habría forward edges) y no hay flujo de $B$ hacia $A$ (si no, habría backward edges de A a B). De este modo, nos aseguramos de que ese corte está saturado, mostrando que se realiza la desigualdad de capacidad y valor de flujo, y **demostrando Max-Flow Min-Cut** y simultáneamente que **el algoritmo efectivamente obtiene el Máximo flujo**.
+La importancia reside en que en cada paso se aumenta $v(f)$ en $b$ (que es mayor a 0), y sabemos que $v(f)$ está acotado, con lo cual **sabemos que el algoritmo termina**. Además, al terminar, hay un corte natural $(A,B)$ donde $A$ es el conjunto de todos los nodos alcanzables por $s$ y $B$ todo el resto. Como la ejecución termina cuando ya no hay caminos $s$-$t$, sabemos que la capacidad residual de las aristas entre $A$ y $B$ es nula. Entonces, la capacidad de ese corte está saturada hacia adelante (si no, habría forward edges) y no hay flujo de $B$ hacia $A$ (si no, habría backward edges de A a B). De este modo, nos aseguramos de que ese corte está saturado, mostrando que se realiza la desigualdad de capacidad y valor de flujo, y **demostrando Max-Flow Min-Cut** y simultáneamente que **el algoritmo efectivamente obtiene el Máximo flujo**.
 
 Una vez finalizada la ejecución de Ford-Fulkerson, lo único necesario para encontrar el corte mínimo es hacer una búsqueda como BFS para encontrar los nodos alcanzables por $t$.
 
@@ -97,6 +97,50 @@ Por otro lado, a la capacidad del corte contribuyen las aristas de las áreas in
 \end{equation}
 
 De este modo, ya que C es constante, vemos que minimizar el corte es igual a maximizar la ganancia, con lo cual este modelo resuelve el problema planteado.
+
+### Detalles de implementación
+
+En términos generales, la solución fue implementada con una clase ProjectSelection correspondiente al problema, que utiliza a una clase Flow, que modela la red de flujo y es capaz de aplicar el algoritmo de Ford Fulkerson.
+
+Ya que el grafo de la red y el residual comparten una gran cantidad de información, en lugar de tratarlos por separado utilizamos únicamente al grafo principal, añadiendo las backward edges con capacidad 0 al agregar cada arista.
+
+El uso del grafo residual se da sobre todo en la búsqueda de caminos a aumentar y la capacidad residual se calcula en el momento en la función $e_transitable$ para ver si un camino residual puede pasar por esa arista dado el flujo en ese momento:
+
+```python
+def e_transitable(g, e, flow):
+    return (e.is_backwards and e.capacity > 0) \
+        or ((not e.is_backwards) and flow[e] < e.capacity)
+```
+
+Como fue explicado para arriba, si es una _foreward edge_, la capacidad residual es positiva cuando la capacidad no está saturada y por lo tanto puede pasar más flujo por allí. Para una _backward edge_ , la capacidad residual es positiva cuando hay flujo en el sentido contrario que puede ser reducido para usar en otro lado. Estos son los casos en donde un camino $s$-$t$ puede pasar por allí.
+
+La lógica principal del algoritmo de Ford_Fulkerson está implementada del siguiente modo:
+
+```python
+def get_max_flow(g, source, target):
+    flow = g.get_empty_flow()
+    path = g.flow_path(source, target, flow)
+
+    while path != None:
+        b = g.bottleneck(path, flow)
+        for edge in path:
+            flow[edge] -= b if edge.is_backwards else -b
+        path = g.flow_path(source, target, flow)
+
+    return flow
+```
+
+Como las capacidades residuales son calculadas en el momento y en base al flujo, no hace falta "actualizar" al grafo residual después de un aumento.
+
+La **búsqueda de caminos** entre s y t fue implementada con **DFS**, ya que teniendo en cuenta la estructura del grafo, un BFS produciría siempre recorrer todos los vértices: como se recorre por distancias al origen, se recorrerán siempre primero todos los proyecots (d = 1), luego todas las áreas de investigación (d=3) y recién al final se llegará a $t$ (d = 3). Con DFS el peor caso será el de recorrer todos los vértices, mientras que es posible que llegue en visitando un proyecto y un área.
+
+El **Mínimo corte** también fue implementado con un DFS recursivo, pero esto ocurrió por comodidad, ya que tanto en ese caso como en BFS buscar el mínimo corte implica recorrer todos los nodos alcanzables por $s$.
+
+### Complejidad
+
+Para calcular la complejidad es necesario acotar la cantidad de iteraciones que tendrá el algoritmo. Como sabemos que el flujo aumentará en una cantidad positiva en cada iteración y sabemos que $v(f) < C$, entonces a lo sumo habrá $C$ iteraciones.
+
+Cada una de las iteraciones, a su vez, consiste principalmente en un aumento.
 
 \newpage
 
