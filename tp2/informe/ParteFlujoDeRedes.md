@@ -134,13 +134,23 @@ Como las capacidades residuales son calculadas en el momento y en base al flujo,
 
 La **búsqueda de caminos** entre s y t fue implementada con **DFS**, ya que teniendo en cuenta la estructura del grafo, un BFS produciría siempre recorrer todos los vértices: como se recorre por distancias al origen, se recorrerán siempre primero todos los proyecots (d = 1), luego todas las áreas de investigación (d=3) y recién al final se llegará a $t$ (d = 3). Con DFS el peor caso será el de recorrer todos los vértices, mientras que es posible que llegue en visitando un proyecto y un área.
 
-El **Mínimo corte** también fue implementado con un DFS recursivo, pero esto ocurrió por comodidad, ya que tanto en ese caso como en BFS buscar el mínimo corte implica recorrer todos los nodos alcanzables por $s$.
+El **Mínimo corte** también fue implementado con un DFS recursivo, pero esto ocurrió por comodidad y no por eficiencia, ya que tanto en ese caso como en BFS buscar el mínimo corte implica recorrer todos los nodos alcanzables por $s$.
 
 ### Complejidad
 
 Para calcular la complejidad es necesario acotar la cantidad de iteraciones que tendrá el algoritmo. Como sabemos que el flujo aumentará en una cantidad positiva en cada iteración y sabemos que $v(f) < C$, entonces a lo sumo habrá $C$ iteraciones.
 
-Cada una de las iteraciones, a su vez, consiste principalmente en un aumento.
+Cada una de las iteraciones, a su vez, consiste principalmente en la búsqueda de un camino, cuyo peor caso recorre todo los nodos en orden $O(|V| + |E|) = O(n+m+2r)$, siendo $r = \sum_{i=1}^{m}|Ri|$ (la cantidad de aristas). En este orden se ve la cantidad de aristas dos veces por la generación de backward edges, aunque esto no afecta realmente al orden.
+
+Buscar el bottleneck se hace dentro del camino encontrado, que es un camino simple, con lo cual es como máximo $O(n+m)$. Lo mismo para el aumento del camino.
+
+Finalmente, todo el orden total es de $O(C(n+m+r))$. Esto significa que es lineal en el n, m y r siempre y cuando se mantenga $C$.
+
+Sin embargo, no sería lógico decir aquello, ya que $C$ no es independiente de $n$ o de $m$. Para obtener esa cota del valor del flujo puede tomarse el corte tanto en $(\{s\}, G-\{s\})$ o en $(G-\{t\},\{t\})$ y la mínima capacidad entre ambos cortes sería una cota. Por eso podemos expresar la parte de C como $\sum_{i=1}^m g_i + \sum_{k=1}^n a_k$, que también depende de m y n.
+
+Para simplificar las cuentas suponemos (con pérdida de generalidad) que $g_i = a_k = 1 \forall i \forall k$. En este caso relajado podríamos fijar para el problema $\Omega((m + n)(m+n+r))$, lo cual es **cuadrático en $m$ y $n$, y lineal en $r$ (manteniendo las otras entradas fijas)**. El $O$ real será más grande y dependerá de las capcacidades (ganancias y pérdidas).
+
+Esta fuerte dependencia de los costos se debe a que no se implementó un mecanismo inteligente de elección de caminos, permitiendo que el bottleneck pueda ser tan pequeño como 1. Teniendo en cuenta que lo ideal sería aumentar primero los paths de mayor bottleneck, hay algoritmos mejorados como el _Scaling Max Flow_, cuya complejidad resulta de $O((n+m+r)log_2(C))$, lo cual baja el orden de los cuadráticos a $O(xlogx)$. **(CITAR)**
 
 \newpage
 
