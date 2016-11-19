@@ -53,91 +53,91 @@ Primeramente, mostramos un par de casos básicos, con 50 y 100 elementos, pesos 
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_24469.png}
-  \caption{$n = 50$, $W_{max} \approx 26000$}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_19819ucorr.png}
+  \caption{$n = 50$, $W_{max} \approx 20000$}
   \label{fig:n_fifty_ucorrelated}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_52857.png}
-  \caption{$n = 100$, $W_{max} \approx 52000$}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_39514ucorr.png}
+  \caption{$n = 100$, $W_{max} \approx 40000$}
   \label{fig:n_one_hundred_ucorrelated}
 \end{subfigure}
 \caption{Instancias con pesos y valores desvinculados (uncorrelated)}
 \label{fig:ucorrelated_instance}
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_40983uspan.png}
-  \caption{$n = 50$, $W_{max} \approx 41000$}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_15897uspan.png}
+  \caption{$n = 50$, $W_{max} \approx 16000$}
   \label{fig:n_fifty_spanucorrelated}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_75752uspan.png}
-  \caption{$n = 100$, $W_{max} \approx 75000$}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_30802uspan.png}
+  \caption{$n = 100$, $W_{max} \approx 31000$}
   \label{fig:n_one_hundred_spanucorrelated}
 \end{subfigure}
 \caption{Instancias con pesos y valores desvinculados difícil ($uncorrelated\_span(2,10)$)}
 \label{fig:initial_instances}
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_40983wspan.png}
-  \caption{$n = 50$, $W_{max} \approx 41000$}
-  \label{fig:n_fifty_spanwcorrelated}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_22531sspan.png}
+  \caption{$n = 50$, $W_{max} \approx 22000$}
+  \label{fig:n_fifty_spanscorrelated}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_75752wspan.png}
-  \caption{$n = 100$, $W_{max} \approx 75000$}
-  \label{fig:n_one_hundred_spanwcorrelated}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_44534sspan.png}
+  \caption{$n = 100$, $W_{max} \approx 44000$}
+  \label{fig:n_one_hundred_spanscorrelated}
 \end{subfigure}
 \caption{Instancias con pesos y valores debilmente vinculados difícil ($strongly\_correlated\_span(2,10)$)}
 \label{fig:initial_instances}
 \end{figure}
 
-Como podemos ver en el caso básico inicial, los tiempos entre la solución Top-Down y Bottom-Up crecen relativamente en forma similar para esta instancia del problema, siendo la solución Bottom-Up la que mejor se ajusta. Lo que hay que notar de estos dos ejemplos es que el tiempo de ejecución del problema con $n = 100$ (para el mismo peso) es el doble del tiempo encontrado para el problema con $n = 50$. Podemos ver, por ejemplo, con un peso $W = 20000$, que en el gráfico con 50 elementos, la solución Bottom-Up tardó aproximadamente 0.5 [s] y la Top-Down 0.6 [s], mientras que para 100 elementos y mismo peso, los tiempos son aproximadamente de 1 [s] y 1.2 [s] respectivamente.
-Un comportamiento similar (aunque un tanto más variable, por ser instancias más difíciles), se puede ver en los tiempos de las demás ejecuciones.
+Como podemos ver en el caso básico inicial, los tiempos entre la solución Top-Down y Bottom-Up crecen relativamente en forma similar para esta instancia del problema. Lo que hay que notar de estos dos ejemplos es que el tiempo de ejecución del problema con $n = 100$ (para el mismo peso) es el doble del tiempo encontrado para el problema con $n = 50$. Podemos ver, por ejemplo, con un peso $W = 10000$, que en el gráfico con 50 elementos, la solución Bottom-Up tardó aproximadamente 0.5 [s] y la Top-Down 0.8 [s], mientras que para 100 elementos y mismo peso, los tiempos son aproximadamente de 1 [s] y 1.6 [s] respectivamente.
+Un comportamiento similar (aunque más variable, por ser instancias más difíciles), se puede ver en los tiempos de las demás ejecuciones.
 
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_37766sspan.png}
-  \caption{$n = 50$, $W_{max} \approx 37000$}
-  \label{fig:n_fifty_spanscorrelated}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_15897wspan.png}
+  \caption{$n = 50$, $W_{max} \approx 16000$}
+  \label{fig:n_fifty_spanwcorrelated}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_69134sspan.png}
-  \caption{$n = 100$, $W_{max} \approx 75000$}
-  \label{fig:n_one_hundred_spanscorrelated}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_30802wspan.png}
+  \caption{$n = 100$, $W_{max} \approx 31000$}
+  \label{fig:n_one_hundred_spanwcorrelated}
 \end{subfigure}
-\caption{Instancias con pesos y valores fuertemente vinculados difícil ($strongly\_correlated\_span(2,10)$)}
+\caption{Instancias con pesos y valores fuertemente vinculados difícil ($weakly\_correlated\_span(2,10)$)}
 \label{fig:initial_instances}
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_25154pceil.png}
-  \caption{$n = 50$, $W_{max} \approx 25000$}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_7221pceil.png}
+  \caption{$n = 50$, $W_{max} \approx 7000$}
   \label{fig:n_fifty_pceil}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_48907pceil.png}
-  \caption{$n = 100$, $W_{max} \approx 49000$}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_15444pceil.png}
+  \caption{$n = 100$, $W_{max} \approx 15000$}
   \label{fig:n_one_hundred_pceil}
 \end{subfigure}
 \caption{Instancia difícil ($pceil(3)$)}
 \label{fig:initial_instances}
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_25154circle.png}
-  \caption{$n = 50$, $W_{max} \approx 25000$}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_5782circle.png}
+  \caption{$n = 50$, $W_{max} \approx 6000$}
   \label{fig:n_fifty_pceil}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_48907circle.png}
-  \caption{$n = 100$, $W_{max} \approx 49000$}
+  \includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_100_maxWeight_11976circle.png}
+  \caption{$n = 100$, $W_{max} \approx 12000$}
   \label{fig:n_one_hundred_pceil}
 \end{subfigure}
 \caption{Instancia difícil ($circle(2/3)$)}
@@ -148,18 +148,18 @@ Ahora pasamos a un caso más particular e interesante. Nos enfocamos en una inst
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_445775.png}
+\includegraphics[width=.8\linewidth]{../programacion-dinamica/knapsack/images/n_50_maxWeight_1485862similarWeights.png}
 \caption{$n = 50$, $w_i$ altos y similares entre sí}
 \label{fig:similar_weights}
 \end{figure}
 
-Una de las cosas que queríamos remarcar es la diferencia entre los tiempos de ejecución de la implementación Top-Down y la Bottom-Up en este tipo de instancias del problema.
+Una de las cosas a remarcar es la diferencia entre los tiempos de ejecución de la implementación Top-Down y la Bottom-Up en este tipo de instancias del problema.
 
 La enorme diferencia se debe básicamente a la forma de resolver el problema que tiene cada técnica. La implementación Bottom-Up va resolviendo desde los sub-problemas más pequeños hasta llegar al problema final deseado iterativamente, obteniendo la solución óptima para absolutamente todos los sub-problemas cuyos parámetros de entrada son menores o iguales al problema original. La desventaja de esta técnica, es que está desperdiciando mucho tiempo en resolver sub-problemas que *podrían no utilizarse* para resolver el problema deseado. En otras palabras, la solución Bottom-Up llena completamente la matriz $M$ de resultados óptimos, cuando hay muchos sub-problemas que no son necesarios.
 
 Por otro lado, la solución Top-Down arranca desde el problema con los parámetros originales que queremos resolver, y recursivamente va partiendo el original en sub-problemas y resolviéndolos hasta obtener todos los resultados deseados. Es decir, la solución Top-Down solo se enfoca en resolver los sub-problemas estrictamente necesarios en los que se divide el problema original, sin gastar tiempo de cómputo en sub-problemas cuya solución jamás utilizaríamos. La desventaja de la solución Top-Down es el overhead que puede traer una solución recursiva, y el espacio en el stack que ésta requiere, el cual se reduce de cierta forma utilizando correctamente variables globales.
 
-Informalmente, podemos decir que la solución Bottom-Up se toma su tiempo en resolver absolutamente todo, mientras que la solución Top-Down va al grano y resuelve lo estrictamente necesario. Es por eso que en este tipo de problemas, la solución Top-Down puede resultar mucho más eficiente que la Bottom-Up.
+Informalmente, podemos decir que la solución Bottom-Up se toma su tiempo en resolver absolutamente todo, mientras que la solución Top-Down va al grano y resuelve lo estrictamente necesario. Es por eso que en este tipo de escenarios, la solución Top-Down puede resultar mucho más eficiente que la Bottom-Up.
 
 ## El problema del viajante de comercio
 
@@ -259,4 +259,130 @@ requerida es:
 
 Por lo tanto, su orden espacial es $O(n2^n)$.
 
-### Tiempos de ejecución
+### Tiempos de ejecución y espacio consumido
+
+El argoritmo implementado es de tipo bottom-up, es decir, se van calculando las
+distancias desde conjuntos pequeños hasta llegar al conjunto de tamaño $n-1$.
+
+Los datos utilizados para 15, 17 y 21 ciudades son los recopilados por
+[John Burkardt](http://people.sc.fsu.edu/~jburkardt/datasets/tsp/tsp.html).
+El resto de los datos fueron generados aleatoriamente y se pueden encontrar en el
+[repositorio](https://github.com/ezeperez26/tda-fiuba/tree/master/tp2/programacion-dinamica/travelling-salesman/test_files)
+con el prefijo *ex*.
+
+En la Figura \ref{fig:tsp_times} se puede visualizar el tiempo de ejecución para
+4 ciudades en adelante. Se muestran los valores hasta el conjunto de 21 ciudades
+dado que no sólo demora cada vez más la ejecución del algoritmo si no que
+también se eleva el consumo de espacio de memoria, como se verá más adelante,
+alcanzando el valor de memoria disponible.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.65\linewidth]{../programacion-dinamica/travelling-salesman/images/tsp_times}
+  \caption{Tiempo de ejecución del problema del viajante}
+  \label{fig:tsp_times}
+\end{figure}
+
+El espacio consumido que se representa en la Figura \ref{fig:tsp_space} se
+refiere a la cantidad de valores almacenados de los costos para ir desde el
+origen a cada conjunto.
+Es decir, la cantidad de registros almacenados para cada conjunto.
+Para obtener la información del espacio ocupado en una unidad en particular,
+por ejemplo en Megabytes, basta con determinar el espacio que ocupa cada
+registro en esa unidad y luego multiplicar por los valores dados.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.65\linewidth]{../programacion-dinamica/travelling-salesman/images/tsp_space}
+  \caption{Espacio utilizado por el problema del viajante}
+  \label{fig:tsp_space}
+\end{figure}
+
+En el Cuadro \ref{tab:tsp_compatariva} se realiza una comparación del espacio
+consumido sin utilizar programación dinámica, utilizando programación dinámica y
+el ahorro logrado.
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{ | l | r | r | r | }
+    \hline
+    Ciudades & Sin programación dinámica & Con programación dinámica & Ahorro \\
+    \hline \hline
+     4 &                   6 &       12 & -6 \\ \hline
+     5 &                  24 &       32 & -8 \\ \hline
+     6 &                 120 &       80 & 40 \\ \hline
+     7 &                 720 &      192 & 528 \\ \hline
+     8 &                5040 &      448 & 4592 \\ \hline
+     9 &               40320 &     1024 & 39296 \\ \hline
+    10 &              362880 &     2304 & 360576 \\ \hline
+    11 &             3628800 &     5120 & 3623680 \\ \hline
+    12 &            39916800 &    11264 & 39905536 \\ \hline
+    13 &           479001600 &    24576 & 478977024 \\ \hline
+    14 &          6227020800 &    53248 & 6226967552 \\ \hline
+    15 &         87178291200 &   114688 & 87178176512 \\ \hline
+    16 &       1307674368000 &   245760 & 1307674122240 \\ \hline
+    17 &      20922789888000 &   524288 & 20922789363712 \\ \hline
+    18 &     355687428096000 &  1114112 & 355687426981888 \\ \hline
+    19 &    6402373705728000 &  2359296 & 6402373703368704 \\ \hline
+    20 &  121645100408832000 &  4980736 & 121645100403851000 \\ \hline
+    21 & 2432902008176640000 & 10485760 & 2432902008166150000 \\ \hline
+  \end{tabular}
+  \caption{Espacio utilizado por el problema del viajante}
+  \label{tab:tsp_compatariva}
+\end{table}
+
+Para los casos de 4 y 5 ciudades no se logra un ahorro, pero en ambos enfoques
+el orden de magnitud del espacio consumido es el mismo, por lo que no es un
+problema a tener en cuenta.
+
+A partir de las 7 ciudades en adelante, el orden de magnitud de ambos comienza a
+distanciarse, resultando un ahorro importante con la programación dinámica.
+
+A efecto ejemplificador del espacio de memoria real ocupado, se toma una unidad
+aproximada del tamaño de un registro de 256 bytes, sin considerar el espacio
+adicional que consume la estructura de datos donde se almacenan los registros,
+pudiendo ser depreciable.
+
+En el Cuadro \ref{tab:tsp_espacio_megabytes} se detalla el espacio consumido
+según la cantidad de ciudades del problema.
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{ | l | r | }
+    \hline
+    Ciudades & Espacio ocupado (en Megabytes) \\
+    \hline \hline
+    4 & 0,003 \\ \hline
+    5 & 0,008 \\ \hline
+    6 & 0,02 \\ \hline
+    7 & 0,05 \\ \hline
+    8 & 0,11 \\ \hline
+    9 & 0,25 \\ \hline
+    10 & 0,56 \\ \hline
+    11 & 1,25 \\ \hline
+    12 & 2,75 \\ \hline
+    13 & 6 \\ \hline
+    14 & 13 \\ \hline
+    15 & 28 \\ \hline
+    16 & 60 \\ \hline
+    17 & 128 \\ \hline
+    18 & 272 \\ \hline
+    19 & 576 \\ \hline
+    20 & 1216 \\ \hline
+    21 & 2560 \\ \hline
+    22 & 5376 \\ \hline
+    23 & 11264 \\ \hline
+    24 & 23552 \\ \hline
+    25 & 49152 \\ \hline
+    26 & 102400 \\ \hline
+  \end{tabular}
+  \caption{Espacio utilizado por el problema del viajante en Megabytes}
+  \label{tab:tsp_espacio_megabytes}
+\end{table}
+
+A partir de las 22 ciudades el consumo de memoria supera la memoria RAM
+disponible en la PC utilizada para correr el algoritmo.
+
+Una propuesta para superar el problema del límite de memoria RAM es utilizar la
+memoria en disco. Aunque esto implicaría un aumento en los tiempos de ejecución
+debido a las operaciones de lectura y escritura de archivos.

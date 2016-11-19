@@ -18,11 +18,15 @@ class TSPTest(unittest.TestCase):
         path = [(i + 1) for i in path[1]]
         self.assertEqual(data.solution, path)
 
+    def test_4_cities_from_file(self):
+        data = tsp_parser.parse_tsp_file("test_files/ex04.tsp")
+        path = travelling_salesman_path(data)
+        path = [(i + 1) for i in path[1]]
+        self.assertEqual(data.solution, path)
+
     def test_15_cities(self):
         data = tsp_parser.parse_tsp_file("test_files/p01.tsp")
         path = travelling_salesman_path(data)
-        print(path)
-        print(data.solution)
         path = [(i + 1) for i in path[1]]
         self.assertEqual(data.solution, path)
 

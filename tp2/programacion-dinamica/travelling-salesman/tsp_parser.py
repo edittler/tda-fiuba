@@ -45,8 +45,12 @@ class tsp_parser(object):
                 continue
 
             if tour_section:
-                tour.append(int(line.strip()))
-
+                value = int(line.strip())
+                if value < 0:
+                    tour.append(1)
+                    tour_section = False
+                    continue
+                tour.append(value)
                 continue
 
         if edge_weight_format == "FULL_MATRIX":

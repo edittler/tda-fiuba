@@ -67,7 +67,7 @@ def travelling_salesman_path(data):
     # Incluye el inicio como origen
     path.append(0)
 
-    return opt, list(reversed(path))
+    return opt, list(reversed(path)), len(costs)
 
 
 def main(args):
