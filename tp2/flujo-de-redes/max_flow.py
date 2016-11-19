@@ -5,11 +5,11 @@ from graph import Graph
 
 class FlowEdge(object):
 
-    def __init__(self, src, dst, capacity=0, is_residual=False):
+    def __init__(self, src, dst, capacity=0, is_backwards=False):
         self.src = src
         self.dst = dst
         self.capacity = capacity
-        self.is_residual = is_residual
+        self.is_backwards = is_backwards
 
 
 class Flow(Graph):
@@ -20,14 +20,14 @@ class Flow(Graph):
         Devuelve la arista agregada.
         """
         e = FlowEdge(u, v, capacity)
-        r = FlowEdge(v, u, is_residual=True)
+        r = FlowEdge(v, u, is_backwards=True)
         g._i[u].append(e)
         g._a[u].append(v)
         g._i[v].append(r)
         return e
 
     def e_transitable(g, e, flow):
-        return (e.is_residual and e.capacity > 0) or ((not e.is_residual) and flow[e] < e.capacity)
+        return (e.is_backwards and e.capacity > 0) or ((not e.is_backwards) and flow[e] < e.capacity)
 
     # Búsqueda de Camino por DFS
     def flow_path(g, source, target, flow):
@@ -65,16 +65,15 @@ class Flow(Graph):
     def get_max_flow(g, source, target):
         """ """
         flow = g.get_empty_flow()
+        path = g.flow_path(source, target, flow)
 
-        while True:
-            path = g.flow_path(source, target, flow)
-            if path is None:
-                return flow
-
+        while path != None:
             b = g.bottleneck(path, flow)
-
             for edge in path:
-                flow[edge] -= b if edge.is_residual else -b
+                flow[edge] -= b if edge.is_backwards else -b
+            path = g.flow_path(source, target, flow)
+
+        return flow
 
     # Reachable from s.
     def get_min_cut(g, source, flow):
@@ -93,6 +92,6 @@ class Flow(Graph):
         edges = sorted(flow.keys(), key=lambda x: (x.src, x.dst))
         res = ''
         for e in edges:
-            if not e.is_residual:
+            if not e.is_backwards:
                 res += str(e.src) + ' -> ' + str(e.dst) + ': ' + str(flow[e]) + '\n'
         return res
