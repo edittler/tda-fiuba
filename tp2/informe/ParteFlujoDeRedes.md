@@ -144,14 +144,31 @@ Cada una de las iteraciones, a su vez, consiste principalmente en la búsqueda d
 
 Buscar el bottleneck se hace dentro del camino encontrado, que es un camino simple, con lo cual es como máximo $O(n+m)$. Lo mismo para el aumento del camino.
 
-Finalmente, todo el orden total es de $O(C(n+m+r))$. Esto significa que es lineal en el n, m y r siempre y cuando se mantenga $C$.
+Finalmente, todo el orden total es de $O(C(n+m+r))$. Esto significa que es lineal en el $n$, $m$ y $r$ siempre y cuando se mantenga $C$.
 
-Sin embargo, no sería lógico decir aquello, ya que $C$ no es independiente de $n$ o de $m$. Para obtener esa cota del valor del flujo puede tomarse el corte tanto en $(\{s\}, G-\{s\})$ o en $(G-\{t\},\{t\})$ y la mínima capacidad entre ambos cortes sería una cota. Por eso podemos expresar la parte de C como $\sum_{i=1}^m g_i + \sum_{k=1}^n a_k$, que también depende de m y n.
+Sin embargo, no sería lógico decir aquello, ya que $C$ no es independiente de $n$ o de $m$. Para obtener esa cota del valor del flujo puede tomarse el corte tanto en $(\{s\}, G-\{s\})$ o en $(G-\{t\},\{t\})$ y la mínima capacidad entre ambos cortes sería una cota. Por eso podemos expresar la parte de C como $\sum_{i=1}^m g_i + \sum_{k=1}^n a_k$, que también depende de $m$ y $n$.
 
-Para simplificar las cuentas suponemos (con pérdida de generalidad) que $g_i = a_k = 1 \forall i \forall k$. En este caso relajado podríamos fijar para el problema $\Omega((m + n)(m+n+r))$, lo cual es **cuadrático en $m$ y $n$, y lineal en $r$ (manteniendo las otras entradas fijas)**. El $O$ real será más grande y dependerá de las capcacidades (ganancias y pérdidas).
+Para simplificar las cuentas (con pérdida de generalidad) suponemos que $g_i = a_k = 1 \forall i \forall k$. En este caso relajado podríamos fijar para el problema $\Omega((m + n)(m+n+r))$, lo cual es **cuadrático en $m$ y $n$, y lineal en $r$ (manteniendo las otras entradas fijas)**. El $O$ real será más grande y dependerá de las capcacidades (ganancias y pérdidas). Sin embargo, si suponemos que las ganancias están acotadas por $g_max$ y las inversiones por $a_max$, lo cual es razonable, los cálculos llevan al mismo resultado, con diferencia de constantes, que no afectan al orden.
 
-Esta fuerte dependencia de los costos se debe a que no se implementó un mecanismo inteligente de elección de caminos, permitiendo que el bottleneck pueda ser tan pequeño como 1. Teniendo en cuenta que lo ideal sería aumentar primero los paths de mayor bottleneck, hay algoritmos mejorados como el _Scaling Max Flow_, cuya complejidad resulta de $O((n+m+r)log_2(C))$, lo cual baja el orden de los cuadráticos a $O(xlogx)$. **(CITAR)**
+Esta fuerte dependencia de los costos se debe a que no se implementó un mecanismo inteligente de elección de caminos, permitiendo que el bottleneck pueda ser tan pequeño como 1. Teniendo en cuenta que lo ideal sería aumentar primero los paths de mayor bottleneck, hay algoritmos mejorados como el _Scaling Max Flow_, cuya complejidad resulta de $O((n+m+r)log_2(C))$, lo cual baja el orden de los cuadráticos a $O(xlogx)$ según mostrado en la sección 7.3 del libro [@KT].
+
+### Algunos casos
+
+En los tests provistos pueden verse algunos casos interesantes.
+
+#### Sin presupuesto.
+El _test_no_selection_ muestra que cuando se gastaría más dinero en cualquier investigación que la que se obtendría con sus respectivos proyectos, el algoritmo elige no tomar ningún área ni proyecto.
+
+**(IMAGEN)**
+
+Teóricamente esto es esperable, dado que el corte por $s$, que tiene las ganancias, será más pequeño que el corte por $t$.
+
+#### Aumento de $m$
+#### Aumento de $n$
+#### Aumento de $r$
+
 
 \newpage
+
 
 # Referencias
