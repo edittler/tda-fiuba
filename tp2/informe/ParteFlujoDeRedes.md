@@ -4,7 +4,7 @@
 
 ## Objetivo
 
-Esta sección del trabajo tiene como objetivo la resolución del problema de Selección de Proyectos mediante su modelado como una red de flujo y la aplicación del algoritmo de Ford Fulkerson para maximizar la ganancia esperada.
+Esta sección del trabajo tiene como objetivo la resolución del problema de Selección de Proyectos mediante su modelado como una red de flujo y la aplicación del algoritmo de Ford-Fulkerson para maximizar la ganancia esperada.
 
 ## Introducción Teórica
 
@@ -28,11 +28,11 @@ En general, este modelo deviene en problemas de optimización, que son el de _ma
 
 ### Max-Flow, Min-Cut
 
-El teorema de máximo flujo, mínimo corte muestra que el máximo flujo corresponde a la capacidad del mínimo corte. Este teorema se basa en la importante propiedad de que la capacidad de cualquier corte en una red es cota superior del valor del flujo.
+El teorema de máximo flujo, mínimo corte muestra que el valor del máximo flujo corresponde a la capacidad del mínimo corte. Este teorema se basa en la importante propiedad de que la capacidad de cualquier corte en una red es cota superior del valor del flujo.
 
-Una demostración común, como la encontrada en el capítulo 7 del libro [@KT] acude a mostrar la situación final del algoritmo de Ford Fulkerson para maximización del flujo.
+Una demostración común, como la encontrada en el capítulo 7 del libro [@KT] acude a mostrar la situación final del algoritmo de Ford-Fulkerson para maximización del flujo.
 
-### Algoritmo de Ford Fulkerson
+### Algoritmo de Ford-Fulkerson
 
 Este algoritmo, que será el utilizado en el trabajo, trabaja con el _Grafo Residual_ $G_f$ de la red, con las siguientes características:
 
@@ -114,11 +114,11 @@ De este modo, ya que C es constante, vemos que minimizar el corte es igual a max
 
 ### Detalles de implementación
 
-En términos generales, la solución fue implementada con una clase ProjectSelection correspondiente al problema, que utiliza a una clase Flow, que modela la red de flujo y es capaz de aplicar el algoritmo de Ford Fulkerson.
+En términos generales, la solución fue implementada con una clase ProjectSelection correspondiente al problema, que utiliza a una clase Flow, que modela la red de flujo y es capaz de aplicar el algoritmo de Ford-Fulkerson.
 
 Ya que el grafo de la red y el residual comparten una gran cantidad de información, en lugar de tratarlos por separado utilizamos únicamente al grafo principal, añadiendo las backward edges con capacidad 0 al agregar cada arista.
 
-El uso del grafo residual se da sobre todo en la búsqueda de caminos a aumentar y la capacidad residual se calcula en el momento en la función $e_transitable$ para ver si un camino residual puede pasar por esa arista dado el flujo en ese momento:
+El uso del grafo residual se da sobre todo en la búsqueda de caminos a aumentar y la capacidad residual se calcula en el momento en la función `e_transitable` para ver si un camino residual puede pasar por esa arista dado el flujo en ese momento:
 
 ```python
 def e_transitable(g, e, flow):
@@ -138,17 +138,21 @@ def get_max_flow(g, source, target):
     while path != None:
         b = g.bottleneck(path, flow)
         for edge in path:
-            flow[edge] -= b if edge.is_backwards else -b
+            if edge.is_backwards:
+                edge.capacity -= b
+            else:
+                edge.reciproca.capacity += b
+                flow[edge] += b
         path = g.flow_path(source, target, flow)
 
     return flow
 ```
 
-Como las capacidades residuales son calculadas en el momento y en base al flujo, no hace falta "actualizar" al grafo residual después de un aumento.
+Entonces las capacidades de las backward edges son modificadas en el momento, mientras que las de las forward edges no cambian (las residuales se calculan en el momento).
 
-La **búsqueda de caminos** entre s y t fue implementada con **DFS**, ya que teniendo en cuenta la estructura del grafo, un BFS produciría siempre recorrer todos los vértices: como se recorre por distancias al origen, se recorrerán siempre primero todos los proyecots (d = 1), luego todas las áreas de investigación (d=3) y recién al final se llegará a $t$ (d = 3). Con DFS el peor caso será el de recorrer todos los vértices, mientras que es posible que llegue en visitando un proyecto y un área.
+La **búsqueda de caminos** entre $s$ y $t$ fue implementada con **DFS**, ya que teniendo en cuenta la estructura del grafo, una BFS recorrería siempre todos los vértices. Esto se debe a que se recorrería por distancias al origen, agregando a la frontera todos los proyectos ($d = 1$), luego todas las áreas ($d = 2$) y finalmente $t$ ($d = 3$). Con DFS, en cambio, el peor caso será el de recorrer todos los vértices, mientras que es posible que llegue en 3 pasos, visitando solo un proyecto y un área.
 
-El **Mínimo corte** también fue implementado con un DFS recursivo, pero esto ocurrió por comodidad y no por eficiencia, ya que tanto en ese caso como en BFS buscar el mínimo corte implica recorrer todos los nodos alcanzables por $s$.
+La obtención del **Mínimo corte** también fue implementada con un DFS recursivo, pero esta fue una decisión de comodidad y no de eficiencia, ya que tanto en ese caso como en BFS buscar el mínimo corte implica recorrer todos los nodos alcanzables por $s$.
 
 ### Complejidad \label{sec:complejidad}
 
@@ -162,7 +166,7 @@ Finalmente, todo el orden total es de $O(C(n+m+r))$. Esto significa que es linea
 
 Sin embargo, no sería lógico decir aquello, ya que $C$ no es independiente de $n$ o de $m$. Para obtener esa cota del valor del flujo puede tomarse el corte tanto en $(\{s\}, G-\{s\})$ o en $(G-\{t\},\{t\})$ y la mínima capacidad entre ambos cortes sería una cota. Por eso podemos expresar la parte de C como $\sum_{i=1}^m g_i + \sum_{k=1}^n a_k$, que también depende de $m$ y $n$.
 
-Para simplificar las cuentas (con pérdida de generalidad) suponemos que $g_i = a_k = 1 \forall i \forall k$. En este caso relajado podríamos fijar para el problema $\Omega((m + n)(m+n+r))$, lo cual es **cuadrático en $m$ y $n$, y lineal en $r$ (manteniendo las otras entradas fijas)**. El $O$ real será más grande y dependerá de las capcacidades (ganancias y pérdidas). Sin embargo, si suponemos que las ganancias están acotadas por $g_max$ y las inversiones por $a_max$, lo cual es razonable, los cálculos llevan al mismo resultado, con diferencia de constantes, que no afectan al orden.
+Para simplificar las cuentas (con pérdida de generalidad) suponemos que $g_i = a_k = 1 \forall i \forall k$. En este caso relajado podríamos fijar para el problema $\Omega((m + n)(m+n+r))$, lo cual es **cuadrático en $m$ y $n$, y lineal en $r$ (manteniendo las otras entradas fijas)**. El $O$ real será más grande y dependerá de las capcacidades (ganancias y pérdidas). Sin embargo, si suponemos que las ganancias están acotadas por $g_{max}$ y las inversiones por $a_{max}$, lo cual es razonable, los cálculos llevan al mismo resultado, con diferencia de constantes, que no afectan al orden.
 
 Esta fuerte dependencia de los costos se debe a que no se implementó un mecanismo inteligente de elección de caminos, permitiendo que el bottleneck pueda ser tan pequeño como 1. Teniendo en cuenta que lo ideal sería aumentar primero los paths de mayor bottleneck, hay algoritmos mejorados como el _Scaling Max Flow_, cuya complejidad resulta de $O((n+m+r)log_2(C))$, lo cual baja el orden de los cuadráticos a $O(xlogx)$ según mostrado en la sección 7.3 del libro [@KT].
 
@@ -183,16 +187,17 @@ Teóricamente esto es esperable, dado que el corte por $s$, que tiene las gananc
 ### Proyecto saturado
 El flujo de la red, irónicamente, tiene muy poco protagonismo en la intuición de este modelo del problema. Tal es así que un trabajo saturado no significa que no podrá elegirse, salvo que su área de investigación no sea compartida por nadie más.
 
-El _test_saturated_project_ es un claro ejemplo.
+El _test_saturated_project_, cuyo esquema es el de la figura \ref{fig:saturacion} es un claro ejemplo.
 
 \begin{figure}[ht!]
-    \label{fig:saturacion}
+
     \center
     \includegraphics[width=0.5\columnwidth]{images/saturacion.png}
     \caption{El proyecto $P_1$ todavía es accesible mediante la backward edge desde su área requerida.}
+    \label{fig:saturacion}
 \end{figure}
 
-Del mismo modo, Proyectos de flujo nulo serán elegidos sin ninguna diferencia.
+Del mismo modo, proyectos de flujo nulo serán elegidos sin ninguna diferencia.
 
 ### Dependencia real del tamaño de la entrada
 El mayor problema con el cálculo teórico efectuado en la sección \ref{sec:complejidad} es que no tiene en cuenta las restricciones que presenta la estructura del grafo en este modelo.
