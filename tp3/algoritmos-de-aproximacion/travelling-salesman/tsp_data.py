@@ -2,6 +2,9 @@
 # -*- coding: utf-8 -*-
 
 
+from graph import Graph
+
+
 class tsp_data(object):
 
     def __init__(self, edge_weight_format, matrix, solution=[]):
@@ -19,6 +22,9 @@ class tsp_data(object):
             text += str_row
         return text
 
+    def __iter__(self):
+        return iter(range(self.dimension()))
+
     def dimension(self):
         return len(self.matrix)
 
@@ -26,3 +32,18 @@ class tsp_data(object):
         if self.edge_weight_format == "LOWER_DIAG_ROW" and from_city < to_city:
             return self.matrix[to_city][from_city]
         return self.matrix[from_city][to_city]
+
+    def graph(self, undirected=False):
+        old_edge_weight_format = self.edge_weight_format
+        if undirected:
+            self.edge_weight_format = "LOWER_DIAG_ROW"
+
+        graph = Graph(self.dimension())
+
+        for u in self:
+            for v in self:
+                if u != v:
+                    graph.add_edge(u, v, self.cost(u, v))
+
+        self.edge_weight_format = old_edge_weight_format
+        return graph

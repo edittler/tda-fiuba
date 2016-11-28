@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from graph import Graph
+from tsp_data import tsp_data
 from tsp_parser import tsp_parser
 
 
@@ -13,7 +14,7 @@ def travelling_salesman_path(graph):
     """
 
     if not isinstance(graph, Graph):
-        print("Los datos no son del tipo tsp_data")
+        print("El parámetro no es de tipo Graph")
         return
 
     # Busca el camino óptimo (incluye el origen como fin)
@@ -26,7 +27,13 @@ def travelling_salesman_path(graph):
 
 
 def main(args):
-
+    M = [[0, 2, 9, 10], [1, 0, 6, 4], [15, 7, 0, 8], [6, 3, 12, 0]]
+    data = tsp_data("FULL_MATRIX", M)
+    graph = data.graph(True)
+    print("\nPrimer ejemplo")
+    # print(travelling_salesman_path(graph))
+    tree = graph.minimum_spanning_tree()
+    print(tree)
     return 0
 
 
