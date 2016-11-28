@@ -44,7 +44,70 @@ Ahora bien, como el algoritmo a utilizar es de orden $O(n^2v^*)$, debemos determ
 
 ### Tiempos de ejecución
 
+
+\newpage
+
 ## El problema del viajante de comercio
+
+El problema del viajante es de complejidad NP-completo cuya solución tiene un
+orden temporal de $O(n^{2} 2^n)$ y un orden espacial de $O(n2^n)$.
+
+Dada la complejidad de algoritmo y las limitaciones físicas de las computadoras,
+es posible encontrar la solución al problema para un numero reducido de ciudades
+(alredededor de 20 ciudades).
+
+Para ello se existen métodos que aproximan la solución, aplicando algunas
+condiciones que permitan tomar decisiones para encontrar el camino mínimo.
+
+### Desigualdad triangular
+
+En muchas situaciones prácticas, la manera menos costosa de ir de $u$ a $w$ es
+ir directamente, sin pasos intermedios. Es decir, cortar una parada intermedia
+nunca aumenta el costo. Formalmente se dice que la función de costo $c$
+satisface la **desigualdad triangular** si para todo vértices $u$, $v$, $w$
+$\in V$ se cumple
+
+\begin{equation*}
+  c(u, w) \leq c(u, v) + c(v, w)
+\end{equation*}
+
+La desigualdad triangular se satisface naturalmente en varias aplicaciones.
+Por ejemplo, si los vértices del gráfico son puntos en el plano y el coste de
+viajar entre dos vértices es la distancia euclidiana entre ellos, entonces se
+satisface la desigualdad triangular. [@Cormen2009]
+
+
+### Algoritmo de aproximación
+
+Aplicando la desigualdad triangular descripta anteriormente, se calcula un árbol
+recubridor mínimo cuyo peso da un límite inferior del costo de un tour óptimo
+del viajante de comercio.
+Luego, se utiliza el árbol recubridor mínimo para crear un recorrido cuyo costo
+no sea más del doble del peso mínimo del árbol recubridor, siempre y cuando se
+satisfaga la desigualdad triangular. [@Cormen2009]
+
+Un pseudocódigo para calcular en forma aproximada el ciclo hamiltoniano mínimo
+es el siguiente:
+
+```
+function TSP (G, c)
+  r = G.V.first
+  T = minimum_spanning_tree(G, c, r)
+  path = ordered_vertex_visit(T, r)
+  return (path)
+end
+```
+
+El algoritmo para encontrar el árbol recubridor mínimo puede ser el de Prim o
+Kruskal.
+
+En su implementación se reutilizó la estructura que almacena la información del
+grafo, añadiendo una primitiva para obtener el árbol recubridor mínimo.
+
+### Complejidad
+
+
+### Tiempos de ejecución
 
 
 \newpage
