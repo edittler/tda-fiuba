@@ -73,6 +73,7 @@ class tsp_parser(object):
                         row = []
 
         file.close()
+        edge_weight_format = "LOWER_DIAG_ROW"
         return tsp_data(edge_weight_format, matrix, tour)
 
     @classmethod

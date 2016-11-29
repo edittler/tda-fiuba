@@ -107,8 +107,77 @@ grafo, añadiendo una primitiva para obtener el árbol recubridor mínimo.
 ### Complejidad
 
 
-### Tiempos de ejecución
+### Tiempos de ejecución y resultados
 
+Los datos utilizados para 15, 17 y 21 ciudades son los recopilados por
+[John Burkardt](http://people.sc.fsu.edu/~jburkardt/datasets/tsp/tsp.html),
+de los cuales varios provienen de
+[TSPLIB95](http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/).
+El resto de los datos fueron generados aleatoriamente y se pueden encontrar en el
+[repositorio](https://github.com/ezeperez26/tda-fiuba/tree/master/tp3/algoritmos-de-aproximacion/travelling-salesman/test_files)
+con el prefijo *ex*.
+Los datos generados aleatoriamente son los mismos del TP N° 2, pero como
+el algoritmo de aproximación sólo funciona para grafos simétricos unidireccionales,
+se toma el triángulo inferior de la matriz.
+
+En la Figura \ref{fig:tsp_times} se puede visualizar el tiempo de ejecución para
+4 ciudades en adelante. Se muestran los valores hasta el conjunto de 10 ciudades.
+Para más ciudades, el tiempo insumido por el algoritmo de aproximación es
+prácticamente depreciable comparado con los del algoritmo Bellman–Held–Karp.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.65\linewidth]{../algoritmos-de-aproximacion/travelling-salesman/images/tsp_times}
+  \caption{Comparativa del tiempo de ejecución del problema del viajante}
+  \label{fig:tsp_times}
+\end{figure}
+
+En el Cuadro \ref{tab:tsp_compatariva} se realiza una comparación del costo del
+tour del viajante obtenido.
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{ | l | r | r | r | r | }
+    \hline
+    Ciudades & Bellman–Held–Karp & Aproximación & Incremento [\%] & Azar \\
+    \hline \hline
+     4 &   26 &   31 &   19 & Si \\ \hline
+     6 &   25 &   38 &   52 & Si \\ \hline
+     8 &   39 &   39 &    0 & Si \\ \hline
+    10 &  144 &  145 & 0,69 & Si \\ \hline
+    11 &  200 &  325 &   63 & Si \\ \hline
+    12 &  118 &  165 &   40 & Si \\ \hline
+    13 &  210 &  235 &   12 & Si \\ \hline
+    14 &  171 &  429 &  151 & Si \\ \hline
+    15 &  291 &  366 &   26 & No \\ \hline
+    16 &  165 &  271 &   64 & Si \\ \hline
+    17 & 2085 & 2352 &   13 & No \\ \hline
+    18 &  371 & 1144 &  208 & Si \\ \hline
+    19 &  819 & 1945 &  137 & Si \\ \hline
+    20 &  694 & 1817 &  162 & Si \\ \hline
+    21 & 2707 & 3803 &   40 & No \\ \hline
+  \end{tabular}
+  \caption{Espacio utilizado por el problema del viajante}
+  \label{tab:tsp_compatariva}
+\end{table}
+
+Utilizando un algoritmo de aproximación el costo se incrementa, en promedio, un
+65 \%. En 4 casos el valor aproximado supera al doble del mínimo.
+Sin embargo, una consideración a tener en cuenta es que los datos generados
+aleatoriamente no se corresponden a ninguna distribución de ciudades, por lo que
+no necesariamente cumple la **desigualdad triangular**.
+
+Los datos que no son generados al azar y que pueden corresponder con ciudades
+reales son:
+
+\begin{description}
+  \item[15 ciudades] Ejemplo de John Burkardt
+  \item[17 ciudades] Conjunto de ciudades de Alemania (Martín Gröetschel)
+  \item[21 ciudades] Conjunto de ciudades de Alemania (Martín Gröetschel)
+\end{description}
+
+Para esos 3 casos, el incremento del costo es de 26 \%, por lo que el resultado
+es mejor cuando tienen relación con datos reales.
 
 \newpage
 
