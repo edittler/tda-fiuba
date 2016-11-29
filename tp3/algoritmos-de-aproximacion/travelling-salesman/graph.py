@@ -111,9 +111,15 @@ class Graph(object):
         for e in edges:
             if subtrees[e.src] != subtrees[e.dst]:
                 tree.append(e)
+                tree.append(Edge(e.dst, e.src, e.weight))
                 subtrees.union(e.src, e.dst)
-                print(subtrees.parents)
-        return tree
+
+        tree_graph = Graph(self.V())
+
+        for e in tree:
+            tree_graph.add_edge(e.src, e.dst, e.weight)
+
+        return tree_graph, tree
 
     @classmethod
     def from_dict(cls, d):
