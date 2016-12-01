@@ -4,7 +4,7 @@
 import unittest
 
 from knapsack_file_parser import Parser
-from knapsack import knapsack_bottom_up_aproximado, knapsack_top_down
+from knapsack import knapsack_bottom_up_aproximado
 
 class KnapsackTest(unittest.TestCase):
 
@@ -17,8 +17,9 @@ class KnapsackTest(unittest.TestCase):
     def test_knapsack_bottom_up(self):
         for problem in self.problems:
             print(str(problem.id) + ")")
-            knapsack_solution = knapsack_bottom_up_aproximado(problem.values, problem.max_value, problem.weights, problem.knapsack_weight, 0.1)
-            print("Mi solucion: " + str(knapsack_solution) + " VS Solucion Optima: " + str(problem.value_found))
+            knapsack_solution_01 = knapsack_bottom_up_aproximado(problem.values, problem.max_value, problem.weights, problem.knapsack_weight, 0.1)
+            knapsack_solution_05 = knapsack_bottom_up_aproximado(problem.values, problem.max_value, problem.weights, problem.knapsack_weight, 0.5)
+            print(str(problem.value_found) + " & " + str(knapsack_solution_01) + " & " + str(knapsack_solution_05))
 
     #def test_knapsack_top_down(self):
     #    return

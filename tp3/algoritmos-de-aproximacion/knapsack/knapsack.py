@@ -27,7 +27,7 @@ def knapsack_bottom_up_aproximado(items_value, max_value, items_weight, knapsack
     knapsack_bottom_up_aproximado_core(rounded_items_value, matrix_value_range, items_weight, knapsack_weight, results)
 
     #return KnapsackSolution(results[cant_items][knapsack_weight], knapsack_get_solution(cant_items, knapsack_weight, items_value, items_weight, results))
-    return int(knapsack_get_optimum_value_aproximado(results, cant_items, matrix_value_range, knapsack_weight)) * b
+    return int(int(knapsack_get_optimum_value_aproximado(results, cant_items, matrix_value_range, knapsack_weight)) * b)
 
 def knapsack_bottom_up_aproximado_core(items_value, max_value, items_weight, knapsack_weight, results):
 
@@ -43,7 +43,7 @@ def knapsack_bottom_up_aproximado_core(items_value, max_value, items_weight, kna
 
             #if (items_weight[i - 1] > knapsack_weight or v > value_sum):
             if v > value_sum:
-                results[i][v] = items_weight[i - 1] + results[i - 1][v]
+                results[i][v] = items_weight[i - 1] + results[i - 1][max(0, v - items_value[i - 1])]
             else:
                 results[i][v] = min(results[i - 1][v], items_weight[i - 1] + results[i - 1][max(0, v - items_value[i - 1])])
 

@@ -6,18 +6,25 @@
 
 ### Solución desarrollada y sus características
 
-En el trabajo práctico anterior se desarrolló un algoritmo que resolvía este problema cuya complejidad era $O(n \ast W)$. Este tipo de algoritmos, se dice, es de orden $pseudo-polinomial$, ya que no solo depende del parámetro $n$ sino también de $W$. Esto implica que a valores relativamente bajos de $W$, se mantenía polinomial, mas no así cuando $W$ crecía mucho.
+En el trabajo práctico anterior se desarrolló un algoritmo que resolvía este problema cuya complejidad era $O(n \ast W)$. Este tipo de algoritmos es, se dice, $pseudo-polinomial$, ya que no solo depende del parámetro $n$ sino también de $W$. Esto implica que a valores relativamente bajos de $W$, se mantenía polinomial, mas no así cuando $W$ crecía mucho.
 
-Ahora bien, podemos desligarnos del valor de la capacidad de la mochila para construir un algoritmo que corra en tiempo polinomial, y devuelva un resultado que se aproxime a la solución óptima. Para esto, volvemos a usar la programación dinámica, construyendo un algoritmo que permitirá pasar de un orden de complejidad de $O(n \ast W)$ a $O(n^{2} \ast v^{*})$ (siendo $v^{*}$ el máximo valor de entre los asignados a los elementos de entrada). Este orden de complejidad también es $pseudo-polinomial$, pero ya no depende de la capacidad de la mochila, sino del valor asignado a los elementos. En otras palabras, la capacidad puede ser tan grande como se desee, que no afectará al tiempo de ejecución de nuestro algoritmo solución. El algoritmo se definirá en una sección posterior. \newline
+Ahora bien, podemos desligarnos del valor de la capacidad de la mochila ($W$) para construir un algoritmo que corra en tiempo polinomial, y devuelva un resultado que se aproxime a la solución óptima. 
+Para esto, volvemos a usar la programación dinámica, construyendo un algoritmo que permitirá pasar de un orden de complejidad de $O(n \ast W)$ a $O(n^{2} \ast v^{*})$ (siendo $v^{*}$ el máximo valor de entre los asignados a los elementos de entrada). 
+Este orden de complejidad también es $pseudo-polinomial$, pero ya no depende de la capacidad de la mochila, sino del valor asignado a los elementos. En otras palabras, la capacidad puede ser tan grande como se desee, que no afectará al tiempo de ejecución de nuestro algoritmo solución. El algoritmo se definirá en una sección posterior. \newline
 A su vez, si se les asigna valores enteros pequeños a los elementos, el problema puede resolverse en tiempo polinomial, y, cuando los $v_i$ son altos, la ventaja que ofrece este algoritmo es que no tenemos que lidiar específicamente con estos $v_i$ altos, sino que podemos alterarlos ligeramente para que se mantengan pequeños (en base a un factor que veremos a continuación) y obtener una solución que se aproxime a la óptima.
 
-Si detectamos que los valores $v_i$ son muy altos, logramos la aproximación deseada $normalizando$ dichos valores en base a un factor $b$ y utilizándo estos nuevos valores más pequeños. A saber, definiendo \begin{center} \begin{math} \tilde{v_i} = \lceil v_i / b \rceil \cdot b \end{math} \end{center}, y aprovechando que absolutamente todos los valores dependen ahora del factor $b$, podremos quedarnos simplemente con el valor escalado \begin{center} \begin{math} \hat{v_i} = \lceil v_i / b \rceil \end{math} \end{center}.
+Si detectamos que los valores $v_i$ son muy altos, logramos la aproximación deseada $normalizando$ dichos valores en base a un factor $b$ determinado y utilizándo estos nuevos valores más pequeños en el desarrollo del algoritmo. A saber, definiendo \begin{center} \begin{math} \tilde{v_i} = \lceil v_i / b \rceil \cdot b \end{math} \end{center}, y aprovechando que absolutamente todos los valores dependen ahora del factor $b$, podremos quedarnos simplemente con el valor escalado \begin{center} \begin{math} \hat{v_i} = \lceil v_i / b \rceil \end{math} \end{center}.
 
-Eligiendo un $b$ acorde, sabemos que la resolución del problema tanto con los valores normalizados como con los coeficientes escalados, tienen el mismo set de soluciones óptimas, con los valores óptimos difiriendo solamente por un factor $b$ (esta diferencia es lo que llamamos $aproximación$).
+Eligiendo un $b$ acorde, sabemos que la resolución del problema tanto con los valores normalizados como con los coeficientes escalados, tienen el mismo set de soluciones óptimas, con los valores óptimos difiriendo solamente por un factor $b$ esta diferencia es lo que llamamos $aproximación$. 
+
+Más específicamente, si $S$ es la solución aproximada, y $\hat{S}$ es la solución óptima exacta, obtenemos:
+\begin{center} \begin{math} (1 + \epsilon) \sum_{i \in S} v_i \geq \sum_{i \in \hat{S}} v_i  \end{math} \end{center}
+
+siendo $\epsilon$ un factor de precisión que se utilizará para determinar el factor de escala $b$, el cual detallamos a continuación.
 
 #### Factor de normalización b
 
-Debemos elegir un $b$ acorde, que permita empequeñecer lo suficiente el valor de los elementos de entrada para que el algoritmo corra en tiempo polinomial. Para ello podemos tomar algo que dependa del máximo de estos $v_i$ y de la cantidad de elementos total de entrada. Además, podemos tener en cuenta la precisión de la aproximación a utilizar, tomando como entrada un paramétro $\epsilon$ que defina que tan lejos de la solución óptima nos podemos encontrar. En otras palabras, nuestros nuevos valores óptimos diferirán como mucho en un factor $(1 + \epsilon)$ por debajo de la solución óptima original. Esto implica, por supuesto, que mientras más pequeño sea $\epsilon$, entonces más precisión debemos lograr, y, por ende, el tiempo de ejecución de nuestro algoritmo será mayor.
+Debemos elegir un $b$ acorde, que permita empequeñecer lo suficiente el valor de los elementos de entrada para que el algoritmo corra en tiempo polinomial. Para ello podemos tomar algo que dependa del máximo de estos $v_i$ y de la cantidad de elementos total de entrada. Además, podemos tener en cuenta la precisión de la aproximación a utilizar, tomando como entrada un paramétro $\epsilon$ que defina que tan lejos de la solución óptima nos podemos encontrar. Esto implica, por supuesto, que mientras más pequeño sea $\epsilon$, entonces más precisión debemos lograr, y, por ende, el tiempo de ejecución de nuestro algoritmo será mayor.
 
 Tomando esto en cuenta, definimos $b = (\epsilon / n) \cdot max_i v_i$
 
@@ -29,7 +36,7 @@ Por ende, nuestro valor óptimo ahora dependerá de nuestra cantidad de elemento
 
 Con este orden de complejidad, manteniendo pequeño los valores asignados a los elementos como ya detallamos, podremos lograr un tiempo polinomial.
 
-La recurrencia para este nuevo problema podemos plantearla como sigue, siendo $S$ la solución óptima final:
+Los casos que se toman en cuenta para dividir en sub-problemas son los siguientes, siendo $S$ la solución óptima final:
 
 \begin{itemize}
 \item Si $n \notin S \Rightarrow \overline{opt}(n, V) = \overline{opt}(n - 1, V)$
@@ -44,6 +51,49 @@ Ahora bien, como el algoritmo a utilizar es de orden $O(n^2v^*)$, debemos determ
 
 ### Tiempos de ejecución
 
+Como vimos en el análisis anterior, el tiempo de ejecución varía tanto con la cantidad de elementos como con la precisión que queremos darle a la aproximación.
+Podemos ver en el siguiente gráfico la diferencia de tiempos en base a la precisión:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.8\linewidth]{../algoritmos-de-aproximacion/knapsack/images/n_50_maxWeight_27010.png}
+\caption{$n = 50$, $w_i$ creciendo}
+\label{fig:precision_differences}
+\end{figure}
+
+Podemos destacar que el tiempo de ejecución no aumenta en base a la capacidad de la mochila, lo cual es una de las principales diferencias con la solución que se encontró en el trabajo práctico anterior.
+
+Además, vemos una gran diferencia entre los tiempos de ejecución dependiendo de la precisión. En efecto, esta diferencia de precisión trae aparejado una diferencia en los valores óptimos que se encuentran. La idea de trabajar con estos algoritmos será entonces ver cuánto podemos $resignar$ de aproximación al valor óptimo para dar con un tiempo de ejecución acorde a lo deseado.
+
+A continuación se presenta la diferencia de valores encontrados con estas dos precisiones y la comparación con el valor óptimo:
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{ | l | r | r | r | r | }
+    \hline
+    Problema & Valor Optimo & Solucion Aproximada con e = 0.1 & Solucion Aproximada con e = 0.5 \\
+    \hline \hline
+     1 &    8373    & 8384 (+11)  & 8414 (+41)      \\ \hline
+     2 &    5847    & 5850 (+3)  & 5882 (+35)      \\ \hline
+     3 &    5962    & 5970 (+8)  & 6017 (+55)     \\ \hline
+     4 &    4888    & 4893 (+5)  & 4925 (+37)     \\ \hline
+     5 &    4889    & 4895 (+6)  & 4930 (+41)     \\ \hline
+     6 &    8181    & 8194 (+13)  & 8233 (+52)     \\ \hline
+     7 &    6033    & 6041 (+8)  & 6085 (+52)     \\ \hline
+     8 &    6865    & 6874 (+9)  & 6911 (+46)     \\ \hline
+     9 &    7082    & 7091 (+9)  & 7136 (+54)     \\ \hline
+    10 &    7605    & 7612 (+7)  & 7641 (+36)     \\ \hline
+    11 &    9533    & 9550 (+17)  & 9613 (+79)     \\ \hline
+    12 &    7654    & 7662 (+8)  & 7717 (+63)     \\ \hline
+    13 &    9577    & 9588 (+11)  & 9642 (+65)     \\ \hline
+    14 &    11287   & 11299 (+12) & 11377 (+90)    \\ \hline
+  \end{tabular}
+  \caption{Diferencias entre valores optimos dependiendo de la precisión de la aproximación}
+  \label{tab:knapsack_comparativo}
+\end{table}
+
+Es notable la diferencia que existe entre los valores obtenidos por cada una de las soluciones. Es por esto que se acentúa la importancia de decidir entre proximidad al valor óptimo y tiempo de ejecución para este tipo de algoritmos.
+En base a esto podemos decir que mientras más pequeña sea la precisión elegida, más cerca de la solución exacta estará, por lo que la diferencia con el valor óptimo será menor, el tiempo de ejecución para encontrar estos nuevos valores se disparará (dejará de ser $polinomial$) y nos encontraríamos en un escenario mucho más parecido a la complejidad $pseudo-polinomial$ que trabajamos en el trabajo anterior, debido a la relación del orden del problema con el parámetro $\epsilon$.
 
 \newpage
 
