@@ -100,10 +100,8 @@ class Graph(object):
                 if self.edge(u, v).weight != self.edge(v, u).weight:
                     raise ValueError("MinimumSpanningTree: asymmetric weights")
 
-        # Kruskal's algorithm: sort edges by weight, and add them one at a time.
-        # We use Kruskal's algorithm, first because it is very simple to
-        # implement once UnionFind exists, and second, because the only slow
-        # part (the sort) is sped up by being built in to Python.
+        # Algoritmo de Kruskal: ordena las aristas por peso y las agrega a la
+        # estructura de conjuntos disjuntos hasta que no queden conjuntos disjuntos.
         edges = [e for e in self.iter_edges()]
         edges.sort(key=lambda e: e.weight)
         subtrees = UnionFind()
