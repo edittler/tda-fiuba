@@ -140,21 +140,75 @@ Un pseudocódigo para calcular en forma aproximada el ciclo hamiltoniano mínimo
 es el siguiente:
 
 ```
-function TSP (G, c)
-  r = G.V.first
-  T = minimum_spanning_tree(G, c, r)
-  path = ordered_vertex_visit(T, r)
-  return (path)
-end
+función TSP (G)
+  T = árbol recubridor mínimo de G
+  raiz = raíz del recorrido (origen)
+  camino = visitar los nodos de T comenzando por la raíz
+  retornar camino
 ```
 
 El algoritmo para encontrar el árbol recubridor mínimo puede ser el de Prim o
-Kruskal.
+Kruskal. Se implementó el algoritmo de Kruskal.
 
-En su implementación se reutilizó la estructura que almacena la información del
-grafo, añadiendo una primitiva para obtener el árbol recubridor mínimo.
+El algoritmo de Kruskal se puede describir de la siguiente manera
 
-### Complejidad
+```
+función kruskal(G):
+  para cada vértice v de G.V:
+    crear un conjunto que contenga a v
+
+  E = aristas de G ordenadas por peso creciente
+
+  T = árbol T vacío
+
+  para cada arista e de E:
+    si C(e.origen) != C(e.destino):
+      agregar la arista e al árbol T
+      unir los conjuntos C(e.origen) y C(e.destino)
+
+  retornar T
+```
+
+Para operar los conjuntos se utilizó una
+[estructura de conjuntos disjuntos](https://en.wikipedia.org/wiki/Disjoint-set_data_structure)
+que posee los siguientes métodos:
+
+\begin{description}
+  \item[Buscar] Busca el conjunto al que pertenece un vértice dado.
+    Si el vértice no se encuentra en ningún conjunto, crea uno para ese elemento.
+  \item[Unir] Une los conjuntos de dos vértices dados.
+\end{description}
+
+Se implementó la estructura que posee dos heurísticas.
+La primera, *uniones por ranking*, es decir, unir el conjunto pequeño al
+conjunto más grande.
+La segunda, *compresión del camino*, consiste en "aplanar" el árbol en una
+operación de búsqueda, haciendo que los nodos visitados apunten directamente a
+la raíz del conjunto. Esto hace más eficiente búsquedas futuras, la operación
+más recurrente.
+Las operaciones de `Buscar` y `Unir` tienen un costo de $\log(n)$ siendo $n$ la
+cantidad de vértices almacenados en la estructura. [@Cormen2009 chap. 21]
+
+El algoritmo de Kruskal recorre todas las aristas y para cada una de ellas opera
+con la estructura de datos realizando 2 búsquedas (una por cada vértice que une
+la arista) y posiblemente una unión de conjuntos.
+Por lo tanto, el orden temporal del algoritmo es $O(m\log n)$ siendo $m$ la
+cantidad de aristas y $n$ la cantidad de vértices.
+
+Una vez obtenido el árbol, se realiza un recorrido en profundidad desde el
+vértice de origen. Este tipo de recorrido tiene una complejidad temporal de
+$O(m + n)$ y una complejidad espacial de $O(n)$ donde $m$ es la cantidad de
+aristas y $n$ la cantidad de vértices del grafo.
+
+Por lo tanto, la complejidad temporal del algoritmo es $O(m\log n)$, lo cual es
+una gran mejora respecto de la complejidad $O(n^{2} 2^n)$ de solución óptima.
+Con respecto a la complejidad espacial, el orden de la aproximación de $O(n)$
+también es una gran mejora con respecto a la complejidad $O(n2^n)$ de la
+solución óptima.
+
+Sin embargo, la solución aproximada sólo tiene utilidad si los datos de los
+grafos satisfacen la desigualdad triangular, donde el costo de la ruta no
+debería superar al doble de la solución óptima.
 
 
 ### Tiempos de ejecución y resultados
@@ -212,7 +266,7 @@ tour del viajante obtenido.
 \end{table}
 
 Utilizando un algoritmo de aproximación el costo se incrementa, en promedio, un
-65 \%. En 4 casos el valor aproximado supera al doble del mínimo.
+65 \%. En 4 casos el valor aproximado supera al doble de la solución óptima.
 Sin embargo, una consideración a tener en cuenta es que los datos generados
 aleatoriamente no se corresponden a ninguna distribución de ciudades, por lo que
 no necesariamente cumple la **desigualdad triangular**.
