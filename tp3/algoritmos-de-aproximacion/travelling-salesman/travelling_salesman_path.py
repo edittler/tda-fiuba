@@ -83,7 +83,7 @@ def travelling_salesman_aprox_path(graph):
         return
 
     # Obtengo el árbol recubridor mínimo
-    tree_graph, ordered_edges = graph.minimum_spanning_tree()
+    tree_graph = graph.minimum_spanning_tree()
 
     # Busca el camino óptimo
     path = []

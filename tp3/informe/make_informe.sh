@@ -9,7 +9,7 @@ if [ "$PANDOC" == "" ]; then
   exit 1
 fi
 
-cat Preambulo.md ParteClasesDeComplejidad.md ParteAlgoritmosDeAproximacion.md |
+cat Preambulo.md ParteClasesDeComplejidad.md ParteAlgoritmosDeAproximacion.md code.md |
   $PANDOC -S -N --template=plantilla.tex --filter pandoc-citeproc -o Informe.pdf
 
 echo "Informe generado!"

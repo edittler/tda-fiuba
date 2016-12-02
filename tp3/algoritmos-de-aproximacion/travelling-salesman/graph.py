@@ -117,7 +117,7 @@ class Graph(object):
         for e in tree:
             tree_graph.add_edge(e.src, e.dst, e.weight)
 
-        return tree_graph, tree
+        return tree_graph
 
     @classmethod
     def from_dict(cls, d):

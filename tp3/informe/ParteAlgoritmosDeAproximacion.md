@@ -150,6 +150,8 @@ función TSP (G)
 El algoritmo para encontrar el árbol recubridor mínimo puede ser el de Prim o
 Kruskal. Se implementó el algoritmo de Kruskal.
 
+\newpage
+
 El algoritmo de Kruskal se puede describir de la siguiente manera
 
 ```
@@ -210,6 +212,7 @@ Sin embargo, la solución aproximada sólo tiene utilidad si los datos de los
 grafos satisfacen la desigualdad triangular, donde el costo de la ruta no
 debería superar al doble de la solución óptima.
 
+\newpage
 
 ### Tiempos de ejecución y resultados
 
@@ -231,7 +234,7 @@ prácticamente depreciable comparado con los del algoritmo Bellman–Held–Karp
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=.65\linewidth]{../algoritmos-de-aproximacion/travelling-salesman/images/tsp_times}
+  \includegraphics[width=.7\linewidth]{../algoritmos-de-aproximacion/travelling-salesman/images/tsp_times}
   \caption{Comparativa del tiempo de ejecución del problema del viajante}
   \label{fig:tsp_times}
 \end{figure}
@@ -282,8 +285,3 @@ reales son:
 
 Para esos 3 casos, el incremento del costo es de 26 \%, por lo que el resultado
 es mejor cuando tienen relación con datos reales.
-
-\newpage
-
-
-# Referencias
