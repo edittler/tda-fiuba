@@ -14,6 +14,8 @@ Para comparar la dificultad de dos problemas X e Y tomamos como criterio la posi
 
 - "X es tan difícil como Y", ya que resolver X asegura que podemos resolver Y, pero no se cumple la inversa. No nos referimos estrictamente al tiempo de ejecución.
 
+Se dice por otro lado que dos problemas son _polinómicamente equivalente_ ($Y \equiv_p X$) cuando cualquiera puede usarse para resolver al otro: $Y\leqslant_pX$ y $X\leqslant_pY$.
+
 ### Problemas de decisión
 
 Identificamos a un problema de decisión por las siguientes componentes:
@@ -31,6 +33,8 @@ Definimos a su vez a un algoritmo $A$ que resuelve a un problema $X$ como una fu
 
 **REVISAR**
 
+Nos son particularmente interesantes estos problemas porque la reducción de un problema de decisión $X$ a otro $Y$ consiste en transformar en tiempo polinómico la entrada de $X$ en una entrada de $Y$ de forma tal que la salida de $Y$ sea la esperada por $X$.
+
 ### Certificación
 
 Llamamos _certificado_ a una cadena $t$ que aporta información sobre si una cadena de input $s$ será aceptada para un problema $X$. Por ejemplo, para un problema de decisión como "verificar si en un grafo hay ciclos", un posible certificado es un conjunto de vértices que supuestamente forman un ciclo. Es algo similar a una solución propuesta.
@@ -38,24 +42,24 @@ Llamamos _certificado_ a una cadena $t$ que aporta información sobre si una cad
 Dado un problema $X$, una entrada $s$ y un certificado $t$, llamamos _certificador_ a una función B que toma certificados y evidencia con ellos que $s \in X$. Para el ejemplo anterior, un certificador tomaría el conjunto de vértices $t$ y la cadena $s$ (que serían los vértices del grafo) y verificaría que $t$ es efectivamente un ciclo. Formalmente:
 
 \begin{equation}
-    B(s,t) = si \iff t \textrm{ certifica que } s \in X
+    B(s,t) = si \iff t \textrm{ demuestra que } s \in X
 \end{equation}
 
 Es importante observar que el certificador no analiza la cadena en sí, sino que evalúa el certificado. Por lo tanto, su función es en realidad comprobar soluciones propuestas al problema, lo cual no necesariamente resuelve el problema en sí mismo. Por este motivo, muchas veces es más sencilla y rápida la acción de un certificador que la de un algoritmo de resolución de un problema.
 
 Llamamos _certificador eficiente_ a uno que certifica en tiempo polinómico.
 
-### $P$ y $NP$
+### P y NP
 
 Son de nuestro interés dos clases de complejidad:
 
-- $P$: clase que contiene a todos los problemas para los cuales existen algoritmos que los resuelven en tiempo polinómico. Si X es un problema, A un algoritmo y p es una función polinómica:
+- P: clase que contiene a todos los problemas para los cuales existen algoritmos que los resuelven en tiempo polinómico. Si X es un problema, A un algoritmo y p es una función polinómica:
 
 \begin{equation}
     P = \{X / \exists A \in O(p(|s|)) \textrm{ que lo resuelve}\}
 \end{equation}
 
-- $NP$: clase que contiene a todos los problemas certificables en tiempo polinómico. Si X es un problema y B un certificador:
+- NP: clase que contiene a todos los problemas certificables en tiempo polinómico. Si X es un problema y B un certificador:
 
 \begin{equation}
     NP = \{X / \exists B \in O(p(|s|)) \textrm{ que lo certifica}\}
@@ -63,11 +67,46 @@ Son de nuestro interés dos clases de complejidad:
 
 Inmediatamente podemos observar que $P \subseteq NP$, ya que si un problema puede resolverse en tiempo polinómico, entonces para certificar soluciones propuestas puede usarse el mismo algoritmo polinómico de resolución, ignorando el certificado.
 
-**Quizás se puede plantear la "situación de hoy en día"**
-
 Adicionalmente, de la definición de reducciones podemos observar que:
 
 - Si $Y \leqslant_p X$ y $X$ es resoluble en tiempo polinómico, entonces $Y$ también. $X \in P \Rightarrow Y \in P$.
 - Vale la recíproca: $Y\leqslant_pX \land Y \notin P \Rightarrow X \notin P$.
 
+### NP-Completo
+
+Además, existe un subconjunto de NP que cumplen con la característica de ser más difíciles que cualquier otro prolema en NP. A esta subclase la denominamos NP-completo. Visto de otro modo, que un problema pertenezca a aquella clase asegura que si se tiene un algoritmo para resolverlo, entonces es posible utilizarlo para transformarlo en tiempo polinómico a cualquier problema de NP.
+
+Entonces un problema $X$ perteneciente a esta clase cumple con dos características:
+
+1. $X \in NP$
+2. $\forall Y \in NP: Y \leqslant_p X$
+
+Es importante que se cumplan ambas, ya que los problemas que cumplen la segunda condición son llamados NP-hard independientemente de si son o no NP.
+
+**Quizás se puede plantear la "situación de hoy en día"**
+
 ## Determinar la clase de complejidad de un problema.
+
+Para muchas aplicaciones es de interés determinar si un problema pertenece a alguna de las tres clases anteriores. En cada caso, el método utilizado será:
+
+- P: encontrar una solución polinomial.
+- NP: encontrar un certificador polinomial.
+- NP-completo: reducir un problema NP-completo conocido al problema en cuestión. Además habrá que probar independientemente que es NP.
+
+A continuación se presentan algunos problemas conocidos que serán de utilidad.
+
+### SAT y 3-SAT
+
+El problema SAT (satisfacibilidad booleana) consiste en los siguientes elementos:
+
+- Un conjunto $X = \{x_1, x_2, ..., x_n\}$ de variables booleanas.
+- $k$ condiciones $C_i$ a satisfacer, cada una con $l$ términos unidos por disyunciones ($\lor$).
+- Cada término $t_i$ en una condición es una de las variables booleanas de $X$ o su negación.
+
+El problema se trata de decidir si existe una asignación de las variables $\nu: X \to \{0,1\}$ (mapeo concreto de cada variable a 0 o 1) que satisfaga simultáneamente todas las condiciones. Es decir, $\nu$ tal que $\bigwedge_{i=1}^{k} C_i = 1$.
+
+El 3-SAT es un caso particular de este, donde $|C_i| = 3 \forall i$. Es demostrable (**CITAR**) que es polinómicamente equivalente a SAT.
+
+La importancia de este problema reside en que el Teorema de Cook (**CITAR?**) demuestra que es NP-Completo, modelando con una tabla la computación completa de cualquier máquina de Turing y expresándo los valores de la tabla y sus relaciones con variables booleanas. (**MEJORAR**). De este modo se reduce cualquier Máquina de Turing a un problema SAT.
+
+Mostrar que SAT y 3-SAT son NP, por otro lado es sencillo. Un certificado es una asignación propuesta. Para verificarlo, solo será necesario ver para cada condición que esa asignación la hace verdadera. La certificación, por lo tanto, es lineal en el tamaño de la entrada, que es la cantidad total de términos ($\sum_{i=1}^{k} |C_i|$).
