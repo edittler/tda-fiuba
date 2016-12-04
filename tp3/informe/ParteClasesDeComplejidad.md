@@ -105,8 +105,36 @@ El problema SAT (satisfacibilidad booleana) consiste en los siguientes elementos
 
 El problema se trata de decidir si existe una asignación de las variables $\nu: X \to \{0,1\}$ (mapeo concreto de cada variable a 0 o 1) que satisfaga simultáneamente todas las condiciones. Es decir, $\nu$ tal que $\bigwedge_{i=1}^{k} C_i = 1$.
 
-El 3-SAT es un caso particular de este, donde $|C_i| = 3 \forall i$. Es demostrable (**CITAR**) que es polinómicamente equivalente a SAT.
+El 3-SAT es un caso particular de este, donde $|C_i| = 3 \quad \forall i$. Es demostrable (**CITAR**) que es polinómicamente equivalente a SAT.
 
 La importancia de este problema reside en que el Teorema de Cook (**CITAR?**) demuestra que es NP-Completo, modelando con una tabla la computación completa de cualquier máquina de Turing y expresándo los valores de la tabla y sus relaciones con variables booleanas. (**MEJORAR**). De este modo se reduce cualquier Máquina de Turing a un problema SAT.
 
 Mostrar que SAT y 3-SAT son NP, por otro lado es sencillo. Un certificado es una asignación propuesta. Para verificarlo, solo será necesario ver para cada condición que esa asignación la hace verdadera. La certificación, por lo tanto, es lineal en el tamaño de la entrada, que es la cantidad total de términos ($\sum_{i=1}^{k} |C_i|$).
+
+### Independent Set (IS)
+
+Un conjunto de vértices de un grafo $G = (V,E)$ es _independiente_ si no contiene ningún par de vértices adyascentes.
+
+Mientras que encontrar un IS de tamaño pequeño es trivial (cualquier vértice es un IS de tamaño 1), encontrar instancias grandes es costoso. Por este motivo, el problema de decisión asociado consiste en decidir si hay un IS de tamaño al menos $k$ para un $k$ dado.
+
+### Vertex Cover (VC)
+
+Se dice que un conjunto de vértices _cubre_ al grafo cuando todas las aristas tienen al menos uno de sus extremos en el conjunto.
+
+Al revés del problema anterior, encontrar un VC de tamaño grande es trivial, ya que por ejemplo el conjunto $V$ completo es un VC. Sin embargo, encontrar instancias pequeñas no es sencillo. Por lo tanto, el problema de decisión asociado consiste en decidir si existe un VC de tamaño a lo sumo $k$ para un $k$ dado.
+
+### Relación entre los problemas
+
+**Teorema**: VC $\equiv_p$ IS
+
+**Demostración**: queremos probar que si $S$ es un IS en $G$, entonces $V-S$ es un VC en $G$.
+
+1. $S$ es IS $\Rightarrow$ $V - S$ es VC:
+
+    Como dijimos antes, $V$ es un VC. Si quitamos uno a uno elementos de $S$ a $V$, sabemos que en ningún caso se quitarán ambos extremos de una arista. Si así fuera, dos de los elementos quitados estarían unidos y $S$ no sería un IS.
+
+2. $V - S$ es VC $\Rightarrow$ $S$ es IS:
+
+    Por contradicción: Si $S$ no fuera un IS, entonces podríamos afirmar que existen dos vértices $v_1,v_2 \in S$ tal que $v_1$ y $v_2$ están conectados. Entonces, $V - S$ no contendrá la unión entre esos dos vértices y por lo tanto no será un VC, contradiciendo la hipótesis.
+
+Entonces se ve que con resolver IS para tamaño $k$, se resuelve VC para tamaño $n-k$ y viceversa. Entonces, la única transformación requerida entre un problema y otro es la cuenta $n-k$, lo cual es $O(1)$, lo cual demuestra que son polinomialmente equivalentes.
