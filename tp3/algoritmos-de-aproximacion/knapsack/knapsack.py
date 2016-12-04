@@ -26,7 +26,6 @@ def knapsack_bottom_up_aproximado(items_value, max_value, items_weight, knapsack
     # Corro el algoritmo en si, midiendo el tiempo
     knapsack_bottom_up_aproximado_core(rounded_items_value, matrix_value_range, items_weight, knapsack_weight, results)
 
-    #return KnapsackSolution(results[cant_items][knapsack_weight], knapsack_get_solution(cant_items, knapsack_weight, items_value, items_weight, results))
     return int(int(knapsack_get_optimum_value_aproximado(results, cant_items, matrix_value_range, knapsack_weight)) * b)
 
 def knapsack_bottom_up_aproximado_core(items_value, max_value, items_weight, knapsack_weight, results):
@@ -41,7 +40,6 @@ def knapsack_bottom_up_aproximado_core(items_value, max_value, items_weight, kna
 
         for v in range(1, value_accum + 1):
 
-            #if (items_weight[i - 1] > knapsack_weight or v > value_sum):
             if v > value_sum:
                 results[i][v] = items_weight[i - 1] + results[i - 1][max(0, v - items_value[i - 1])]
             else:
@@ -59,3 +57,21 @@ def knapsack_get_optimum_value_aproximado(results, cant_items, matrix_value_rang
             if results[i][v] <= knapsack_weight:
 
                 return v
+
+def knapsack_get_solution_set_aproximado(n, V, items_value, items_weight, optimum_values):
+
+    result = []
+
+    if n == 0 or V == 0:
+        return None
+    else:
+
+        for i in range(cant_items, 0, -1):
+
+            for v in range(V, 0, -1):
+
+                if items_weight[i - 1] + optimum_values[i - 1][v - items_values[i - 1]] == optimum_values[i][v]:
+                    result.append(i)
+                    v -= items_value[i - 1]
+
+    return list(reversed(result))
