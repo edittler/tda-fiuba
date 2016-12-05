@@ -179,4 +179,6 @@ Entonces, el problema se reduce a aplicar el algoritmo de Bellman-Ford y respond
 
 Esto no significa necesariamente que sea el algoritmo más eficiente para resolver este problema, pero a los fines de este trabajo es suficiente, dado que el algoritmo es claramente polinómico, con complejidad $O(|E||V|)$. Concluimos entonces que CN $\in$ P.
 
-## Ciclos nulos
+## Problema de Ciclos Nulos (C0)
+
+_Se tiene un grafo dirigido y pesado G, cuyas aristas tienen pesos que pueden ser negativos. Se pide devolver si el grafo tiene algún ciclo con peso exactamente igual a cero._
