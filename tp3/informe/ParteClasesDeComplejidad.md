@@ -177,6 +177,6 @@ Por otro lado, **en caso de haber ciclos negativos**, estos son mejorables infin
 
 Entonces, el problema se reduce a aplicar el algoritmo de Bellman-Ford y responder 1 si el algoritmo encontró ciclos negativos.
 
-Esto no significa necesariamente que sea el algoritmo más eficiente para resolver este problema, pero a los fines de este trabajo es suficiente, dado que el algoritmo es claramente polinómico, con complejidad $O(|E||V|). Concluimos entonces que CN $\in$ P.
+Esto no significa necesariamente que sea el algoritmo más eficiente para resolver este problema, pero a los fines de este trabajo es suficiente, dado que el algoritmo es claramente polinómico, con complejidad $O(|E||V|)$. Concluimos entonces que CN $\in$ P.
 
-## Ciclos nulos 
+## Ciclos nulos

@@ -82,6 +82,27 @@ def knapsack_get_optimum_value_aproximado(results, cant_items, matrix_value_rang
                 return v
 ```
 
+#### Función que devuelve el set solución aproximado
+
+```python
+def knapsack_get_solution_set_aproximado(n, V, items_value, items_weight, optimum_values):
+
+    result = []
+
+    if n == 0 or V == 0:
+        return None
+    else:
+
+        for i in range(cant_items, 0, -1):
+
+            for v in range(V, 0, -1):
+
+                if items_weight[i - 1] + optimum_values[i - 1][v - items_values[i - 1]] == optimum_values[i][v]:
+                    result.append(i)
+                    v -= items_value[i - 1]
+
+    return list(reversed(result))
+```
 ### El problema del viajante de comercio
 
 #### Función que calcula el camino y costo mínimo
