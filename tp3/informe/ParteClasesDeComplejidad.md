@@ -2,6 +2,10 @@
 
 # Clases de Complejidad
 
+## Objetivo
+
+El objetivo de esta sección del trabajo es analizar 4 problemas, sus posibles soluciones y su clasificación según clase de complejidad.
+
 ## Introducción Teórica
 
 La clasificación de clases de complejidad de los problemas surge de la necesidad de comparar problemas para los cuales no se conoce una solución eficiente (polinomial), pero no se ha demostrado que no la tienen.
@@ -138,3 +142,41 @@ Al revés del problema anterior, encontrar un VC de tamaño grande es trivial, y
     Por contradicción: Si $S$ no fuera un IS, entonces podríamos afirmar que existen dos vértices $v_1,v_2 \in S$ tal que $v_1$ y $v_2$ están conectados. Entonces, $V - S$ no contendrá la unión entre esos dos vértices y por lo tanto no será un VC, contradiciendo la hipótesis.
 
 Entonces se ve que con resolver IS para tamaño $k$, se resuelve VC para tamaño $n-k$ y viceversa. Entonces, la única transformación requerida entre un problema y otro es la cuenta $n-k$, lo cual es $O(1)$, lo cual demuestra que son polinomialmente equivalentes.
+
+**Teorema**: 3-SAT $\leqslant_p$ IS
+
+**Demostración**: queremos probar que se puede modelar el problema de 3-SAT como un problema de conjuntos independientes. Creamos el siguiente modelo:
+
+- Para cada una de las $k$ condiciones creamos tres vértices, uno por cada término. Tendremos entonces, $|V| = 3k$
+- Para modelar las incompatibilidades entre los términos de distintas condiciones ($x_i$ en una y $~x_i$ en otra), unimos con aristas estos casos.
+- Como es suficiente satisfacer un término de cada condición para que la asignación satisfaga a todas, entonces unimos los 3 vértices de cada condición entre sí, formando triángulos. Esto no significa que no es posible satisfacer más términos, solo que hacerlo complica las incompatibilidades y no es necesario para demostrar que existe una asignación satisfactoria.
+
+De este modo, si encontramos un conjunto independiente de al menos $k$ vértices, nos aseguramos de que elegimos al menos $k$ términos, uno de cada condición, sin que haya incompatibilidades. Este conjunto da como resultado, justamente, una asignación satisfactoria.
+
+**Corolario**: 3-SAT $\equiv_p$ SAT $\leqslant_p$ IS $\equiv_p$ VC
+
+Por este motivo, tanto IS como VC son NP-completos y podemos tratar de reducir esos problemas a los que querramos demostrar que también lo son.
+
+## Problema de Ciclos Negativos (CN)
+_Se tiene un grafo dirigido y pesado G, cuyas aristas tienen pesos que pueden ser negativos. Se pide devolver si el grafo tiene algún ciclo con peso negativo._
+
+El algoritmo de Bellman-Ford de búsqueda de caminos mínimos en grafos tiene la característica de ser óptimo con aristas de pesos negativos (cuando Dijkstra no lo es) y la ventaja de detectar, al final de su ejecución, ciclos negativos.
+
+Aquel consiste, en cada paso, en recorrer todas las aristas $(u,v) \in E$ viendo si la distancia actual al vértice $v$ es mejorable si se llega desde $u$. Esto puede verse en pseudocódigo como:
+
+```python
+for e in edges:
+    if(distance[e.dst] > distance[e.src] + e.weight):
+        distance[e.dst] = distance[e.src] + e.weight
+        parent[e.dst] = e.src
+```
+
+**Si no hay ciclos negativos**, en cada uno de estos pasos el algoritmo deja en su valor óptimo la distancia a cada vértice a distancia sin peso más cercano. Es decir, en el primer paso, los vértices adyascentes al origen $s$ quedarán con su menor distancia. En el segundo, los adyascentes a esos (distancia sin peso 2 a $s$) quedarán minimizados. Por este motivo, como el camino mínimo no puede tener más de $|V| - 1$ aristas (no puede recorrer más de una vez un vértice o no sería óptimo) y por lo tanto al terminarse $|V|-1$ pasos de los anteriores puede asegurarse que se llegó a destino con el mejor camino posible.
+
+Por otro lado, **en caso de haber ciclos negativos**, estos son mejorables infinitamente (se los puede seguir recorriendo sin fin y seguir bajando su peso total). De este modo, si luego de $|V|-1$ iteraciones todavía hay una arista mejorable, podemos asegurar que el grafo tiene ciclos negativos, que era el objetivo de este problema.
+
+Entonces, el problema se reduce a aplicar el algoritmo de Bellman-Ford y responder 1 si el algoritmo encontró ciclos negativos.
+
+Esto no significa necesariamente que sea el algoritmo más eficiente para resolver este problema, pero a los fines de este trabajo es suficiente, dado que el algoritmo es claramente polinómico, con complejidad $O(|E||V|). Concluimos entonces que CN $\in$ P.
+
+## Ciclos nulos 
