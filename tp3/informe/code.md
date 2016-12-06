@@ -13,7 +13,7 @@ ejemplos, benchmarks de algoritmos y más:
 
 #### Función que setea el ambiente para llamar al algoritmo de aproximación
 
-```python
+\begin{lstlisting}[style=python]
 def knapsack_bottom_up_aproximado(items_value, max_value, items_weight, knapsack_weight, 
 precision_e):
 
@@ -39,11 +39,11 @@ precision_e):
 
     return int(int(knapsack_get_optimum_value_aproximado(results, cant_items, 
                     matrix_value_range, knapsack_weight)) * b)
-```
+\end{lstlisting}
 
 #### Implementación del algoritmo de aproximación
 
-```python
+\begin{lstlisting}[style=python]
 def knapsack_bottom_up_aproximado_core(items_value, max_value, items_weight, 
 knapsack_weight, results):
 
@@ -63,11 +63,11 @@ knapsack_weight, results):
             else:
                 results[i][v] = min(results[i - 1][v], items_weight[i - 1] + 
                                 results[i - 1][max(0, v - items_value[i - 1])])
-```
+\end{lstlisting}
 
 #### Función que obtiene el valor óptimo aproximado de la matriz solución
 
-```python
+\begin{lstlisting}[style=python]
 def knapsack_get_optimum_value_aproximado(results, cant_items, matrix_value_range, knapsack_weight):
 
     # Recorro la matriz viendo desde el mayor valor V posible
@@ -80,11 +80,11 @@ def knapsack_get_optimum_value_aproximado(results, cant_items, matrix_value_rang
             if results[i][v] <= knapsack_weight:
 
                 return v
-```
+\end{lstlisting}
 
 #### Función que devuelve el set solución aproximado
 
-```python
+\begin{lstlisting}[style=python]
 def knapsack_get_solution_set_aproximado(n, V, items_value, items_weight, optimum_values):
 
     result = []
@@ -102,12 +102,14 @@ def knapsack_get_solution_set_aproximado(n, V, items_value, items_weight, optimu
                     v -= items_value[i - 1]
 
     return list(reversed(result))
-```
+\end{lstlisting}
+
+
 ### El problema del viajante de comercio
 
 #### Función que calcula el camino y costo mínimo
 
-```python
+\begin{lstlisting}[style=python]
 def travelling_salesman_aprox_path(graph):
     """
     Recibe el grafo sobre el cual se desea resolver problema del viajante de
@@ -148,11 +150,11 @@ def travelling_salesman_aprox_path(graph):
     path.append(0)
 
     return opt, list(path)
-```
+\end{lstlisting}
 
 #### Método de la clase Graph que genera el árbol recubridor mínimo
 
-```python
+\begin{lstlisting}[style=python]
     def minimum_spanning_tree(self):
         """
         Retorna el árbol recubridod mínimo del grafo no dirigido G.
@@ -183,11 +185,11 @@ def travelling_salesman_aprox_path(graph):
             tree_graph.add_edge(e.src, e.dst, e.weight)
 
         return tree_graph
-```
+\end{lstlisting}
 
 #### Clase UnionFind
 
-```python
+\begin{lstlisting}[style=python]
 class UnionFind(object):
     """Estructura de datos de Union-buscar"""
 
@@ -229,7 +231,7 @@ class UnionFind(object):
             if r != heaviest:
                 self.weights[heaviest] += self.weights[r]
                 self.parents[r] = heaviest
-```
+\end{lstlisting}
 
 \newpage
 
