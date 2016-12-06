@@ -187,7 +187,7 @@ Se puede demostrar que el problema de búsqueda de ciclos negativos es *NP-Compl
 
 Primero demostraremos que es *NP*, o sea, que es certificable en tiempo polinomial. Para el problema de ciclos negativos es sencillo: dado un certificado que consiste en un ejemplo de ciclo simplemente tenemos que calcular la suma de sus pesos y ver si es cero, y además verificar que es un ciclo. Esto puede hacerse en tiempo lineal.
 
-Luego reducimos un problema *NP-Completo* conocido, que es el de _subset-sum_ al problema de búsqueda de ciclos nulos. Una forma de este problema consiste en $n$ elementos $w_1,\ldots,w_n \in \mathbb{Z}$ y su objetivo es encontrar un que deben sumar 0. Se prueba que este problema 
+Luego reducimos un problema *NP-Completo* conocido, que es el de _subset-sum_ al problema de búsqueda de ciclos nulos. Una forma de este problema consiste en $n$ elementos $w_1,...,w_n \in \mathbb{Z}$ y su objetivo es encontrar un que deben sumar 0. Se prueba que este problema 
 Estos son los pasos:
 
 1. Crear un grafo de $2n$ vértices. Por cada elemento $w_i$ creamos un vértice $u_i$ y uno $v_i$.
