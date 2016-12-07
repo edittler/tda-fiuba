@@ -85,6 +85,11 @@ Resumiendo, un problema $X$ perteneciente a esta clase cumple con dos caracterí
 
 Es importante que se cumplan ambas, ya que los problemas que cumplen la segunda condición son llamados NP-hard independientemente de si son o no NP.
 
+Dos propiedades importantes que se desprenden de la definición son:
+
+- Si $X$ es NP-Completo y $X \leqslant_p Y$ entonces $Y$ es NP-Completo también, por la transitividad de la reducción.
+- Si dos problemas son NP-Completos, son polinómicamente equivalentes.
+
 ## Determinar la clase de complejidad de un problema.
 
 Para muchas aplicaciones es de interés determinar si un problema pertenece a alguna de las tres clases anteriores. En cada caso, el método utilizado será:
@@ -105,9 +110,9 @@ El problema SAT (satisfacibilidad booleana) consiste en los siguientes elementos
 
 El problema se trata de decidir si existe una asignación de las variables $\nu: X \to \{0,1\}$ (mapeo concreto de cada variable a 0 o 1) que satisfaga simultáneamente todas las condiciones. Es decir, $\nu$ tal que $\bigwedge_{i=1}^{k} C_i = 1$.
 
-El 3-SAT es un caso particular de este, donde $|C_i| = 3 \quad \forall i$. Es demostrable (**CITAR**) que es polinómicamente equivalente a SAT.
+La importancia de este problema reside en que el Teorema de Cook-Levin demuestra que es NP-Completo de forma directa, sin depender de otros problemas. Con ese objetivo modela cualquier con una tabla la computación completa de cualquier máquina de Turing y expresa los valores de la tabla y sus relaciones con variables booleanas que son entradas de SAT [@CLW]. De este modo se reduce cualquier lenguaje aceptable por una Máquina de Turing a un problema SAT.
 
-La importancia de este problema reside en que el Teorema de Cook (**CITAR?**) demuestra que es NP-Completo, modelando con una tabla la computación completa de cualquier máquina de Turing y expresándo los valores de la tabla y sus relaciones con variables booleanas. (**MEJORAR**). De este modo se reduce cualquier Máquina de Turing a un problema SAT.
+El 3-SAT es un caso particular de este, donde $|C_i| = 3 \quad \forall i$. Es demostrable que es polinómicamente equivalente a SAT, ya que el segundo puede expresarse en su forma normal conjuntiva o disyuntiva eficientemente [@Cormen2009. Teorema 34.10].
 
 Mostrar que SAT y 3-SAT son NP, por otro lado es sencillo. Un certificado es una asignación propuesta. Para verificarlo, solo será necesario ver para cada condición que esa asignación la hace verdadera. La certificación, por lo tanto, es lineal en el tamaño de la entrada, que es la cantidad total de términos ($\sum_{i=1}^{k} |C_i|$).
 
@@ -162,7 +167,7 @@ Este es el problema que será utilizado en todos los problemas NP-Completos. El 
 
 El problema de decisión es _si_ cuando existe un subconjunto de $W$ tal que la suma de sus elementos es $K$
 
-El libro de Kleinberg y Tardos demuestra que SAT se reduce a 3D-Matching, que a su vez se reduce a este problema.
+El libro Algorithm Design [@KT. Sección 8.8] demuestra que SAT se reduce a 3D-Matching, que a su vez se reduce a este problema.
 
 ### Subset-Sum-Zero (SSZ) \label{s:ssz}
 
