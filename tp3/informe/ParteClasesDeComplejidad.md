@@ -35,8 +35,6 @@ Definimos a su vez a un algoritmo $A$ que resuelve a un problema $X$ como una fu
     A(s) = si \iff s \in X
 \end{equation}
 
-**REVISAR**
-
 Nos son particularmente interesantes estos problemas porque la reducción de un problema de decisión $X$ a otro $Y$ consiste en transformar en tiempo polinómico la entrada de $X$ en una entrada de $Y$ de forma tal que la salida de $Y$ sea la esperada por $X$.
 
 ### Certificación
@@ -103,7 +101,7 @@ A continuación se presentan algunos problemas conocidos que serán de utilidad.
 
 El problema SAT (satisfacibilidad booleana) consiste en los siguientes elementos:
 
-- Un conjunto $X = \{x_1, x_2, ..., x_n\}$ de variables booleanas.
+- Un conjunto $X = \{x_1, x_2, \ldots x_n\}$ de variables booleanas.
 - $k$ condiciones $C_i$ a satisfacer, cada una con $l$ términos unidos por disyunciones ($\lor$).
 - Cada término $t_i$ en una condición es una de las variables booleanas de $X$ o su negación.
 
@@ -157,6 +155,29 @@ De este modo, si encontramos un conjunto independiente de al menos $k$ vértices
 
 Por este motivo, tanto IS como VC son NP-completos y podemos tratar de reducir esos problemas a los que querramos demostrar que también lo son.
 
+### Subset-Sum (SS) \label{s:ss}
+
+Este es el problema que será utilizado en todos los problemas NP-Completos. El problema consiste en:
+
+- Un conjunto de valores $W = \{w_1, \ldots w_n\} \in \mathbb{N}$.
+- Un número $K$ que es nuestra suma objetivo.
+
+El problema de decisión es _si_ cuando existe un subconjunto de $W$ tal que la suma de sus elementos es $K$
+
+El libro de Kleinberg y Tardos demuestra que SAT se reduce a 3D-Matching, que a su vez se reduce a este problema.
+
+### Subset-Sum-Zero (SSZ) \label{s:ssz}
+
+A su vez, una variante que utilizaremos tiene un conjunto de valores $W = \{w_1, \ldots w_n\} \in \mathbb{Z}$ y su problema de decisión asociado es _si_ cuando existe un subconjunto que sume 0.
+
+Primero mostramos que este problema es NP. Dado un certificado $t$ que consiste en un subconjunto propuesto 0, se asegura que ese conjunto sume efectivamente 0. Si es necesario asegurarse de que es un subconjunto de W, eso puede hacerse con fuerza bruta en tiempo cuadrático (aunque sería más eficiente usar un hash).
+
+Para mostrar que es NP-Completo reducimos SS general a este problema.
+
+La reducción consiste en generar una nueva entrada $W' = W + \{-K\}$. Como $W$ solo tenía números naturales, entonces la única forma de que el nuevo conjunto sume 0 es si había un conjunto que sumara $K$ en $W$ y tome el nuevo elemento agregado $-K$ en $W'$. De este modo, entonces, $W'$ será la entrada de SSZ, con un costo de reducción $O(1)$.
+
+Entonces: SS $\leqslant_p$ SSZ y por lo tanto SSZ $\in$ NP-Completo.
+
 ## Problema de Ciclos Negativos (CN)
 _Se tiene un grafo dirigido y pesado G, cuyas aristas tienen pesos que pueden ser negativos. Se pide devolver si el grafo tiene algún ciclo con peso negativo._
 
@@ -185,24 +206,45 @@ _Se tiene un grafo dirigido y pesado G, cuyas aristas tienen pesos que pueden se
 
 Se puede demostrar que el problema de búsqueda de ciclos negativos es *NP-Completo*.
 
-Primero demostraremos que es *NP*, o sea, que es certificable en tiempo polinomial. Para el problema de ciclos negativos es sencillo: dado un certificado que consiste en un ejemplo de ciclo simplemente tenemos que calcular la suma de sus pesos y ver si es cero, y además verificar que es un ciclo. Esto puede hacerse en tiempo lineal.
+Primero demostraremos que es *NP*, o sea, que es certificable en tiempo polinomial. Para el problema de ciclos negativos es sencillo: dado un certificado que consiste en un ejemplo de ciclo simplemente tenemos que calcular la suma de sus pesos y ver si es cero, y además verificar que es un ciclo. Esto puede hacerse en tiempo lineal con el siguiente pseudocódigo:
 
-Luego reducimos un problema *NP-Completo* conocido, que es el de _subset-sum_ al problema de búsqueda de ciclos nulos. Una forma de este problema consiste en $n$ elementos $w_1,\ldots,w_n \in \mathbb{Z}$ y su objetivo es encontrar un que deben sumar 0. Se prueba que este problema 
-Estos son los pasos:
+```python
+# Nuestro certificado fue guardado en una lista c
+suma += 0
+for i, edge in enumerate(c):
+    suma += c[i].weight
+    if edge.src != c[i-1].dst:
+        return 0
+return 1 if suma == 0 else 0
+```
+
+Luego reducimos un problema *NP-Completo* conocido, que es el SSZ (sección \ref{s:ssz}) a C0.
+
+La reducción puede verse en la figura \ref{fig:reduccionP2} y tiene los siguientes pasos:
 
 1. Crear un grafo de $2n$ vértices. Por cada elemento $w_i$ creamos un vértice $u_i$ y uno $v_i$.
 2. Unimos cada $v_i$ con su respectivo $u_i$ mediante una arista de peso $w_i$.
 3. Luego unimos cada $u_i$ con todos los $v_j$ (incluyendo el propio), mediante aristas de peso 0.
 
-Esto generará grafos como este:
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\columnwidth]{images/P2.png}
+    \caption{Reducción Propuesta para un conjunto de 3 elementos.}
+    \label{fig:reduccionP2}
+\end{figure}
 
-**INSERTAR IMAGEN**
+Esta reducción tiene tiempo cuadrático, ya que consiste en conectar a todos los vértices $u$ con todos los vértices $v$.
 
 Entonces, lo que ocurre es lo siguiente:
-- Como lo que se encuentra es un ciclo, entonces seguro que ese ciclo incluye al menos a ambos vértices de un elemento. Nunca se elegirá "medio vértice", ya que si así fuera no habría ciclo. Por sabemos que **si el ciclo pasa por un elemento, se suma su valor**.
+
+- Como lo que debe encontrar C0 es un ciclo, entonces seguro que ese ciclo incluye al menos a ambos vértices de un elemento. Nunca se elegirá "medio vértice", ya que si así ocurriera, sería un camino abierto.
+- Sabemos que **si el ciclo pasa por un elemento, se suma su valor**, ya que necesariamente debe pasar de $v_i$ a $u_i$ (si un camino llega a $v_i$ su única salida es hacia $u_i$).
 - Como toda arista que no es la propia de cada elemento es nula, entonces un ciclo que tome varios elementos tendrá como peso total la suma de los elementos.
 - Si un ciclo suma 0, entonces la suma de los elementos por los que pasa es 0.
-- Si encontramos un ciclo de peso total 0, entonces habremos encontrado un subconjunto de elementos que suman 0 entre sí, lo cual es la solución al problema planteado.
+
+En conclusión, si encontramos un ciclo de peso total 0, entonces habremos encontrado un subconjunto de elementos que suman 0 entre sí, lo cual es la solución al problema planteado.
+
+Por lo tanto, _SSZ_ $\leqslant_p$ C0 y entonces C0 $\in$ NP-Completo.
 
 ## Problema de decisión de Scheduling con tiempos de ejecución distintos (P3)
 
@@ -250,16 +292,15 @@ Ahora bien, si yo consigo una planificación $P$ que resuelve mi problema $P3$, 
 
 _Se tiene un conjunto de n tareas, cada una con un tiempo de ejecución igual a 1, una fecha límite de finalización_ $d_i \in N$ _y una ganancia_ $v_i \in R$ _que será otorgada si se finaliza antes que su tiempo límite. Se pide devolver si existe alguna planificación que obtenga una ganancia total_ $k \in R$ _sabiendo que no se pueden ejecutar dos tareas a la vez._
 
-El problema NP-completo conocido que resulta intuitivo aplicar es otra variante del _subset-sum_, ya que el problema de decisión _P4_ es una elección de elementos de un conjunto para que sumen un valor específico. Esta variante consiste en:
-
-- Un conjunto de valores $W = \{w_1, ..., w_n\} \in \mathbb{N}$.
-- Un número K que es nuestra suma objetivo.
+El problema NP-completo conocido que resulta intuitivo aplicar es _SS_ (sección \ref{s:ss}), ya que el problema de decisión _P4_ es una elección de elementos de un conjunto para que sumen un valor específico.
 
 Para reducir subset-sum a nuestro problema, podemos transformar la entrada del siguiente modo:
 
 - Cada elemento $w_i$ será una tarea con:
 	- Tiempo de ejecución igual a 1. Esto es obligatorio para la entrada de este problema.
 	- Deadline n+1 (o infinito). Esto permite que todas las tareas sean elegidas.
-- La ganancia deseada $K$ será el mismo número que la suma del _subset-sum_ original. 
+- La ganancia deseada $K$ será el mismo número que la suma del SS original.
+
+Esta transformación es lineal, ya que todo lo que hace es crear una tarea por elemento.
 
 Esta entrada será la de P4, que decidirá si existe una planificación que tenga como ganancia total $K$, o sea que elegirá un subconjunto de $W$ que sume $K$, resolviendo el problema de _subset-sum_. Por lo tanto, sabemos que SS $\leqslant_p$ P4 y por lo tanto P4 $\in$ NP-Completo.
