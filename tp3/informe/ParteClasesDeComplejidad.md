@@ -248,10 +248,16 @@ Ahora bien, si yo consigo una planificación $P$ que resuelve mi problema $P3$, 
 
 _Se tiene un conjunto de n tareas, cada una con un tiempo de ejecución igual a 1, una fecha límite de finalización_ $d_i \in N$ _y una ganancia_ $v_i \in R$ _que será otorgada si se finaliza antes que su tiempo límite. Se pide devolver si existe alguna planificación que obtenga una ganancia total_ $k \in R$ _sabiendo que no se pueden ejecutar dos tareas a la vez._
 
-Un problema NP-completo conocido que resulta intuitivo aplicar a este problema es el subset-sum, ya que el problema de decisión es sobre un número específico de suma y es una elección de elementos. Entonces partimos de:
-- Un conjunto de valores $w_i, ..., w_n \in \natural$.
+El problema NP-completo conocido que resulta intuitivo aplicar es otra variante del _subset-sum_, ya que el problema de decisión _P4_ es una elección de elementos de un conjunto para que sumen un valor específico. Esta variante consiste en:
+
+- Un conjunto de valores $W = \{w_1, ..., w_n\} \in \mathbb{N}$.
 - Un número K que es nuestra suma objetivo.
 
-Para reducir subset-sum a nuestro problema, podemos plantear cada elemento $w_i$ como una tarea, con tiempo de ejecución 1 y con deadline n+1 (o infinito) en todos los casos y el valor $K$ sea el mismo que el del subset\_sum. El tiempo de ejecución es el requerido por el problema, mientras que el deadline largo permite que todas las tareas puedan ser elegidas.
+Para reducir subset-sum a nuestro problema, podemos transformar la entrada del siguiente modo:
 
-En esas condiciones le pasamos el problema a P4, que encontrará una planificación para que la suma de los valores sea k. 
+- Cada elemento $w_i$ será una tarea con:
+	- Tiempo de ejecución igual a 1. Esto es obligatorio para la entrada de este problema.
+	- Deadline n+1 (o infinito). Esto permite que todas las tareas sean elegidas.
+- La ganancia deseada $K$ será el mismo número que la suma del _subset-sum_ original. 
+
+Esta entrada será la de P4, que decidirá si existe una planificación que tenga como ganancia total $K$, o sea que elegirá un subconjunto de $W$ que sume $K$, resolviendo el problema de _subset-sum_. Por lo tanto, sabemos que SS $\leqslant_p$ P4 y por lo tanto P4 $\in$ NP-Completo.
