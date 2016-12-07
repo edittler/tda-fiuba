@@ -215,7 +215,8 @@ Para verificar que esta solución corresponde al problema, tenemos que ver que l
 
 El certificador propuesto es el siguiente:
 
-Para cada elemento $s[i]$ de nuestra solución propuesta  
+\begin{lstlisting}[mathescape]
+Para cada elemento $s[i]$ de nuestra solución propuesta
     Para cada elemento $s[j]$ restante ($i \neq j$)  
         Si $s[i] < s[j]$  
             $fin[i] = s[i] + t_i$  
@@ -232,6 +233,7 @@ Fin Para
 Si $GananciaTotal \le k$  
     return False  
 return True  
+\end{lstlisting}
 
 En otras palabras, para cada comienzo de tarea, se debe verificar que dicha tarea, sumado a su tiempo de ejecución, no se solape con el comienzo de ninguna otra tarea que empieza después de la actual. Además, si esto se cumple, y el fin de la tarea ocurre antes de su deadline, se suma a la ganancia total obtenida. Luego resta a saber si la ganancia total obtenida supera al $k$ determinado para esa instancia del problema.
 Este certificador corre en tiempo polinomial, es $O(n^2)$.
