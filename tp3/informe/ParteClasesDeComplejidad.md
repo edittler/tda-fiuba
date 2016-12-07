@@ -204,6 +204,46 @@ Entonces, lo que ocurre es lo siguiente:
 - Si un ciclo suma 0, entonces la suma de los elementos por los que pasa es 0.
 - Si encontramos un ciclo de peso total 0, entonces habremos encontrado un subconjunto de elementos que suman 0 entre sí, lo cual es la solución al problema planteado.
 
+## Problema de decisión de Scheduling con tiempos de ejecución distintos (P3)
+
+_Se tiene un conjunto de $n$ tareas, cada una con un tiempo de ejecución $t_i \in R_{+}$, una fecha límite de finalización $d_i \in R_+$ y una ganancia $v_i \in R_+$ que será otorgada si se finaliza antes que su tiempo límite. Se pide devolver si existe alguna planificación que obtenga una ganancia total, mayor o igual a $k \in R_+$ sabiendo que no se pueden ejecutar dos tareas a la vez_
+
+Vamos a demostrar que este problema es NP-Completo. Para ello, primero debemos demostrar que el problema es NP, pudiendo verificar una solución al problema en tiempo polinomial. Luego aplicaremos una reducción al problema de la suma de sub-conjuntos (Subset Sum Problem).
+
+Supongamos que tenemos una planificación de la forma $y = s[1..n]$ tal que para cada tarea $i$, denominamos a $s[i]$ como el tiempo en el que inicia dicha tarea.
+Para verificar que esta solución corresponde al problema, tenemos que ver que las tareas no se solapen y que la ganancia total obtenida (es decir, la suma de las ganancias de las tareas que terminaron antes de su deadline) sea al menos $k$.
+
+El certificador propuesto es el siguiente:
+
+Para cada elemento $s[i]$ de nuestra solución propuesta  
+    Para cada elemento $s[j]$ restante ($i \neq j$)  
+        Si $s[i] < s[j]$  
+            $fin[i] = s[i] + t_i$  
+            Si $fin[i] \leq s[j]$  
+                Si $fin[i] <= d_i$  
+                    $GananciaTotal += v_i$  
+                Fin Si  
+            Sino  
+                return False  
+            Fin Si  
+        Fin Si  
+    Fin Para  
+Fin Para  
+Si $GananciaTotal \le k$  
+    return False  
+return True  
+
+En otras palabras, para cada comienzo de tarea, se debe verificar que dicha tarea, sumado a su tiempo de ejecución, no se solape con el comienzo de ninguna otra tarea que empieza después de la actual. Además, si esto se cumple, y el fin de la tarea ocurre antes de su deadline, se suma a la ganancia total obtenida. Luego resta a saber si la ganancia total obtenida supera al $k$ determinado para esa instancia del problema.
+Este certificador corre en tiempo polinomial, es $O(n^2)$.
+
+Demostrado esto, ahora realizamos una reducción de un problema conocido NP-Completo a nuestro problema, para formalizar la demostración de que P3 es NP-Completo. Para ello, utilizamos el Subset Sum Problem.
+
+A partir de una instancia del Subset Sum Problem: SSPI = $(sspi[1..n], k)$ donde sspi es un set de números enteros positivos y $k$ un número positivo, puedo construirme una instancia de P3, siendo los tiempos de ejecución $t_{i} = sspi_i$, las ganancias $v_{i} = sspi_i$, mi límite $k$ equivalente en ambas instancias y mis deadlines $d_{i} = k \forall i$.
+Esta transformación es $O(n)$.
+
+Ahora bien, si yo consigo una planificación $P$ que resuelve mi problema $P3$, entonces, tengo un set $S$ de tareas que terminan de ejecutarse antes de su deadline, por ende, $\sum_{i \in S} sspi_{i} \leq k$ y cuya ganancia es al menos $k$, esto es $\sum_{i \in S} sspi_{i} \geq k$. Combinando ambas restricciones, obtenemos $\sum_{i \in S} sspi_{i} = k$, lo cual es una solución para el Subset Sum Problem.
+
+
 ## Problema de Scheduling con k fijo (P4)
 
 _Se tiene un conjunto de n tareas, cada una con un tiempo de ejecución igual a 1, una fecha límite de finalización_ $d_i \in N$ _y una ganancia_ $v_i \in R$ _que será otorgada si se finaliza antes que su tiempo límite. Se pide devolver si existe alguna planificación que obtenga una ganancia total_ $k \in R$ _sabiendo que no se pueden ejecutar dos tareas a la vez._
